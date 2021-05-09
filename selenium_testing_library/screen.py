@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import List, Tuple
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver import Remote as Driver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -9,6 +9,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 Locator: Tuple[str, str]
+
+
+class MultipleElementsReturned(Exception):
+    ...
+
+
+class NoElementsReturned(Exception):
+    ...
+
+
+class NoElementsReturnedDueToTimeout(NoElementsReturned):
+    ...
 
 
 class Element:
@@ -29,10 +41,10 @@ class Element:
     #     return self.element.get_attribute(name)
 
     # def get_property(self, name: str):
-    #     return self.element.get_property()
+    #     return self.element.get_property(name)
 
-    # def send_keys(self, keys)
-    #     return self.element.send_keys
+    # def send_keys(self, keys):
+    #     return self.element.send_keys(keys)
 
     def wait_until_selected(self):
         self.waiter.until(EC.element_to_be_selected(self.element))
@@ -59,10 +71,10 @@ class Screen:
         els = self.driver.find_elements(*locator)
 
         if not els:
-            raise Exception("No element matched")
+            raise NoElementsReturned("No elements returned")
 
         if len(els) > 1:
-            raise Exception("more than 1 element")
+            raise MultipleElementsReturned("Multiple elements returned")
 
         return Element(els[0], self.driver)
 
@@ -71,18 +83,22 @@ class Screen:
         if not els:
             return None
         if len(els) > 1:
-            raise Exception("more than 1 element")
+            raise MultipleElementsReturned("Multiple elements returned")
 
         return Element(els[0], self.driver)
 
     def find(self, locator: Tuple[str, str]):
-        els = self.waiter.until(
-            EC.presence_of_all_elements_located(locator), self.driver
-        )
+        try:
+            els = self.waiter.until(
+                EC.presence_of_all_elements_located(locator), self.driver
+            )
+        except TimeoutException:
+            # TODO: Should this be a different kind of an exception?
+            raise NoElementsReturnedDueToTimeout("No elements returned")
         if not els:
-            raise Exception("No elements")
+            raise NoElementsReturned("No elements returned")
         if len(els) > 1:
-            raise Exception("More than 1 element")
+            raise MultipleElementsReturned("Multiple elements returned")
         return Element(els[0], self.driver)
 
     def get_all(self, locator: Tuple[str, str]):
@@ -90,23 +106,29 @@ class Screen:
             Element(el, self.driver) for el in self.driver.find_elements(*locator)
         )
         if not els:
-            raise Exception("No elements matched")
+            raise NoElementsReturned("No elements returned")
 
         return els
 
     def query_all(self, locator: Tuple[str, str]):
         try:
             return self.get_all(locator)
-        except:
+        except NoElementsReturned:
             return []
 
     def find_all(self, locator: Tuple[str, str]):
-        els = list(
-            Element(el, self.driver)
-            for el in self.waiter.until(EC.presence_of_all_elements_located(locator))
-        )
+        try:
+            els = list(
+                Element(el, self.driver)
+                for el in self.waiter.until(
+                    EC.presence_of_all_elements_located(locator)
+                )
+            )
+        except TimeoutException:
+            # TODO: Should this be a different kind of an exception?
+            raise NoElementsReturnedDueToTimeout("No elements returned")
         if not els:
-            raise Exception()
+            raise NoElementsReturned("No elements returned")
 
         return els
 

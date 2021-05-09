@@ -1,6 +1,13 @@
 import pathlib
 import pytest
-from selenium_testing_library import Element, Screen, Locator, __version__
+from selenium_testing_library import (
+    Element,
+    Screen,
+    Locator,
+    __version__,
+    MultipleElementsReturned,
+    NoElementsReturned,
+)
 
 
 def test_version():
@@ -33,30 +40,30 @@ def test_basic_functions(screen):
     screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.get(IMG_LOC), Element)
-    with pytest.raises(Exception):
+    with pytest.raises(NoElementsReturned):
         screen.get(F_LOC)
-    with pytest.raises(Exception):
+    with pytest.raises(MultipleElementsReturned):
         screen.get(A_LOC)
 
     # test_query(selenium):
 
     assert isinstance(screen.query(IMG_LOC), Element)
     assert screen.query(F_LOC) is None
-    with pytest.raises(Exception):
+    with pytest.raises(MultipleElementsReturned):
         screen.query(A_LOC)
 
     # test_find(selenium):
 
     assert isinstance(screen.find(IMG_LOC), Element)
-    with pytest.raises(Exception):
+    with pytest.raises(NoElementsReturned):
         screen.find(F_LOC) is None
-    with pytest.raises(Exception):
+    with pytest.raises(MultipleElementsReturned):
         screen.find(A_LOC)
 
     # test_get_all(selenium):
 
     assert isinstance(screen.get_all(IMG_LOC)[0], Element)
-    with pytest.raises(Exception):
+    with pytest.raises(NoElementsReturned):
         screen.get_all(F_LOC)
     assert len(screen.get_all(A_LOC)) > 1
 
@@ -69,7 +76,7 @@ def test_basic_functions(screen):
     # test_find_all(selenium):
 
     assert isinstance(screen.find_all(IMG_LOC)[0], Element)
-    with pytest.raises(Exception):
+    with pytest.raises(NoElementsReturned):
         screen.find_all(F_LOC)
     assert len(screen.find_all(A_LOC)) > 1
 
