@@ -1,8 +1,4 @@
-from .screen import (
-    Screen,
-    NoElementsReturned,
-    MultipleElementsReturned,
-)
+from .screen import MultipleElementsReturned, NoElementsReturned, Screen
 
 
 class Locator:

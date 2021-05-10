@@ -1,12 +1,14 @@
 from __future__ import annotations
+
 from enum import Enum
 from typing import List, NewType, Optional, Tuple
+
 from selenium.common.exceptions import TimeoutException  # type: ignore
 from selenium.webdriver import Remote as Driver  # type: ignore
 from selenium.webdriver.common.by import By  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
-from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
 from selenium.webdriver.support import expected_conditions as EC  # type: ignore
+from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
 
 
 class ByOptions(Enum):

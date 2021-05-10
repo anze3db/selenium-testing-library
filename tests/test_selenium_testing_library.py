@@ -1,12 +1,14 @@
 import pathlib
+
 import pytest  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
+
 from selenium_testing_library import (
-    Screen,
     Locator,
-    __version__,
     MultipleElementsReturned,
     NoElementsReturned,
+    Screen,
+    __version__,
 )
 
 
