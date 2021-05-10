@@ -1,5 +1,4 @@
 from .screen import (
-    Element,
     Screen,
     NoElementsReturned,
     MultipleElementsReturned,

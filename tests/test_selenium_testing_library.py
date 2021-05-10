@@ -1,7 +1,7 @@
 import pathlib
 import pytest  # type: ignore
+from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 from selenium_testing_library import (
-    Element,
     Screen,
     Locator,
     __version__,
@@ -39,7 +39,7 @@ def test_basic_functions(screen):
     F_LOC = Locator("footer")
     screen.driver.get(get_file_path("index.html"))
 
-    assert isinstance(screen.get(IMG_LOC), Element)
+    assert isinstance(screen.get(IMG_LOC), WebElement)
     with pytest.raises(NoElementsReturned):
         screen.get(F_LOC)
     with pytest.raises(MultipleElementsReturned):
@@ -47,14 +47,14 @@ def test_basic_functions(screen):
 
     # test_query(selenium):
 
-    assert isinstance(screen.query(IMG_LOC), Element)
+    assert isinstance(screen.query(IMG_LOC), WebElement)
     assert screen.query(F_LOC) is None
     with pytest.raises(MultipleElementsReturned):
         screen.query(A_LOC)
 
     # test_find(selenium):
 
-    assert isinstance(screen.find(IMG_LOC), Element)
+    assert isinstance(screen.find(IMG_LOC), WebElement)
     with pytest.raises(NoElementsReturned):
         screen.find(F_LOC) is None
     with pytest.raises(MultipleElementsReturned):
@@ -62,20 +62,20 @@ def test_basic_functions(screen):
 
     # test_get_all(selenium):
 
-    assert isinstance(screen.get_all(IMG_LOC)[0], Element)
+    assert isinstance(screen.get_all(IMG_LOC)[0], WebElement)
     with pytest.raises(NoElementsReturned):
         screen.get_all(F_LOC)
     assert len(screen.get_all(A_LOC)) > 1
 
     # test_query_all(selenium):
 
-    assert isinstance(screen.query_all(IMG_LOC)[0], Element)
+    assert isinstance(screen.query_all(IMG_LOC)[0], WebElement)
     assert len(screen.query_all(F_LOC)) == 0
     assert len(screen.query_all(A_LOC)) > 1
 
     # test_find_all(selenium):
 
-    assert isinstance(screen.find_all(IMG_LOC)[0], Element)
+    assert isinstance(screen.find_all(IMG_LOC)[0], WebElement)
     with pytest.raises(NoElementsReturned):
         screen.find_all(F_LOC)
     assert len(screen.find_all(A_LOC)) > 1
