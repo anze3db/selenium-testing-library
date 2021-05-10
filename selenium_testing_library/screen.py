@@ -1,14 +1,27 @@
 from __future__ import annotations
+from enum import Enum
+from typing import List, NewType, Tuple, Iterable
+from selenium.common.exceptions import NoSuchElementException, TimeoutException  # type: ignore
+from selenium.webdriver import Remote as Driver  # type: ignore
+from selenium.webdriver.common.by import By  # type: ignore
+from selenium.webdriver.remote.webelement import WebElement  # type: ignore
+from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
+from selenium.webdriver.support import expected_conditions as EC  # type: ignore
 
-from typing import List, Tuple
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium.webdriver import Remote as Driver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-Locator: Tuple[str, str]
+class ByOptions(Enum):
+    CLASS_NAME: str = By.CLASS_NAME
+    CSS_SELECTOR: str = By.CSS_SELECTOR
+    ID: str = By.ID
+    LINK_TEXT: str = By.LINK_TEXT
+    PARTIAL_LINK_TEXT: str = By.PARTIAL_LINK_TEXT
+    TAG_NAME: str = By.TAG_NAME
+    XPATH: str = By.XPATH
+
+
+ByType = NewType("ByType", ByOptions)
+
+Locator = Tuple[ByType, str]
 
 
 class MultipleElementsReturned(Exception):
@@ -16,10 +29,6 @@ class MultipleElementsReturned(Exception):
 
 
 class NoElementsReturned(Exception):
-    ...
-
-
-class NoElementsReturnedDueToTimeout(NoElementsReturned):
     ...
 
 
@@ -60,14 +69,18 @@ class Element:
 
 
 class Screen:
+
+    TEST_ID_ATTRIBUTE = "data-testid"
+    WAIT_TIMEOUT = 1
+
     def __init__(
         self,
         driver: Driver,
     ):
         self.driver = driver
-        self.waiter = WebDriverWait(self.driver, 1)
+        self.waiter = WebDriverWait(self.driver, self.WAIT_TIMEOUT)
 
-    def get(self, locator: Tuple[str, str]):
+    def get(self, locator: Locator):
         els = self.driver.find_elements(*locator)
 
         if not els:
@@ -78,7 +91,7 @@ class Screen:
 
         return Element(els[0], self.driver)
 
-    def query(self, locator: Tuple[str, str]):
+    def query(self, locator: Locator):
         els = self.driver.find_elements(*locator)
         if not els:
             return None
@@ -87,21 +100,21 @@ class Screen:
 
         return Element(els[0], self.driver)
 
-    def find(self, locator: Tuple[str, str]):
+    def find(self, locator: Locator):
         try:
             els = self.waiter.until(
                 EC.presence_of_all_elements_located(locator), self.driver
             )
         except TimeoutException:
             # TODO: Should this be a different kind of an exception?
-            raise NoElementsReturnedDueToTimeout("No elements returned")
+            raise NoElementsReturned("No elements returned")
         if not els:
             raise NoElementsReturned("No elements returned")
         if len(els) > 1:
             raise MultipleElementsReturned("Multiple elements returned")
         return Element(els[0], self.driver)
 
-    def get_all(self, locator: Tuple[str, str]):
+    def get_all(self, locator: Locator):
         els = list(
             Element(el, self.driver) for el in self.driver.find_elements(*locator)
         )
@@ -110,13 +123,13 @@ class Screen:
 
         return els
 
-    def query_all(self, locator: Tuple[str, str]):
+    def query_all(self, locator: Locator):
         try:
             return self.get_all(locator)
         except NoElementsReturned:
             return []
 
-    def find_all(self, locator: Tuple[str, str]):
+    def find_all(self, locator: Locator):
         try:
             els = list(
                 Element(el, self.driver)
@@ -126,7 +139,7 @@ class Screen:
             )
         except TimeoutException:
             # TODO: Should this be a different kind of an exception?
-            raise NoElementsReturnedDueToTimeout("No elements returned")
+            raise NoElementsReturned("No elements returned")
         if not els:
             raise NoElementsReturned("No elements returned")
 
@@ -208,22 +221,4 @@ class Screen:
         self.find_all(locator)
 
 
-class Locator:
-    def __init__(self, css_selector: str):
-        self.value = css_selector
-
-    def __iter__(self):
-        yield By.CSS_SELECTOR
-        yield self.value
-
-
-class LocatorXPath:
-    def __init__(self, xpath_selector: str):
-        self.value = xpath_selector
-
-    def __iter__(self):
-        yield By.XPATH
-        yield self.value
-
-
-__all__ = ["Element", "Page", "Locator", "LocatorXPath"]
+__all__ = ["Screen"]

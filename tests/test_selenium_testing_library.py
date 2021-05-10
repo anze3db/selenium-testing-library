@@ -1,5 +1,5 @@
 import pathlib
-import pytest
+import pytest  # type: ignore
 from selenium_testing_library import (
     Element,
     Screen,
