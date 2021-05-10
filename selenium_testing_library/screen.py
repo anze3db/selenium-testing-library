@@ -1,6 +1,6 @@
 from __future__ import annotations
 from enum import Enum
-from typing import List, NewType, Tuple, Iterable
+from typing import List, NewType, Optional, Tuple, Iterable
 from selenium.common.exceptions import NoSuchElementException, TimeoutException  # type: ignore
 from selenium.webdriver import Remote as Driver  # type: ignore
 from selenium.webdriver.common.by import By  # type: ignore
@@ -80,7 +80,7 @@ class Screen:
         self.driver = driver
         self.waiter = WebDriverWait(self.driver, self.WAIT_TIMEOUT)
 
-    def get(self, locator: Locator):
+    def get(self, locator: Locator) -> Element:
         els = self.driver.find_elements(*locator)
 
         if not els:
@@ -91,7 +91,7 @@ class Screen:
 
         return Element(els[0], self.driver)
 
-    def query(self, locator: Locator):
+    def query(self, locator: Locator) -> Optional[Element]:
         els = self.driver.find_elements(*locator)
         if not els:
             return None
@@ -100,7 +100,7 @@ class Screen:
 
         return Element(els[0], self.driver)
 
-    def find(self, locator: Locator):
+    def find(self, locator: Locator) -> Element:
         try:
             els = self.waiter.until(
                 EC.presence_of_all_elements_located(locator), self.driver
@@ -114,7 +114,7 @@ class Screen:
             raise MultipleElementsReturned("Multiple elements returned")
         return Element(els[0], self.driver)
 
-    def get_all(self, locator: Locator):
+    def get_all(self, locator: Locator) -> List[Element]:
         els = list(
             Element(el, self.driver) for el in self.driver.find_elements(*locator)
         )
@@ -123,13 +123,13 @@ class Screen:
 
         return els
 
-    def query_all(self, locator: Locator):
+    def query_all(self, locator: Locator) -> List[Element]:
         try:
             return self.get_all(locator)
         except NoElementsReturned:
             return []
 
-    def find_all(self, locator: Locator):
+    def find_all(self, locator: Locator) -> List[Element]:
         try:
             els = list(
                 Element(el, self.driver)
@@ -146,79 +146,79 @@ class Screen:
         return els
 
     # By role
-    def get_by_role(self, role):
+    def get_by_role(self, role) -> Element:
         locator = (By.XPATH, f"//*[@role='{role}']")
         return self.get(locator)
 
-    def query_by_role(self, role: str):
+    def query_by_role(self, role: str) -> Optional[Element]:
         locator = (By.XPATH, f"//*[@role='{role}']")
         return self.get(locator)
 
-    def find_by_role(self, role: str):
+    def find_by_role(self, role: str) -> Element:
         locator = (By.XPATH, f"//*[@role='{role}']")
         return self.find(locator)
 
-    def get_all_by_role(self, role):
+    def get_all_by_role(self, role) -> List[Element]:
         locator = (By.XPATH, f"//*[@role='{role}']")
         return self.get_all(locator)
 
-    def query_all_by_role(self, role: str):
+    def query_all_by_role(self, role: str) -> List[Element]:
         locator = (By.XPATH, f"//*[@role='{role}']")
         return self.query_all(locator)
 
-    def find_all_by_role(self, role: str):
+    def find_all_by_role(self, role: str) -> List[Element]:
         locator = (By.XPATH, f"//*[@role='{role}']")
         return self.find_all(locator)
 
     # By text
-    def get_by_text(self, text: str):
+    def get_by_text(self, text: str) -> Element:
         locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
         return self.get(locator)
 
-    def query_by_text(self, text: str):
+    def query_by_text(self, text: str) -> Optional[Element]:
         locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
         return self.query(locator)
 
-    def find_by_text(self, text: str):
+    def find_by_text(self, text: str) -> Element:
         locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
         return self.find(locator)
 
-    def get_all_by_text(self, text: str):
+    def get_all_by_text(self, text: str) -> List[Element]:
         locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
         return self.get_all(locator)
 
-    def query_all_by_text(self, text: str):
+    def query_all_by_text(self, text: str) -> List[Element]:
         locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
         return self.query_all(locator)
 
-    def find_all_by_text(self, text: str):
+    def find_all_by_text(self, text: str) -> List[Element]:
         locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
         return self.find_all(locator)
 
     # By value
-    def get_by_value(self, value: str):
+    def get_by_value(self, value: str) -> Element:
         locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
-        self.get(locator)
+        return self.get(locator)
 
-    def query_by_value(self, value: str):
+    def query_by_value(self, value: str) -> Optional[Element]:
         locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
-        self.query(locator)
+        return self.query(locator)
 
-    def find_by_value(self, value: str):
+    def find_by_value(self, value: str) -> Element:
         locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
-        self.find(locator)
+        return self.find(locator)
 
-    def get_all_by_value(self, value: str):
+    def get_all_by_value(self, value: str) -> List[Element]:
         locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
-        self.get_all(locator)
+        return self.get_all(locator)
 
-    def query_all_by_value(self, value: str):
+    def query_all_by_value(self, value: str) -> List[Element]:
         locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
-        self.query_all(locator)
+        return self.query_all(locator)
 
-    def find_all_by_value(self, value: str):
+    def find_all_by_value(self, value: str) -> List[Element]:
         locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
-        self.find_all(locator)
+        return self.find_all(locator)
 
 
 __all__ = ["Screen"]
