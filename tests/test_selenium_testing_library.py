@@ -1,6 +1,7 @@
 import pathlib
 
 import pytest  # type: ignore
+from selenium.webdriver.common.keys import Keys  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 from selenium_testing_library import (
@@ -31,6 +32,15 @@ def get_file_path(name):
     return "file://" + str(pathlib.Path(__file__).parent.absolute() / "pages" / name)
 
 
+def test_readme(screen):
+    screen.driver.get("http://www.google.com/ncr")
+    screen.get_by_text("Aceito").click()
+    screen.get_by_role("combobox").send_keys("Dogs" + Keys.RETURN)
+    # Find waits until the results become available
+    screen.find_by_text("Dog - Wikipedia")
+    assert screen.query_by_text("Cats") is None
+
+
 def test_get_by_text(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     assert isinstance(screen.get_by_text("Email address"), WebElement)
@@ -38,7 +48,7 @@ def test_get_by_text(screen: Screen):
     assert len(screen.find_all_by_text("Item")) == 3
 
 
-@pytest.mark.skip("Not working yet")
+@pytest.mark.skip("Not fully working yet")
 def test_role(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     assert isinstance(screen.get_by_role("button"), WebElement)
