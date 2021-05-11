@@ -31,8 +31,17 @@ def get_file_path(name):
     return "file://" + str(pathlib.Path(__file__).parent.absolute() / "pages" / name)
 
 
-def test_text(screen: Screen):
+def test_get_by_text(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
+    assert isinstance(screen.get_by_text("Email address"), WebElement)
+    assert screen.query_by_text("address") is None
+    assert len(screen.find_all_by_text("Item")) == 3
+
+
+@pytest.mark.skip("Not working yet")
+def test_role(screen: Screen):
+    screen.driver.get(get_file_path("form.html"))
+    assert isinstance(screen.get_by_role("button"), WebElement)
 
 
 def test_basic_functions(screen):
@@ -81,12 +90,3 @@ def test_basic_functions(screen):
     with pytest.raises(NoElementsReturned):
         screen.find_all(F_LOC)
     assert len(screen.find_all(A_LOC)) > 1
-
-
-@pytest.mark.skip
-def test_readme(screen):
-    screen.driver.get("https://google.com/ncr")
-    screen.driver.find_element("NAME", "q").send_keys("cheese")
-    screen.find_by_role("textbox").send_keys("Snakes")
-    screen.get_by_text("Google Search").click()
-    assert screen.query_by_text("Images for snakes") is not None

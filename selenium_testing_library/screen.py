@@ -131,52 +131,52 @@ class Screen:
 
     # By text
     def get_by_text(self, text: str) -> WebElement:
-        locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
+        locator = (By.XPATH, f'//*[text() = "{text}"]')
         return self.get(locator)
 
     def query_by_text(self, text: str) -> Optional[WebElement]:
-        locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
+        locator = (By.XPATH, f'//*[text() = "{text}"]')
         return self.query(locator)
 
     def find_by_text(self, text: str) -> WebElement:
-        locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
+        locator = (By.XPATH, f'//*[text() = "{text}"]')
         return self.find(locator)
 
     def get_all_by_text(self, text: str) -> List[WebElement]:
-        locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
+        locator = (By.XPATH, f'//*[text() = "{text}"]')
         return self.get_all(locator)
 
     def query_all_by_text(self, text: str) -> List[WebElement]:
-        locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
+        locator = (By.XPATH, f'//*[text() = "{text}"]')
         return self.query_all(locator)
 
     def find_all_by_text(self, text: str) -> List[WebElement]:
-        locator = (By.XPATH, f'//*[contains(text(), "{text}")]')
+        locator = (By.XPATH, f'//*[text() = "{text}"]')
         return self.find_all(locator)
 
-    # By value
-    def get_by_value(self, value: str) -> WebElement:
-        locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
+    # By placeholder
+    def get_by_placeholder(self, value: str) -> WebElement:
+        locator = (By.XPATH, f'//*[@placeholder = "{value}"]')
         return self.get(locator)
 
-    def query_by_value(self, value: str) -> Optional[WebElement]:
-        locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
+    def query_by_placeholder(self, value: str) -> Optional[WebElement]:
+        locator = (By.XPATH, f'//*[@placeholder = "{value}"]')
         return self.query(locator)
 
-    def find_by_value(self, value: str) -> WebElement:
-        locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
+    def find_by_placeholder(self, value: str) -> WebElement:
+        locator = (By.XPATH, f'//*[@placeholder = "{value}"]')
         return self.find(locator)
 
-    def get_all_by_value(self, value: str) -> List[WebElement]:
-        locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
+    def get_all_by_placeholder(self, value: str) -> List[WebElement]:
+        locator = (By.XPATH, f'//*[@placeholder = "{value}"]')
         return self.get_all(locator)
 
-    def query_all_by_value(self, value: str) -> List[WebElement]:
-        locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
+    def query_all_by_placeholder(self, value: str) -> List[WebElement]:
+        locator = (By.XPATH, f'//*[@placeholder = "{value}"]')
         return self.query_all(locator)
 
-    def find_all_by_value(self, value: str) -> List[WebElement]:
-        locator = (By.XPATH, f'//*[contains(value(), "{value}")]')
+    def find_all_by_placeholder(self, value: str) -> List[WebElement]:
+        locator = (By.XPATH, f'//*[@placeholder = "{value}"]')
         return self.find_all(locator)
 
 
