@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import List, NewType, Optional, Tuple
+from typing import Generator, List, NewType, Optional, Tuple
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
 from selenium.webdriver import Remote as Driver  # type: ignore
@@ -178,6 +178,41 @@ class Screen:
     def find_all_by_placeholder(self, value: str) -> List[WebElement]:
         locator = (By.XPATH, f'//*[@placeholder = "{value}"]')
         return self.find_all(locator)
+
+    # By label text
+    def get_by_label_text(self, text: str) -> WebElement:
+        label: WebElement = self.get((By.XPATH, f'//label[text() = "{text}"]'))
+        id_ = label.get_attribute("for")
+        return self.get((By.ID, id_))
+
+    def query_by_label_text(self, text: str) -> Optional[WebElement]:
+        try:
+            return self.get_by_label_text(text)
+        except NoElementsReturned:
+            return None
+
+    def find_by_label_text(self, text: str) -> WebElement:
+        label: WebElement = self.find((By.XPATH, f'//label[text() = "{text}"]'))
+        id_ = label.get_attribute("for")
+        return self.get((By.ID, id_))
+
+    def get_all_by_label_text(self, text: str) -> Generator[WebElement, None, None]:
+        labels: WebElement = self.get_all((By.XPATH, f'//label[text() = "{text}"]'))
+        for label in labels:
+            id_ = label.get_attribute("for")
+            yield self.get((By.ID, id_))
+
+    def query_all_by_label_text(self, text: str) -> Generator[WebElement, None, None]:
+        labels: WebElement = self.query_all((By.XPATH, f'//label[text() = "{text}"]'))
+        for label in labels:
+            id_ = label.get_attribute("for")
+            yield self.get((By.ID, id_))
+
+    def find_all_by_label_text(self, text: str) -> Generator[WebElement, None, None]:
+        labels: WebElement = self.find_all((By.XPATH, f'//label[text() = "{text}"]'))
+        for label in labels:
+            id_ = label.get_attribute("for")
+            yield self.get((By.ID, id_))
 
 
 __all__ = ["Screen"]

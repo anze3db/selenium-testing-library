@@ -48,6 +48,21 @@ def test_get_by_text(screen: Screen):
     assert len(screen.find_all_by_text("Item")) == 3
 
 
+def test_get_by_label_text(screen: Screen):
+    screen.driver.get(get_file_path("form.html"))
+    input_field = screen.get_by_label_text("Email address")
+    assert isinstance(input_field, WebElement)
+    assert input_field.tag_name == "input"
+    assert input_field.get_attribute("type") == "email"
+
+    input_field = screen.query_by_label_text("Password")
+    assert input_field.get_attribute("type") == "password"
+
+    input_fields = list(screen.get_all_by_label_text("Same Label"))
+    assert input_fields[0].get_attribute("type") == "text"
+    assert input_fields[1].get_attribute("type") == "color"
+
+
 @pytest.mark.skip("Not fully working yet")
 def test_role(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
