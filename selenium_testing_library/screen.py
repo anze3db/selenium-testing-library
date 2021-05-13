@@ -26,11 +26,11 @@ ByType = NewType("ByType", ByOptions)
 Locator = Tuple[ByType, str]
 
 
-class MultipleElementsReturned(Exception):
+class MultipleSuchElementsException(Exception):
     ...
 
 
-class NoElementsReturned(Exception):
+class NoSuchElementException(Exception):
     ...
 
 
@@ -39,21 +39,17 @@ class Screen:
     TEST_ID_ATTRIBUTE = "data-testid"
     WAIT_TIMEOUT = 1
 
-    def __init__(
-        self,
-        driver: Driver,
-    ):
+    def __init__(self, driver: Driver):
         self.driver = driver
-        self.waiter = WebDriverWait(self.driver, self.WAIT_TIMEOUT)
 
     def get(self, locator: Locator) -> WebElement:
         els = self.driver.find_elements(*locator)
 
         if not els:
-            raise NoElementsReturned("No elements returned")
+            raise NoSuchElementException()
 
         if len(els) > 1:
-            raise MultipleElementsReturned("Multiple elements returned")
+            raise MultipleSuchElementsException()
 
         return els[0]
 
@@ -62,45 +58,47 @@ class Screen:
         if not els:
             return None
         if len(els) > 1:
-            raise MultipleElementsReturned("Multiple elements returned")
+            raise MultipleSuchElementsException()
 
         return els[0]
 
-    def find(self, locator: Locator) -> WebElement:
+    def find(self, locator: Locator, *, timeout=5, poll_frequency=0.5) -> WebElement:
         try:
-            els = self.waiter.until(
-                EC.presence_of_all_elements_located(locator), self.driver
-            )
+            els = WebDriverWait(
+                self.driver, timeout=timeout, poll_frequency=poll_frequency
+            ).until(EC.presence_of_all_elements_located(locator), self.driver)
         except TimeoutException:
-            # TODO: Should this be a different kind of an exception?
-            raise NoElementsReturned("No elements returned")
+            raise NoSuchElementException()
         if not els:
-            raise NoElementsReturned("No elements returned")
+            raise NoSuchElementException()
         if len(els) > 1:
-            raise MultipleElementsReturned("Multiple elements returned")
+            raise MultipleSuchElementsException()
         return els[0]
 
     def get_all(self, locator: Locator) -> List[WebElement]:
         els = self.driver.find_elements(*locator)
         if not els:
-            raise NoElementsReturned("No elements returned")
+            raise NoSuchElementException()
 
         return els
 
     def query_all(self, locator: Locator) -> List[WebElement]:
         try:
             return self.get_all(locator)
-        except NoElementsReturned:
+        except NoSuchElementException:
             return []
 
-    def find_all(self, locator: Locator) -> List[WebElement]:
+    def find_all(
+        self, locator: Locator, *, timeout=5, poll_frequency=0.5
+    ) -> List[WebElement]:
         try:
-            els = self.waiter.until(EC.presence_of_all_elements_located(locator))
+            els = WebDriverWait(
+                self.driver, timeout=timeout, poll_frequency=poll_frequency
+            ).until(EC.presence_of_all_elements_located(locator))
         except TimeoutException:
-            # TODO: Should this be a different kind of an exception?
-            raise NoElementsReturned("No elements returned")
+            raise NoSuchElementException()
         if not els:
-            raise NoElementsReturned("No elements returned")
+            raise NoSuchElementException()
 
         return els
 
@@ -188,7 +186,7 @@ class Screen:
     def query_by_label_text(self, text: str) -> Optional[WebElement]:
         try:
             return self.get_by_label_text(text)
-        except NoElementsReturned:
+        except NoSuchElementException:
             return None
 
     def find_by_label_text(self, text: str) -> WebElement:

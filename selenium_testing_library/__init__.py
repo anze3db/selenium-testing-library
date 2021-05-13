@@ -1,4 +1,4 @@
-from .screen import MultipleElementsReturned, NoElementsReturned, Screen
+from .screen import MultipleSuchElementsException, NoSuchElementException, Screen
 
 
 class Locator:

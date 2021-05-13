@@ -6,8 +6,8 @@ from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 from selenium_testing_library import (
     Locator,
-    MultipleElementsReturned,
-    NoElementsReturned,
+    MultipleSuchElementsException,
+    NoSuchElementException,
     Screen,
     __version__,
 )
@@ -30,15 +30,6 @@ def screen(selenium):
 
 def get_file_path(name):
     return "file://" + str(pathlib.Path(__file__).parent.absolute() / "pages" / name)
-
-
-def test_readme(screen):
-    screen.driver.get("http://www.google.com/ncr")
-    screen.get_by_text("Aceito").click()
-    screen.get_by_role("combobox").send_keys("Dogs" + Keys.RETURN)
-    # Find waits until the results become available
-    screen.find_by_text("Dog - Wikipedia")
-    assert screen.query_by_text("Cats") is None
 
 
 def test_get_by_text(screen: Screen):
@@ -76,30 +67,30 @@ def test_basic_functions(screen):
     screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.get(IMG_LOC), WebElement)
-    with pytest.raises(NoElementsReturned):
+    with pytest.raises(NoSuchElementException):
         screen.get(F_LOC)
-    with pytest.raises(MultipleElementsReturned):
+    with pytest.raises(MultipleSuchElementsException):
         screen.get(A_LOC)
 
     # test_query(selenium):
 
     assert isinstance(screen.query(IMG_LOC), WebElement)
     assert screen.query(F_LOC) is None
-    with pytest.raises(MultipleElementsReturned):
+    with pytest.raises(MultipleSuchElementsException):
         screen.query(A_LOC)
 
     # test_find(selenium):
 
     assert isinstance(screen.find(IMG_LOC), WebElement)
-    with pytest.raises(NoElementsReturned):
+    with pytest.raises(NoSuchElementException):
         screen.find(F_LOC) is None
-    with pytest.raises(MultipleElementsReturned):
+    with pytest.raises(MultipleSuchElementsException):
         screen.find(A_LOC)
 
     # test_get_all(selenium):
 
     assert isinstance(screen.get_all(IMG_LOC)[0], WebElement)
-    with pytest.raises(NoElementsReturned):
+    with pytest.raises(NoSuchElementException):
         screen.get_all(F_LOC)
     assert len(screen.get_all(A_LOC)) > 1
 
@@ -112,6 +103,6 @@ def test_basic_functions(screen):
     # test_find_all(selenium):
 
     assert isinstance(screen.find_all(IMG_LOC)[0], WebElement)
-    with pytest.raises(NoElementsReturned):
+    with pytest.raises(NoSuchElementException):
         screen.find_all(F_LOC)
     assert len(screen.find_all(A_LOC)) > 1
