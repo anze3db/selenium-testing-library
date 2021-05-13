@@ -1,11 +1,11 @@
 import pathlib
 
 import pytest  # type: ignore
+from selenium.webdriver.common.by import By  # type: ignore
 from selenium.webdriver.common.keys import Keys  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 from selenium_testing_library import (
-    Locator,
     MultipleSuchElementsException,
     NoSuchElementException,
     Screen,
@@ -61,9 +61,9 @@ def test_role(screen: Screen):
 
 
 def test_basic_functions(screen):
-    IMG_LOC = Locator("img")
-    A_LOC = Locator("a")
-    F_LOC = Locator("footer")
+    IMG_LOC = (By.CSS_SELECTOR, "img")
+    A_LOC = (By.CSS_SELECTOR, "a")
+    F_LOC = (By.CSS_SELECTOR, "footer")
     screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.get(IMG_LOC), WebElement)
