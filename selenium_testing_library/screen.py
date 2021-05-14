@@ -66,10 +66,8 @@ class Screen:
         try:
             els = WebDriverWait(
                 self.driver, timeout=timeout, poll_frequency=poll_frequency
-            ).until(EC.presence_of_all_elements_located(locator), self.driver)
+            ).until(EC.presence_of_all_elements_located(locator))
         except TimeoutException:
-            raise NoSuchElementException()
-        if not els:
             raise NoSuchElementException()
         if len(els) > 1:
             raise MultipleSuchElementsException()
@@ -92,15 +90,11 @@ class Screen:
         self, locator: Locator, *, timeout=5, poll_frequency=0.5
     ) -> List[WebElement]:
         try:
-            els = WebDriverWait(
+            return WebDriverWait(
                 self.driver, timeout=timeout, poll_frequency=poll_frequency
             ).until(EC.presence_of_all_elements_located(locator))
         except TimeoutException:
             raise NoSuchElementException()
-        if not els:
-            raise NoSuchElementException()
-
-        return els
 
     # By role
     def get_by_role(self, role) -> WebElement:
@@ -213,4 +207,8 @@ class Screen:
             yield self.get((By.ID, id_))
 
 
-__all__ = ["Screen"]
+__all__ = [
+    "Screen",
+    "MultipleSuchElementsException",
+    "NoSuchElementException",
+]
