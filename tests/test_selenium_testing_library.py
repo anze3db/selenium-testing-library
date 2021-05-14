@@ -9,6 +9,7 @@ from selenium_testing_library import (
     MultipleSuchElementsException,
     NoSuchElementException,
     Screen,
+    Within,
     __version__,
 )
 
@@ -58,6 +59,26 @@ def test_get_by_label_text(screen: Screen):
 def test_role(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     assert isinstance(screen.get_by_role("button"), WebElement)
+
+
+def test_within(screen: Screen):
+    screen.driver.get(get_file_path("form.html"))
+    el = screen.get((By.CSS_SELECTOR, "#subsection"))
+    Within(el).get((By.CSS_SELECTOR, "input"))
+    assert Within(el).query((By.CSS_SELECTOR, "label")) is None
+    Within(el).find((By.CSS_SELECTOR, "input"))
+
+    assert len(Within(el).get_all((By.CSS_SELECTOR, "div"))) == 3
+    assert len(Within(el).query_all((By.CSS_SELECTOR, "div"))) == 3
+    assert len(Within(el).find_all((By.CSS_SELECTOR, "div"))) == 3
+
+    assert len(Within(el).query_all((By.CSS_SELECTOR, "img"))) == 0
+
+    with pytest.raises(NoSuchElementException):
+        Within(el).get_all((By.CSS_SELECTOR, "img"))
+
+    with pytest.raises(NoSuchElementException):
+        Within(el).find_all((By.CSS_SELECTOR, "img"))
 
 
 def test_basic_functions(screen):

@@ -207,8 +207,14 @@ class Screen:
             yield self.get((By.ID, id_))
 
 
+class Within(Screen):
+    def __init__(self, element: WebElement):
+        self.driver = element
+
+
 __all__ = [
     "Screen",
+    "Within",
     "MultipleSuchElementsException",
     "NoSuchElementException",
 ]
