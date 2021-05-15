@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from enum import Enum
-from typing import Generator, List, NewType, Optional, Tuple
+from typing import Generator, List, Optional
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
 from selenium.webdriver import Remote as Driver  # type: ignore
@@ -10,20 +9,9 @@ from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 from selenium.webdriver.support import expected_conditions as EC  # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
 
+from . import locators
 
-class ByOptions(Enum):
-    CLASS_NAME: str = By.CLASS_NAME
-    CSS_SELECTOR: str = By.CSS_SELECTOR
-    ID: str = By.ID
-    LINK_TEXT: str = By.LINK_TEXT
-    PARTIAL_LINK_TEXT: str = By.PARTIAL_LINK_TEXT
-    TAG_NAME: str = By.TAG_NAME
-    XPATH: str = By.XPATH
-
-
-ByType = NewType("ByType", ByOptions)
-
-Locator = Tuple[ByType, str]
+Locator = locators.LocatorType
 
 
 class MultipleSuchElementsException(Exception):
@@ -43,6 +31,18 @@ class Screen:
         self.driver = driver
 
     def get(self, locator: Locator) -> WebElement:
+
+        by, selector = locator
+
+        if by == locators.ByOptions.ROLE:
+            return self.get_by_role(selector)
+        elif by == locators.ByOptions.TEXT:
+            return self.get_by_text(selector)
+        elif by == locators.ByOptions.LABEL_TEXT:
+            return self.get_by_label_text(selector)
+        elif by == locators.ByOptions.PLACEHOLDER:
+            return self.get_by_placeholder(selector)
+
         els = self.driver.find_elements(*locator)
 
         if not els:
@@ -54,6 +54,18 @@ class Screen:
         return els[0]
 
     def query(self, locator: Locator) -> Optional[WebElement]:
+
+        by, selector = locator
+
+        if by == locators.ByOptions.ROLE:
+            return self.query_by_role(selector)
+        elif by == locators.ByOptions.TEXT:
+            return self.query_by_text(selector)
+        elif by == locators.ByOptions.LABEL_TEXT:
+            return self.query_by_label_text(selector)
+        elif by == locators.ByOptions.PLACEHOLDER:
+            return self.query_by_placeholder(selector)
+
         els = self.driver.find_elements(*locator)
         if not els:
             return None
@@ -63,6 +75,18 @@ class Screen:
         return els[0]
 
     def find(self, locator: Locator, *, timeout=5, poll_frequency=0.5) -> WebElement:
+
+        by, selector = locator
+
+        if by == locators.ByOptions.ROLE:
+            return self.find_by_role(selector)
+        elif by == locators.ByOptions.TEXT:
+            return self.find_by_text(selector)
+        elif by == locators.ByOptions.LABEL_TEXT:
+            return self.find_by_label_text(selector)
+        elif by == locators.ByOptions.PLACEHOLDER:
+            return self.find_by_placeholder(selector)
+
         try:
             els = WebDriverWait(
                 self.driver, timeout=timeout, poll_frequency=poll_frequency
@@ -74,6 +98,18 @@ class Screen:
         return els[0]
 
     def get_all(self, locator: Locator) -> List[WebElement]:
+
+        by, selector = locator
+
+        if by == locators.ByOptions.ROLE:
+            return self.get_all_by_role(selector)
+        elif by == locators.ByOptions.TEXT:
+            return self.get_all_by_text(selector)
+        elif by == locators.ByOptions.LABEL_TEXT:
+            return list(self.get_all_by_label_text(selector))
+        elif by == locators.ByOptions.PLACEHOLDER:
+            return self.get_all_by_placeholder(selector)
+
         els = self.driver.find_elements(*locator)
         if not els:
             raise NoSuchElementException()
@@ -81,6 +117,18 @@ class Screen:
         return els
 
     def query_all(self, locator: Locator) -> List[WebElement]:
+
+        by, selector = locator
+
+        if by == locators.ByOptions.ROLE:
+            return self.query_all_by_role(selector)
+        elif by == locators.ByOptions.TEXT:
+            return self.query_all_by_text(selector)
+        elif by == locators.ByOptions.LABEL_TEXT:
+            return list(self.query_all_by_label_text(selector))
+        elif by == locators.ByOptions.PLACEHOLDER:
+            return self.query_all_by_placeholder(selector)
+
         try:
             return self.get_all(locator)
         except NoSuchElementException:
@@ -89,6 +137,17 @@ class Screen:
     def find_all(
         self, locator: Locator, *, timeout=5, poll_frequency=0.5
     ) -> List[WebElement]:
+        by, selector = locator
+
+        if by == locators.ByOptions.ROLE:
+            return self.find_all_by_role(selector)
+        elif by == locators.ByOptions.TEXT:
+            return self.find_all_by_text(selector)
+        elif by == locators.ByOptions.LABEL_TEXT:
+            return list(self.find_all_by_label_text(selector))
+        elif by == locators.ByOptions.PLACEHOLDER:
+            return self.find_all_by_placeholder(selector)
+
         try:
             return WebDriverWait(
                 self.driver, timeout=timeout, poll_frequency=poll_frequency
@@ -217,4 +276,5 @@ __all__ = [
     "Within",
     "MultipleSuchElementsException",
     "NoSuchElementException",
+    "locators",
 ]

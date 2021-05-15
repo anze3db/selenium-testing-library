@@ -11,6 +11,7 @@ from selenium_testing_library import (
     Screen,
     Within,
     __version__,
+    locators,
 )
 
 
@@ -38,6 +39,12 @@ def test_get_by_text(screen: Screen):
     assert isinstance(screen.get_by_text("Email address"), WebElement)
     assert screen.query_by_text("address") is None
     assert len(screen.find_all_by_text("Item")) == 3
+
+    # Go through get with a text selector
+    screen.driver.get(get_file_path("form.html"))
+    assert isinstance(screen.get(locators.Text("Email address")), WebElement)
+    assert screen.query(locators.Text("address")) is None
+    assert len(screen.find_all(locators.Text("Item"))) == 3
 
 
 def test_get_by_label_text(screen: Screen):
