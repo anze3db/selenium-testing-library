@@ -20,9 +20,6 @@ class ByOptions(Enum):
     LABEL_TEXT = "label text"
 
 
-ByType = NewType("ByType", ByOptions)
-
-
 class Locator:
     BY: Optional[ByOptions] = None
 
@@ -85,4 +82,4 @@ class LabelText(Locator):
     BY = ByOptions.LABEL_TEXT
 
 
-LocatorType = Union[Tuple[ByType, str], Locator]
+LocatorType = Union[Tuple[ByOptions, str], Locator]
