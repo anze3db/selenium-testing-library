@@ -1,8 +1,6 @@
 import pathlib
 
 import pytest  # type: ignore
-from selenium.webdriver.common.by import By  # type: ignore
-from selenium.webdriver.common.keys import Keys  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 from selenium_testing_library import (
@@ -70,28 +68,28 @@ def test_role(screen: Screen):
 
 def test_within(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
-    el = screen.get((By.CSS_SELECTOR, "#subsection"))
-    Within(el).get((By.CSS_SELECTOR, "input"))
-    assert Within(el).query((By.CSS_SELECTOR, "label")) is None
-    Within(el).find((By.CSS_SELECTOR, "input"))
+    el = screen.get(locators.Css("#subsection"))
+    Within(el).get(locators.Css("input"))
+    assert Within(el).query(locators.Css("label")) is None
+    Within(el).find(locators.Css("input"))
 
-    assert len(Within(el).get_all((By.CSS_SELECTOR, "div"))) == 3
-    assert len(Within(el).query_all((By.CSS_SELECTOR, "div"))) == 3
-    assert len(Within(el).find_all((By.CSS_SELECTOR, "div"))) == 3
+    assert len(Within(el).get_all(locators.Css("div"))) == 3
+    assert len(Within(el).query_all(locators.Css("div"))) == 3
+    assert len(Within(el).find_all(locators.Css("div"))) == 3
 
-    assert len(Within(el).query_all((By.CSS_SELECTOR, "img"))) == 0
-
-    with pytest.raises(NoSuchElementException):
-        Within(el).get_all((By.CSS_SELECTOR, "img"))
+    assert len(Within(el).query_all(locators.Css("img"))) == 0
 
     with pytest.raises(NoSuchElementException):
-        Within(el).find_all((By.CSS_SELECTOR, "img"))
+        Within(el).get_all(locators.Css("img"))
+
+    with pytest.raises(NoSuchElementException):
+        Within(el).find_all(locators.Css("img"))
 
 
 def test_basic_functions(screen):
-    IMG_LOC = (By.CSS_SELECTOR, "img")
-    A_LOC = (By.CSS_SELECTOR, "a")
-    F_LOC = (By.CSS_SELECTOR, "footer")
+    IMG_LOC = locators.Css("img")
+    A_LOC = locators.Css("a")
+    F_LOC = locators.Css("footer")
     screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.get(IMG_LOC), WebElement)

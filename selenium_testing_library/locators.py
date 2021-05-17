@@ -1,10 +1,9 @@
-from enum import Enum
-from typing import NewType, Optional, Tuple, Union
+from typing import Optional, Tuple, Union
 
 from selenium.webdriver.common.by import By  # type: ignore
 
 
-class ByOptions(Enum):
+class ByOptions:
     CLASS_NAME: str = By.CLASS_NAME
     CSS_SELECTOR: str = By.CSS_SELECTOR
     ID: str = By.ID
@@ -21,7 +20,7 @@ class ByOptions(Enum):
 
 
 class Locator:
-    BY: Optional[ByOptions] = None
+    BY: Optional[str] = None
 
     def __init__(self, selector: str):
         self.selector = selector
@@ -82,4 +81,4 @@ class LabelText(Locator):
     BY = ByOptions.LABEL_TEXT
 
 
-LocatorType = Union[Tuple[ByOptions, str], Locator]
+LocatorType = Union[Tuple[str, str], Locator]
