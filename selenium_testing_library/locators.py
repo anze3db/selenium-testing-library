@@ -1,6 +1,7 @@
 from typing import Optional, Tuple, Union
 
 from selenium.webdriver.common.by import By  # type: ignore
+from typing_extensions import Literal
 
 
 class ByOptions:
@@ -81,4 +82,23 @@ class LabelText(Locator):
     BY = ByOptions.LABEL_TEXT
 
 
-LocatorType = Union[Tuple[str, str], Locator]
+LocatorType = Union[
+    Tuple[
+        Literal[
+            "class name",
+            "css selector",
+            "id",
+            "label text",
+            "link text",
+            "name",
+            "partial link text",
+            "placeholder",
+            "role",
+            "tag_name",
+            "text",
+            "xpath",
+        ],
+        str,
+    ],
+    Locator,
+]
