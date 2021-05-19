@@ -17,15 +17,9 @@ def test_version():
     assert __version__ == "0.0.1"
 
 
-@pytest.fixture
-def chrome_options(chrome_options):
-    chrome_options.add_argument("headless")
-    return chrome_options
-
-
-@pytest.fixture
-def screen(selenium):
-    return Screen(selenium)
+@pytest.fixture()
+def screen(session_selenium):
+    return Screen(session_selenium)
 
 
 def get_file_path(name):
