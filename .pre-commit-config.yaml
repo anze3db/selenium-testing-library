@@ -34,7 +34,7 @@ repos:
     hooks:
     -   id: pytest
         name: pytest
-        entry: poetry run pytest --driver Chrome --driver-path chromedriver
+        entry: poetry run pytest --selenium-headless
         language: system
         pass_filenames: false
         always_run: true

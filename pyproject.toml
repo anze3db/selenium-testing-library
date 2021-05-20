@@ -12,7 +12,6 @@ typing-extensions = "^3.10.0"
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 black = "^21.5b0"
-pytest-selenium = "^2.0.1"
 pytest-watch = "^4.2.0"
 mypy = "^0.812"
 isort = "^5.8.0"
