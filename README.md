@@ -20,6 +20,15 @@ assert screen.query_by_text("Cats") is None
 
 | Testing Library          | STL                     | Status      |
 | ------------------------ | ----------------------- | ----------- |
+| `getBy`                  | `get_by`                | 🟢 Done     |
+| `queryBy`                | `query_by`              | 🟢 Done     |
+| `findBy`                 | `find_by`               | 🟢 Done     |
+| `getAllBy`               | `get_all_by`            | 🟢 Done     |
+| `queryAllBy`             | `query_all_by`          | 🟢 Done     |
+| `findAllBy`              | `find_all_by`           | 🟢 Done     |
+
+| Testing Library          | STL                     | Status      |
+| ------------------------ | ----------------------- | ----------- |
 | `ByRole`                 | `by_role`               | ⚠️ Partial  |
 | `ByLabelText`            | `by_label_text`         | ⚠️ Partial  |
 | `ByPlaceholderText`      | `by_placeholder_text`   | ⚠️ Partial  |
@@ -29,10 +38,15 @@ assert screen.query_by_text("Cats") is None
 | `ByTitle`                | `by_title`              | ❌ Missing |
 | `ByTestId`               | `by_test_id`            | ❌ Missing |
 
+| Testing Library             | STL                     | Status        |
+| --------------------------- | ----------------------- | ------------- |
+| `waitFor`                   | `wait_for`              | ❌ Missing    |
+| `waitForElementToBeRemoved` | `wait_for_stale`        | ❌ Missing    |
+
 ## Local development
 
 ```shell
 poetry install && poetry shell
 # Make sure `chromedriver` is in your PATH
-pytest --headless
+pytest --selenium-headless
 ```
