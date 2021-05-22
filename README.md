@@ -16,7 +16,7 @@ screen.find_by_text("Dog - Wikipedia")
 assert screen.query_by_text("Cats") is None
 ```
 
-## Query API Parity
+## API Parity with Testing Library
 
 | Testing Library          | STL                     | Status      |
 | ------------------------ | ----------------------- | ----------- |
