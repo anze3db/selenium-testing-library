@@ -34,12 +34,16 @@ def test_get_by_text(screen: Screen):
 
     # Go through get with a text selector
     screen.driver.get(get_file_path("form.html"))
-    assert isinstance(screen.get(locators.Text("Email address")), WebElement)
-    assert screen.query(locators.Text("address")) is None
-    assert len(screen.find_all(locators.Text("Item"))) == 3
+    assert isinstance(screen.get_by(locators.Text("Email address")), WebElement)
+    assert screen.query_by(locators.Text("address")) is None
+    assert len(screen.find_all_by(locators.Text("Item"))) == 3
 
 
 def test_get_by_label_text(screen: Screen):
+    screen.driver.get(get_file_path("label.html"))
+    username_fields = list(screen.get_all_by_label_text("Username"))
+    assert len(username_fields) == 2  # TODO: Should be 5
+
     screen.driver.get(get_file_path("form.html"))
     input_field = screen.get_by_label_text("Email address")
     assert isinstance(input_field, WebElement)
@@ -62,22 +66,22 @@ def test_role(screen: Screen):
 
 def test_within(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
-    el = screen.get(locators.Css("#subsection"))
-    Within(el).get(locators.Css("input"))
-    assert Within(el).query(locators.Css("label")) is None
-    Within(el).find(locators.Css("input"))
+    el = screen.get_by(locators.Css("#subsection"))
+    Within(el).get_by(locators.Css("input"))
+    assert Within(el).query_by(locators.Css("label")) is None
+    Within(el).find_by(locators.Css("input"))
 
-    assert len(Within(el).get_all(locators.Css("div"))) == 3
-    assert len(Within(el).query_all(locators.Css("div"))) == 3
-    assert len(Within(el).find_all(locators.Css("div"))) == 3
+    assert len(Within(el).get_all_by(locators.Css("div"))) == 3
+    assert len(Within(el).query_all_by(locators.Css("div"))) == 3
+    assert len(Within(el).find_all_by(locators.Css("div"))) == 3
 
-    assert len(Within(el).query_all(locators.Css("img"))) == 0
-
-    with pytest.raises(NoSuchElementException):
-        Within(el).get_all(locators.Css("img"))
+    assert len(Within(el).query_all_by(locators.Css("img"))) == 0
 
     with pytest.raises(NoSuchElementException):
-        Within(el).find_all(locators.Css("img"))
+        Within(el).get_all_by(locators.Css("img"))
+
+    with pytest.raises(NoSuchElementException):
+        Within(el).find_all_by(locators.Css("img"))
 
 
 def test_basic_functions(screen):
@@ -86,43 +90,43 @@ def test_basic_functions(screen):
     F_LOC = locators.Css("footer")
     screen.driver.get(get_file_path("index.html"))
 
-    assert isinstance(screen.get(IMG_LOC), WebElement)
+    assert isinstance(screen.get_by(IMG_LOC), WebElement)
     with pytest.raises(NoSuchElementException):
-        screen.get(F_LOC)
+        screen.get_by(F_LOC)
     with pytest.raises(MultipleSuchElementsException):
-        screen.get(A_LOC)
+        screen.get_by(A_LOC)
 
     # test_query(selenium):
 
-    assert isinstance(screen.query(IMG_LOC), WebElement)
-    assert screen.query(F_LOC) is None
+    assert isinstance(screen.query_by(IMG_LOC), WebElement)
+    assert screen.query_by(F_LOC) is None
     with pytest.raises(MultipleSuchElementsException):
-        screen.query(A_LOC)
+        screen.query_by(A_LOC)
 
     # test_find(selenium):
 
-    assert isinstance(screen.find(IMG_LOC), WebElement)
+    assert isinstance(screen.find_by(IMG_LOC), WebElement)
     with pytest.raises(NoSuchElementException):
-        screen.find(F_LOC) is None
+        screen.find_by(F_LOC) is None
     with pytest.raises(MultipleSuchElementsException):
-        screen.find(A_LOC)
+        screen.find_by(A_LOC)
 
-    # test_get_all(selenium):
+    # test_get_all_by(selenium):
 
-    assert isinstance(screen.get_all(IMG_LOC)[0], WebElement)
+    assert isinstance(screen.get_all_by(IMG_LOC)[0], WebElement)
     with pytest.raises(NoSuchElementException):
-        screen.get_all(F_LOC)
-    assert len(screen.get_all(A_LOC)) > 1
+        screen.get_all_by(F_LOC)
+    assert len(screen.get_all_by(A_LOC)) > 1
 
     # test_query_all(selenium):
 
-    assert isinstance(screen.query_all(IMG_LOC)[0], WebElement)
-    assert len(screen.query_all(F_LOC)) == 0
-    assert len(screen.query_all(A_LOC)) > 1
+    assert isinstance(screen.query_all_by(IMG_LOC)[0], WebElement)
+    assert len(screen.query_all_by(F_LOC)) == 0
+    assert len(screen.query_all_by(A_LOC)) > 1
 
     # test_find_all(selenium):
 
-    assert isinstance(screen.find_all(IMG_LOC)[0], WebElement)
+    assert isinstance(screen.find_all_by(IMG_LOC)[0], WebElement)
     with pytest.raises(NoSuchElementException):
-        screen.find_all(F_LOC)
-    assert len(screen.find_all(A_LOC)) > 1
+        screen.find_all_by(F_LOC)
+    assert len(screen.find_all_by(A_LOC)) > 1

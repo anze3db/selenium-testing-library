@@ -29,7 +29,7 @@ class Screen:
     def __init__(self, driver: Driver):
         self.driver = driver
 
-    def get(self, locator: Locator) -> WebElement:
+    def get_by(self, locator: Locator) -> WebElement:
 
         by, selector = locator
 
@@ -52,7 +52,7 @@ class Screen:
 
         return els[0]
 
-    def query(self, locator: Locator) -> Optional[WebElement]:
+    def query_by(self, locator: Locator) -> Optional[WebElement]:
 
         by, selector = locator
 
@@ -73,7 +73,7 @@ class Screen:
 
         return els[0]
 
-    def find(self, locator: Locator, *, timeout=5, poll_frequency=0.5) -> WebElement:
+    def find_by(self, locator: Locator, *, timeout=5, poll_frequency=0.5) -> WebElement:
 
         by, selector = locator
 
@@ -96,10 +96,9 @@ class Screen:
             raise MultipleSuchElementsException()
         return els[0]
 
-    def get_all(self, locator: Locator) -> List[WebElement]:
+    def get_all_by(self, locator: Locator) -> List[WebElement]:
 
         by, selector = locator
-
         if by == locators.ByOptions.ROLE:
             return self.get_all_by_role(selector)
         elif by == locators.ByOptions.TEXT:
@@ -115,7 +114,7 @@ class Screen:
 
         return els
 
-    def query_all(self, locator: Locator) -> List[WebElement]:
+    def query_all_by(self, locator: Locator) -> List[WebElement]:
 
         by, selector = locator
 
@@ -129,11 +128,11 @@ class Screen:
             return self.query_all_by_placeholder(selector)
 
         try:
-            return self.get_all(locator)
+            return self.get_all_by(locator)
         except NoSuchElementException:
             return []
 
-    def find_all(
+    def find_all_by(
         self, locator: Locator, *, timeout=5, poll_frequency=0.5
     ) -> List[WebElement]:
         by, selector = locator
@@ -157,83 +156,83 @@ class Screen:
     # By role
     def get_by_role(self, role) -> WebElement:
         locator = locators.XPath(f"//*[@role='{role}']")
-        return self.get(locator)
+        return self.get_by(locator)
 
     def query_by_role(self, role: str) -> Optional[WebElement]:
         locator = locators.XPath(f"//*[@role='{role}']")
-        return self.get(locator)
+        return self.get_by(locator)
 
     def find_by_role(self, role: str) -> WebElement:
         locator = locators.XPath(f"//*[@role='{role}']")
-        return self.find(locator)
+        return self.find_by(locator)
 
     def get_all_by_role(self, role) -> List[WebElement]:
         locator = locators.XPath(f"//*[@role='{role}']")
-        return self.get_all(locator)
+        return self.get_all_by(locator)
 
     def query_all_by_role(self, role: str) -> List[WebElement]:
         locator = locators.XPath(f"//*[@role='{role}']")
-        return self.query_all(locator)
+        return self.query_all_by(locator)
 
     def find_all_by_role(self, role: str) -> List[WebElement]:
         locator = locators.XPath(f"//*[@role='{role}']")
-        return self.find_all(locator)
+        return self.find_all_by(locator)
 
     # By text
     def get_by_text(self, text: str) -> WebElement:
         locator = locators.XPath(f'//*[text() = "{text}"]')
-        return self.get(locator)
+        return self.get_by(locator)
 
     def query_by_text(self, text: str) -> Optional[WebElement]:
         locator = locators.XPath(f'//*[text() = "{text}"]')
-        return self.query(locator)
+        return self.query_by(locator)
 
     def find_by_text(self, text: str) -> WebElement:
         locator = locators.XPath(f'//*[text() = "{text}"]')
-        return self.find(locator)
+        return self.find_by(locator)
 
     def get_all_by_text(self, text: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[text() = "{text}"]')
-        return self.get_all(locator)
+        return self.get_all_by(locator)
 
     def query_all_by_text(self, text: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[text() = "{text}"]')
-        return self.query_all(locator)
+        return self.query_all_by(locator)
 
     def find_all_by_text(self, text: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[text() = "{text}"]')
-        return self.find_all(locator)
+        return self.find_all_by(locator)
 
     # By placeholder
     def get_by_placeholder(self, value: str) -> WebElement:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
-        return self.get(locator)
+        return self.get_by(locator)
 
     def query_by_placeholder(self, value: str) -> Optional[WebElement]:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
-        return self.query(locator)
+        return self.query_by(locator)
 
     def find_by_placeholder(self, value: str) -> WebElement:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
-        return self.find(locator)
+        return self.find_by(locator)
 
     def get_all_by_placeholder(self, value: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
-        return self.get_all(locator)
+        return self.get_all_by(locator)
 
     def query_all_by_placeholder(self, value: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
-        return self.query_all(locator)
+        return self.query_all_by(locator)
 
     def find_all_by_placeholder(self, value: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
-        return self.find_all(locator)
+        return self.find_all_by(locator)
 
     # By label text
     def get_by_label_text(self, text: str) -> WebElement:
-        label: WebElement = self.get(locators.XPath(f'//label[text() = "{text}"]'))
+        label: WebElement = self.get_by(locators.XPath(f'//label[text() = "{text}"]'))
         id_ = label.get_attribute("for")
-        return self.get(locators.Id(id_))
+        return self.get_by(locators.Id(id_))
 
     def query_by_label_text(self, text: str) -> Optional[WebElement]:
         try:
@@ -242,31 +241,39 @@ class Screen:
             return None
 
     def find_by_label_text(self, text: str) -> WebElement:
-        label: WebElement = self.find(locators.XPath(f'//label[text() = "{text}"]'))
+        label: WebElement = self.find_by(locators.XPath(f'//label[text() = "{text}"]'))
         id_ = label.get_attribute("for")
-        return self.get(locators.Id(id_))
+        return self.get_by(locators.Id(id_))
 
     def get_all_by_label_text(self, text: str) -> Generator[WebElement, None, None]:
-        labels: WebElement = self.get_all(locators.XPath(f'//label[text() = "{text}"]'))
+        labels: WebElement = self.get_all_by(
+            locators.XPath(f'//label[text() = "{text}"]')
+        )
         for label in labels:
-            id_ = label.get_attribute("for")
-            yield self.get(locators.Id(id_))
+            for_ = label.get_attribute("for")
+            if for_ is not None:
+                yield self.get_by(locators.Id(for_))
+                continue
+            id_ = label.get_attribute("id")
+            if id_ is not None:
+                yield self.query_by(locators.Css(f"[aria-label^='{id_}']"))
+                continue
 
     def query_all_by_label_text(self, text: str) -> Generator[WebElement, None, None]:
-        labels: WebElement = self.query_all(
+        labels: WebElement = self.query_all_by(
             locators.XPath(f'//label[text() = "{text}"]')
         )
         for label in labels:
             id_ = label.get_attribute("for")
-            yield self.get(locators.Id(id_))
+            yield self.get_by(locators.Id(id_))
 
     def find_all_by_label_text(self, text: str) -> Generator[WebElement, None, None]:
-        labels: WebElement = self.find_all(
+        labels: WebElement = self.find_all_by(
             locators.XPath(f'//label[text() = "{text}"]')
         )
         for label in labels:
             id_ = label.get_attribute("for")
-            yield self.get(locators.Id(id_))
+            yield self.get_by(locators.Id(id_))
 
 
 class Within(Screen):
