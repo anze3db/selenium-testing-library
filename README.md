@@ -1,6 +1,6 @@
 # Selenium Testing Library
 
-A Python Selenium framework inspired by [Testing Library](https://testing-library.com/).
+Slenium Testing Library (STL) is a Python library for Selenium inspired by [Testing Library](https://testing-library.com/).
 
 ```python
 from selenium import webdriver
@@ -33,6 +33,6 @@ assert screen.query_by_text("Cats") is None
 
 ```shell
 poetry install && poetry shell
-# Download the chromedriver and run the tests
-pytest --driver Chrome --driver-path chromedriver
+# Make sure `chromedriver` is in your PATH
+pytest --headless
 ```
