@@ -87,9 +87,11 @@ class Screen:
             return self.find_by_placeholder(selector)
 
         try:
-            els = WebDriverWait(
-                self.driver, timeout=timeout, poll_frequency=poll_frequency
-            ).until(EC.presence_of_all_elements_located(locator))
+            els = self.wait_for(
+                EC.presence_of_all_elements_located(locator),
+                timeout=timeout,
+                poll_frequency=poll_frequency,
+            )
         except TimeoutException:
             raise NoSuchElementException()
         if len(els) > 1:
@@ -147,9 +149,11 @@ class Screen:
             return self.find_all_by_placeholder(selector)
 
         try:
-            return WebDriverWait(
-                self.driver, timeout=timeout, poll_frequency=poll_frequency
-            ).until(EC.presence_of_all_elements_located(locator))
+            return self.wait_for(
+                EC.presence_of_all_elements_located(locator),
+                timeout=timeout,
+                poll_frequency=poll_frequency,
+            )
         except TimeoutException:
             raise NoSuchElementException()
 
@@ -274,6 +278,21 @@ class Screen:
         for label in labels:
             id_ = label.get_attribute("for")
             yield self.get_by(locators.Id(id_))
+
+    def wait_for(
+        self, method, *, timeout=5, poll_frequency=0.5, ignored_exceptions=None
+    ):
+        return WebDriverWait(
+            self.driver,
+            timeout=timeout,
+            poll_frequency=poll_frequency,
+            ignored_exceptions=ignored_exceptions,
+        ).until(method)
+
+    def wait_for_stale(self, element: WebElement, *, timeout=5, poll_frequency=0.5):
+        return self.wait_for(
+            EC.staleness_of(element), timeout=timeout, poll_frequency=poll_frequency
+        )
 
 
 class Within(Screen):

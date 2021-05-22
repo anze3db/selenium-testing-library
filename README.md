@@ -40,8 +40,8 @@ assert screen.query_by_text("Cats") is None
 
 | Testing Library             | STL                     | Status        |
 | --------------------------- | ----------------------- | ------------- |
-| `waitFor`                   | `wait_for`              | ❌ Missing    |
-| `waitForElementToBeRemoved` | `wait_for_stale`        | ❌ Missing    |
+| `waitFor`                   | `wait_for`              | 🟢 Done       |
+| `waitForElementToBeRemoved` | `wait_for_stale`        | 🟢 Done       |
 
 ## Local development
 
