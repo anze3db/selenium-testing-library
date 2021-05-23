@@ -47,6 +47,9 @@ assert screen.query_by_text("Cats") is None
 
 ```shell
 poetry install && poetry shell
-# Make sure `chromedriver` is in your PATH
+# Make sure `chromedriver` is in your PATH, download from https://chromedriver.chromium.org/downloads
+# run tests:
 pytest --selenium-headless
+# run tests and display coverage info:
+pytest --selenium-headless --cov=selenium_testing_library
 ```
