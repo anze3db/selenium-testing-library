@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Generator, List, Optional
+from typing import Any, Callable, Generator, List, Optional, TypeVar
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
 from selenium.webdriver import Remote as Driver  # type: ignore
@@ -11,6 +11,8 @@ from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
 from . import locators
 
 Locator = locators.LocatorType
+
+T = TypeVar("T")
 
 
 class MultipleSuchElementsException(Exception):
@@ -280,8 +282,13 @@ class Screen:
             yield self.get_by(locators.Id(id_))
 
     def wait_for(
-        self, method, *, timeout=5, poll_frequency=0.5, ignored_exceptions=None
-    ):
+        self,
+        method: Callable[[Driver], T],
+        *,
+        timeout=5,
+        poll_frequency=0.5,
+        ignored_exceptions=None,
+    ) -> T:
         return WebDriverWait(
             self.driver,
             timeout=timeout,
