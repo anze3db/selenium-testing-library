@@ -31,10 +31,10 @@ assert screen.query_by_text("Cats") is None
 | ------------------------ | ----------------------- | ----------- |
 | `ByRole`                 | `by_role`               | ⚠️ Partial  |
 | `ByLabelText`            | `by_label_text`         | ⚠️ Partial  |
-| `ByPlaceholderText`      | `by_placeholder_text`   | ⚠️ Partial  |
+| `ByPlaceholderText`      | `by_placeholder`        | ⚠️ Partial  |
 | `ByText`                 | `by_text`               | ⚠️ Partial  |
 | `ByDisplayValue`         | `by_display_value`      | ❌ Missing |
-| `ByAltText`              | `by_al_text`            | ❌ Missing |
+| `ByAltText`              | `by_alt_text`           | ❌ Missing |
 | `ByTitle`                | `by_title`              | ❌ Missing |
 | `ByTestId`               | `by_test_id`            | ❌ Missing |
 
