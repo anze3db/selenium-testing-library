@@ -18,6 +18,7 @@ class ByOptions:
     TEXT = "text"
     PLACEHOLDER = "placeholder"
     LABEL_TEXT = "label text"
+    ALT_TEXT = "alt text"
 
 
 class Locator:
@@ -81,6 +82,9 @@ class Placeholder(Locator):
 class LabelText(Locator):
     BY = ByOptions.LABEL_TEXT
 
+class LabelText(Locator):
+    BY = ByOptions.ALT_TEXT
+
 
 LocatorType = Union[
     Tuple[
@@ -97,6 +101,7 @@ LocatorType = Union[
             "tag_name",
             "text",
             "xpath",
+            "alt text",
         ],
         str,
     ],

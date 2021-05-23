@@ -43,6 +43,8 @@ class Screen:
             return self.get_by_label_text(selector)
         elif by == locators.ByOptions.PLACEHOLDER:
             return self.get_by_placeholder(selector)
+        elif by == locators.ByOptions.ALT_TEXT:
+            return self.get_by_alt_text(selector)
 
         els = self.driver.find_elements(*locator)
 
@@ -66,6 +68,8 @@ class Screen:
             return self.query_by_label_text(selector)
         elif by == locators.ByOptions.PLACEHOLDER:
             return self.query_by_placeholder(selector)
+        elif by == locators.ByOptions.ALT_TEXT:
+            return self.query_by_alt_text(selector)
 
         els = self.driver.find_elements(*locator)
         if not els:
@@ -87,6 +91,8 @@ class Screen:
             return self.find_by_label_text(selector)
         elif by == locators.ByOptions.PLACEHOLDER:
             return self.find_by_placeholder(selector)
+        elif by == locators.ByOptions.ALT_TEXT:
+            return self.find_by_alt_text(selector)
 
         try:
             els = self.wait_for(
@@ -111,6 +117,8 @@ class Screen:
             return list(self.get_all_by_label_text(selector))
         elif by == locators.ByOptions.PLACEHOLDER:
             return self.get_all_by_placeholder(selector)
+        elif by == locators.ByOptions.ALT_TEXT:
+            return self.get_all_by_alt_text(selector)
 
         els = self.driver.find_elements(*locator)
         if not els:
@@ -130,6 +138,8 @@ class Screen:
             return list(self.query_all_by_label_text(selector))
         elif by == locators.ByOptions.PLACEHOLDER:
             return self.query_all_by_placeholder(selector)
+        elif by == locators.ByOptions.ALT_TEXT:
+            return self.query_all_by_alt_text(selector)
 
         try:
             return self.get_all_by(locator)
@@ -149,6 +159,8 @@ class Screen:
             return list(self.find_all_by_label_text(selector))
         elif by == locators.ByOptions.PLACEHOLDER:
             return self.find_all_by_placeholder(selector)
+        elif by == locators.ByOptions.ALT_TEXT:
+            return self.find_all_by_alt_text(selector)
 
         try:
             return self.wait_for(
@@ -280,6 +292,31 @@ class Screen:
         for label in labels:
             id_ = label.get_attribute("for")
             yield self.get_by(locators.Id(id_))
+
+    # By alt text
+    def get_by_alt_text(self, value: str) -> WebElement:
+        locator = locators.XPath(f'//*[@alt = "{value}"]')
+        return self.get_by(locator)
+
+    def query_by_alt_text(self, value: str) -> Optional[WebElement]:
+        locator = locators.XPath(f'//*[@alt = "{value}"]')
+        return self.query_by(locator)
+
+    def find_by_alt_text(self, value: str) -> WebElement:
+        locator = locators.XPath(f'//*[@alt = "{value}"]')
+        return self.find_by(locator)
+
+    def get_all_by_alt_text(self, value: str) -> List[WebElement]:
+        locator = locators.XPath(f'//*[@alt = "{value}"]')
+        return self.get_all_by(locator)
+
+    def query_all_by_alt_text(self, value: str) -> List[WebElement]:
+        locator = locators.XPath(f'//*[@alt = "{value}"]')
+        return self.query_all_by(locator)
+
+    def find_all_by_alt_text(self, value: str) -> List[WebElement]:
+        locator = locators.XPath(f'//*[@alt = "{value}"]')
+        return self.find_all_by(locator)
 
     def wait_for(
         self,

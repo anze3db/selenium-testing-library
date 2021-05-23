@@ -57,6 +57,15 @@ def test_get_by_label_text(screen: Screen):
     assert input_fields[0].get_attribute("type") == "text"
     assert input_fields[1].get_attribute("type") == "color"
 
+def test_by_alt_text(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    assert isinstance(screen.get_by_alt_text("Some Image"), WebElement)
+
+    screen.driver.get(get_file_path("form.html"))
+    assert len(screen.find_all_by_alt_text("img2 alt")) == 2
+    with pytest.raises(MultipleSuchElementsException):
+        screen.query_by_alt_text("img2 alt")
+
 
 @pytest.mark.skip("Not fully working yet")
 def test_role(screen: Screen):
