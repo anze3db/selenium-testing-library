@@ -82,8 +82,9 @@ class Placeholder(Locator):
 class LabelText(Locator):
     BY = By.LABEL_TEXT
 
-class LabelText(Locator):
-    BY = ByOptions.ALT_TEXT
+
+class AltText(Locator):
+    BY = By.ALT_TEXT
 
 
 LocatorType = Union[

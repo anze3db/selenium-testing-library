@@ -42,8 +42,8 @@ class Screen:
         elif by == locators.By.LABEL_TEXT:
             return self.get_by_label_text(selector)
         elif by == locators.By.PLACEHOLDER:
-            return self.get_by_placeholder(selector)
-        elif by == locators.ByOptions.ALT_TEXT:
+            return self.get_by_placeholder_text(selector)
+        elif by == locators.By.ALT_TEXT:
             return self.get_by_alt_text(selector)
 
         els = self.driver.find_elements(*locator)
@@ -67,8 +67,8 @@ class Screen:
         elif by == locators.By.LABEL_TEXT:
             return self.query_by_label_text(selector)
         elif by == locators.By.PLACEHOLDER:
-            return self.query_by_placeholder(selector)
-        elif by == locators.ByOptions.ALT_TEXT:
+            return self.query_by_placeholder_text(selector)
+        elif by == locators.By.ALT_TEXT:
             return self.query_by_alt_text(selector)
 
         els = self.driver.find_elements(*locator)
@@ -90,8 +90,8 @@ class Screen:
         elif by == locators.By.LABEL_TEXT:
             return self.find_by_label_text(selector)
         elif by == locators.By.PLACEHOLDER:
-            return self.find_by_placeholder(selector)
-        elif by == locators.ByOptions.ALT_TEXT:
+            return self.find_by_placeholder_text(selector)
+        elif by == locators.By.ALT_TEXT:
             return self.find_by_alt_text(selector)
 
         try:
@@ -116,8 +116,8 @@ class Screen:
         elif by == locators.By.LABEL_TEXT:
             return list(self.get_all_by_label_text(selector))
         elif by == locators.By.PLACEHOLDER:
-            return self.get_all_by_placeholder(selector)
-        elif by == locators.ByOptions.ALT_TEXT:
+            return self.get_all_by_placeholder_text(selector)
+        elif by == locators.By.ALT_TEXT:
             return self.get_all_by_alt_text(selector)
 
         els = self.driver.find_elements(*locator)
@@ -137,8 +137,8 @@ class Screen:
         elif by == locators.By.LABEL_TEXT:
             return list(self.query_all_by_label_text(selector))
         elif by == locators.By.PLACEHOLDER:
-            return self.query_all_by_placeholder(selector)
-        elif by == locators.ByOptions.ALT_TEXT:
+            return self.query_all_by_placeholder_text(selector)
+        elif by == locators.By.ALT_TEXT:
             return self.query_all_by_alt_text(selector)
 
         try:
@@ -158,8 +158,8 @@ class Screen:
         elif by == locators.By.LABEL_TEXT:
             return list(self.find_all_by_label_text(selector))
         elif by == locators.By.PLACEHOLDER:
-            return self.find_all_by_placeholder(selector)
-        elif by == locators.ByOptions.ALT_TEXT:
+            return self.find_all_by_placeholder_text(selector)
+        elif by == locators.By.ALT_TEXT:
             return self.find_all_by_alt_text(selector)
 
         try:
@@ -222,27 +222,27 @@ class Screen:
         return self.find_all_by(locator)
 
     # By placeholder
-    def get_by_placeholder(self, value: str) -> WebElement:
+    def get_by_placeholder_text(self, value: str) -> WebElement:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
         return self.get_by(locator)
 
-    def query_by_placeholder(self, value: str) -> Optional[WebElement]:
+    def query_by_placeholder_text(self, value: str) -> Optional[WebElement]:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
         return self.query_by(locator)
 
-    def find_by_placeholder(self, value: str) -> WebElement:
+    def find_by_placeholder_text(self, value: str) -> WebElement:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
         return self.find_by(locator)
 
-    def get_all_by_placeholder(self, value: str) -> List[WebElement]:
+    def get_all_by_placeholder_text(self, value: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
         return self.get_all_by(locator)
 
-    def query_all_by_placeholder(self, value: str) -> List[WebElement]:
+    def query_all_by_placeholder_text(self, value: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
         return self.query_all_by(locator)
 
-    def find_all_by_placeholder(self, value: str) -> List[WebElement]:
+    def find_all_by_placeholder_text(self, value: str) -> List[WebElement]:
         locator = locators.XPath(f'//*[@placeholder = "{value}"]')
         return self.find_all_by(locator)
 
