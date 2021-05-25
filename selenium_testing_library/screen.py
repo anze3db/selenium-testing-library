@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Generator, List, Optional, TypeVar
+from typing import Callable, Generator, List, Optional, TypeVar
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
 from selenium.webdriver import Remote as Driver  # type: ignore
@@ -35,13 +35,13 @@ class Screen:
 
         by, selector = locator
 
-        if by == locators.ByOptions.ROLE:
+        if by == locators.By.ROLE:
             return self.get_by_role(selector)
-        elif by == locators.ByOptions.TEXT:
+        elif by == locators.By.TEXT:
             return self.get_by_text(selector)
-        elif by == locators.ByOptions.LABEL_TEXT:
+        elif by == locators.By.LABEL_TEXT:
             return self.get_by_label_text(selector)
-        elif by == locators.ByOptions.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER:
             return self.get_by_placeholder(selector)
         elif by == locators.ByOptions.ALT_TEXT:
             return self.get_by_alt_text(selector)
@@ -60,13 +60,13 @@ class Screen:
 
         by, selector = locator
 
-        if by == locators.ByOptions.ROLE:
+        if by == locators.By.ROLE:
             return self.query_by_role(selector)
-        elif by == locators.ByOptions.TEXT:
+        elif by == locators.By.TEXT:
             return self.query_by_text(selector)
-        elif by == locators.ByOptions.LABEL_TEXT:
+        elif by == locators.By.LABEL_TEXT:
             return self.query_by_label_text(selector)
-        elif by == locators.ByOptions.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER:
             return self.query_by_placeholder(selector)
         elif by == locators.ByOptions.ALT_TEXT:
             return self.query_by_alt_text(selector)
@@ -83,13 +83,13 @@ class Screen:
 
         by, selector = locator
 
-        if by == locators.ByOptions.ROLE:
+        if by == locators.By.ROLE:
             return self.find_by_role(selector)
-        elif by == locators.ByOptions.TEXT:
+        elif by == locators.By.TEXT:
             return self.find_by_text(selector)
-        elif by == locators.ByOptions.LABEL_TEXT:
+        elif by == locators.By.LABEL_TEXT:
             return self.find_by_label_text(selector)
-        elif by == locators.ByOptions.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER:
             return self.find_by_placeholder(selector)
         elif by == locators.ByOptions.ALT_TEXT:
             return self.find_by_alt_text(selector)
@@ -109,13 +109,13 @@ class Screen:
     def get_all_by(self, locator: Locator) -> List[WebElement]:
 
         by, selector = locator
-        if by == locators.ByOptions.ROLE:
+        if by == locators.By.ROLE:
             return self.get_all_by_role(selector)
-        elif by == locators.ByOptions.TEXT:
+        elif by == locators.By.TEXT:
             return self.get_all_by_text(selector)
-        elif by == locators.ByOptions.LABEL_TEXT:
+        elif by == locators.By.LABEL_TEXT:
             return list(self.get_all_by_label_text(selector))
-        elif by == locators.ByOptions.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER:
             return self.get_all_by_placeholder(selector)
         elif by == locators.ByOptions.ALT_TEXT:
             return self.get_all_by_alt_text(selector)
@@ -130,13 +130,13 @@ class Screen:
 
         by, selector = locator
 
-        if by == locators.ByOptions.ROLE:
+        if by == locators.By.ROLE:
             return self.query_all_by_role(selector)
-        elif by == locators.ByOptions.TEXT:
+        elif by == locators.By.TEXT:
             return self.query_all_by_text(selector)
-        elif by == locators.ByOptions.LABEL_TEXT:
+        elif by == locators.By.LABEL_TEXT:
             return list(self.query_all_by_label_text(selector))
-        elif by == locators.ByOptions.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER:
             return self.query_all_by_placeholder(selector)
         elif by == locators.ByOptions.ALT_TEXT:
             return self.query_all_by_alt_text(selector)
@@ -151,13 +151,13 @@ class Screen:
     ) -> List[WebElement]:
         by, selector = locator
 
-        if by == locators.ByOptions.ROLE:
+        if by == locators.By.ROLE:
             return self.find_all_by_role(selector)
-        elif by == locators.ByOptions.TEXT:
+        elif by == locators.By.TEXT:
             return self.find_all_by_text(selector)
-        elif by == locators.ByOptions.LABEL_TEXT:
+        elif by == locators.By.LABEL_TEXT:
             return list(self.find_all_by_label_text(selector))
-        elif by == locators.ByOptions.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER:
             return self.find_all_by_placeholder(selector)
         elif by == locators.ByOptions.ALT_TEXT:
             return self.find_all_by_alt_text(selector)

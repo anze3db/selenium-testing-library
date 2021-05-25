@@ -1,18 +1,18 @@
 from typing import Optional, Tuple, Union
 
-from selenium.webdriver.common.by import By  # type: ignore
+from selenium.webdriver.common.by import By as SeleniumBy  # type: ignore
 from typing_extensions import Literal
 
 
-class ByOptions:
-    CLASS_NAME: str = By.CLASS_NAME
-    CSS_SELECTOR: str = By.CSS_SELECTOR
-    ID: str = By.ID
-    LINK_TEXT: str = By.LINK_TEXT
-    PARTIAL_LINK_TEXT: str = By.PARTIAL_LINK_TEXT
-    TAG_NAME: str = By.TAG_NAME
-    XPATH: str = By.XPATH
-    NAME: str = By.NAME
+class By:
+    CLASS_NAME: str = SeleniumBy.CLASS_NAME
+    CSS_SELECTOR: str = SeleniumBy.CSS_SELECTOR
+    ID: str = SeleniumBy.ID
+    LINK_TEXT: str = SeleniumBy.LINK_TEXT
+    PARTIAL_LINK_TEXT: str = SeleniumBy.PARTIAL_LINK_TEXT
+    TAG_NAME: str = SeleniumBy.TAG_NAME
+    XPATH: str = SeleniumBy.XPATH
+    NAME: str = SeleniumBy.NAME
     # STL queries:
     ROLE = "role"
     TEXT = "text"
@@ -36,51 +36,51 @@ class Locator:
 
 
 class Css(Locator):
-    BY = ByOptions.CSS_SELECTOR
+    BY = By.CSS_SELECTOR
 
 
 class XPath(Locator):
-    BY = ByOptions.XPATH
+    BY = By.XPATH
 
 
 class Id(Locator):
-    BY = ByOptions.ID
+    BY = By.ID
 
 
 class Name(Locator):
-    BY = ByOptions.NAME
+    BY = By.NAME
 
 
 class TagName(Locator):
-    BY = ByOptions.TAG_NAME
+    BY = By.TAG_NAME
 
 
 class LinkText(Locator):
-    BY = ByOptions.LINK_TEXT
+    BY = By.LINK_TEXT
 
 
 class PartialLinkText(Locator):
-    BY = ByOptions.PARTIAL_LINK_TEXT
+    BY = By.PARTIAL_LINK_TEXT
 
 
 class ClassName(Locator):
-    BY = ByOptions.CLASS_NAME
+    BY = By.CLASS_NAME
 
 
 class Role(Locator):
-    BY = ByOptions.ROLE
+    BY = By.ROLE
 
 
 class Text(Locator):
-    BY = ByOptions.TEXT
+    BY = By.TEXT
 
 
 class Placeholder(Locator):
-    BY = ByOptions.PLACEHOLDER
+    BY = By.PLACEHOLDER
 
 
 class LabelText(Locator):
-    BY = ByOptions.LABEL_TEXT
+    BY = By.LABEL_TEXT
 
 class LabelText(Locator):
     BY = ByOptions.ALT_TEXT
