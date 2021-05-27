@@ -4,3 +4,5 @@ dist
 __pycache__
 .pytest_cache
 .coverage
+coverage_html_report
+htmlcov

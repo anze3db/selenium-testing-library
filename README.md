@@ -103,5 +103,5 @@ poetry install && poetry shell
 # run tests:
 pytest --selenium-headless
 # run tests and display coverage info:
-pytest --selenium-headless --cov=selenium_testing_library
+pytest --selenium-headless --cov=selenium_testing_library --cov-report html
 ```
