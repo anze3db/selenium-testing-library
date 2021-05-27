@@ -26,7 +26,7 @@ def get_file_path(name):
     return "file://" + str(pathlib.Path(__file__).parent.absolute() / "pages" / name)
 
 
-def test_get_by_text(screen: Screen):
+def test_by_text(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     assert isinstance(screen.get_by_text("Email address"), WebElement)
     assert screen.query_by_text("address") is None
@@ -39,7 +39,7 @@ def test_get_by_text(screen: Screen):
     assert len(screen.find_all_by(locators.Text("Item"))) == 3
 
 
-def test_get_by_label_text(screen: Screen):
+def test_by_label_text(screen: Screen):
     screen.driver.get(get_file_path("label.html"))
     username_fields = list(screen.get_all_by_label_text("Username"))
     assert len(username_fields) == 2  # TODO: Should be 5
@@ -66,9 +66,16 @@ def test_by_alt_text(screen: Screen):
     with pytest.raises(MultipleSuchElementsException):
         screen.query_by_alt_text("img2 alt")
 
+@pytest.mark.skip("Not implemented yet")
+def test_by_placeholder_text(screen:Screen):
+    pass
+
+@pytest.mark.skip("Not implemented yet")
+def test_by_xpath(screen:Screen):
+    pass
 
 @pytest.mark.skip("Not fully working yet")
-def test_role(screen: Screen):
+def test_by_role(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     assert isinstance(screen.get_by_role("button"), WebElement)
 
