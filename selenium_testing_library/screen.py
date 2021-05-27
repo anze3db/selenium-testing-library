@@ -41,7 +41,7 @@ class Screen:
             return self.get_by_text(selector)
         elif by == locators.By.LABEL_TEXT:
             return self.get_by_label_text(selector)
-        elif by == locators.By.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER_TEXT:
             return self.get_by_placeholder_text(selector)
         elif by == locators.By.ALT_TEXT:
             return self.get_by_alt_text(selector)
@@ -66,7 +66,7 @@ class Screen:
             return self.query_by_text(selector)
         elif by == locators.By.LABEL_TEXT:
             return self.query_by_label_text(selector)
-        elif by == locators.By.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER_TEXT:
             return self.query_by_placeholder_text(selector)
         elif by == locators.By.ALT_TEXT:
             return self.query_by_alt_text(selector)
@@ -89,7 +89,7 @@ class Screen:
             return self.find_by_text(selector)
         elif by == locators.By.LABEL_TEXT:
             return self.find_by_label_text(selector)
-        elif by == locators.By.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER_TEXT:
             return self.find_by_placeholder_text(selector)
         elif by == locators.By.ALT_TEXT:
             return self.find_by_alt_text(selector)
@@ -115,7 +115,7 @@ class Screen:
             return self.get_all_by_text(selector)
         elif by == locators.By.LABEL_TEXT:
             return list(self.get_all_by_label_text(selector))
-        elif by == locators.By.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER_TEXT:
             return self.get_all_by_placeholder_text(selector)
         elif by == locators.By.ALT_TEXT:
             return self.get_all_by_alt_text(selector)
@@ -136,7 +136,7 @@ class Screen:
             return self.query_all_by_text(selector)
         elif by == locators.By.LABEL_TEXT:
             return list(self.query_all_by_label_text(selector))
-        elif by == locators.By.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER_TEXT:
             return self.query_all_by_placeholder_text(selector)
         elif by == locators.By.ALT_TEXT:
             return self.query_all_by_alt_text(selector)
@@ -157,7 +157,7 @@ class Screen:
             return self.find_all_by_text(selector)
         elif by == locators.By.LABEL_TEXT:
             return list(self.find_all_by_label_text(selector))
-        elif by == locators.By.PLACEHOLDER:
+        elif by == locators.By.PLACEHOLDER_TEXT:
             return self.find_all_by_placeholder_text(selector)
         elif by == locators.By.ALT_TEXT:
             return self.find_all_by_alt_text(selector)

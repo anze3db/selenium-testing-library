@@ -16,7 +16,7 @@ class By:
     # STL queries:
     ROLE = "role"
     TEXT = "text"
-    PLACEHOLDER = "placeholder"
+    PLACEHOLDER_TEXT = "placeholder text"
     LABEL_TEXT = "label text"
     ALT_TEXT = "alt text"
 
@@ -75,8 +75,8 @@ class Text(Locator):
     BY = By.TEXT
 
 
-class Placeholder(Locator):
-    BY = By.PLACEHOLDER
+class PlaceholderText(Locator):
+    BY = By.PLACEHOLDER_TEXT
 
 
 class LabelText(Locator):
@@ -97,7 +97,7 @@ LocatorType = Union[
             "link text",
             "name",
             "partial link text",
-            "placeholder",
+            "placeholder text",
             "role",
             "tag_name",
             "text",
