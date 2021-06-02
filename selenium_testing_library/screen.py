@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable, Generator, List, Optional, TypeVar
+from typing import Callable, List, Optional, TypeVar
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
 from selenium.webdriver import Remote as Driver  # type: ignore
@@ -23,75 +23,20 @@ class NoSuchElementException(Exception):
     ...
 
 
-class BaseResolver:
-    def __init__(self, locator):
-        self.locator = locator
-
-    def find_elements(self, driver):
-        return driver.find_elements(*self.locator)
-
-
-class RoleResolver(BaseResolver):
-    def __init__(self, locator):
-        _, selector = locator
-        self.locator = locators.XPath(f"//*[@role='{selector}']")
-
-
-class TextResolver(BaseResolver):
-    def __init__(self, locator):
-        _, selector = locator
-        self.locator = locators.XPath(f'//*[text() = "{selector}"]')
-
-
-class PlaceholderTextResolver(BaseResolver):
-    def __init__(self, locator):
-        _, selector = locator
-        self.locator = locators.XPath(f'//*[@placeholder = "{selector}"]')
-
-
-class LabelTextResolver(BaseResolver):
-    def __init__(self, locator):
-        _, selector = locator
-        self.locator = locators.XPath(f'//label[text() = "{selector}"]')
-
-    def find_elements(self, driver):
-        labels: WebElement = driver.find_elements(*self.locator)
-        elements = []
-        for label in labels:
-            for_ = label.get_attribute("for")
-            if for_ is not None:
-                elements += driver.find_elements(*locators.Id(for_))
-                continue
-            id_ = label.get_attribute("id")
-            if id_ is not None:
-                elements += driver.find_elements(
-                    *locators.Css(f"[aria-labelledby^='{id_}']")
-                )
-                continue
-        return elements
-
-
-class AltTextResolver(BaseResolver):
-    def __init__(self, locator):
-        _, selector = locator
-        self.locator = locators.XPath(f'//*[@alt = "{selector}"]')
-
-
-by_to_resolver = {
-    locators.By.CLASS_NAME: BaseResolver,
-    locators.By.CSS_SELECTOR: BaseResolver,
-    locators.By.ID: BaseResolver,
-    locators.By.LINK_TEXT: BaseResolver,
-    locators.By.PARTIAL_LINK_TEXT: BaseResolver,
-    locators.By.TAG_NAME: BaseResolver,
-    locators.By.XPATH: BaseResolver,
-    locators.By.NAME: BaseResolver,
-    locators.By.TEXT: TextResolver,
-    locators.By.ROLE: RoleResolver,
-    locators.By.PLACEHOLDER_TEXT: PlaceholderTextResolver,
-    locators.By.LABEL_TEXT: LabelTextResolver,
-    locators.By.ALT_TEXT: AltTextResolver,
-    locators.By.CLASS_NAME: BaseResolver,
+by_to_locator = {
+    locators.By.CLASS_NAME: locators.ClassName,
+    locators.By.CSS_SELECTOR: locators.Css,
+    locators.By.ID: locators.Id,
+    locators.By.LINK_TEXT: locators.LinkText,
+    locators.By.PARTIAL_LINK_TEXT: locators.PartialLinkText,
+    locators.By.TAG_NAME: locators.TagName,
+    locators.By.XPATH: locators.XPath,
+    locators.By.NAME: locators.Name,
+    locators.By.TEXT: locators.Text,
+    locators.By.ROLE: locators.Role,
+    locators.By.PLACEHOLDER_TEXT: locators.PlaceholderText,
+    locators.By.LABEL_TEXT: locators.LabelText,
+    locators.By.ALT_TEXT: locators.AltText,
 }
 
 
@@ -104,9 +49,10 @@ class Screen:
         self.driver = driver
 
     def get_by(self, locator: Locator) -> WebElement:
-        by, _ = locator
-        resolver = by_to_resolver[by](locator)
-        els = resolver.find_elements(self.driver)
+        if isinstance(locator, tuple):
+            by, selector = locator
+            locator = by_to_locator[by](selector)
+        els = locator.find_elements(self.driver)
 
         if not els:
             raise NoSuchElementException()
@@ -117,9 +63,10 @@ class Screen:
         return els[0]
 
     def query_by(self, locator: Locator) -> Optional[WebElement]:
-        by, _ = locator
-        resolver = by_to_resolver[by](locator)
-        els = resolver.find_elements(self.driver)
+        if isinstance(locator, tuple):
+            by, selector = locator
+            locator = by_to_locator[by](selector)
+        els = locator.find_elements(self.driver)
 
         if not els:
             return None
@@ -129,12 +76,13 @@ class Screen:
         return els[0]
 
     def find_by(self, locator: Locator, *, timeout=5, poll_frequency=0.5) -> WebElement:
-        by, _ = locator
-        resolver = by_to_resolver[by](locator)
+        if isinstance(locator, tuple):
+            by, selector = locator
+            locator = by_to_locator[by](selector)
 
         try:
             els = self.wait_for(
-                resolver.find_elements,
+                locator.find_elements,
                 timeout=timeout,
                 poll_frequency=poll_frequency,
             )
@@ -145,9 +93,10 @@ class Screen:
         return els[0]
 
     def get_all_by(self, locator: Locator) -> List[WebElement]:
-        by, _ = locator
-        resolver = by_to_resolver[by](locator)
-        els = resolver.find_elements(self.driver)
+        if isinstance(locator, tuple):
+            by, selector = locator
+            locator = by_to_locator[by](selector)
+        els = locator.find_elements(self.driver)
         if not els:
             raise NoSuchElementException()
 
@@ -162,12 +111,13 @@ class Screen:
     def find_all_by(
         self, locator: Locator, *, timeout=5, poll_frequency=0.5
     ) -> List[WebElement]:
-        by, _ = locator
-        resolver = by_to_resolver[by](locator)
+        if isinstance(locator, tuple):
+            by, selector = locator
+            locator = by_to_locator[by](selector)
 
         try:
             return self.wait_for(
-                resolver.find_elements,
+                locator.find_elements,
                 timeout=timeout,
                 poll_frequency=poll_frequency,
             )
