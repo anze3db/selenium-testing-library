@@ -41,7 +41,7 @@ def test_by_text(screen: Screen):
 
 def test_by_label_text(screen: Screen):
     screen.driver.get(get_file_path("label.html"))
-    username_fields = list(screen.get_all_by_label_text("Username"))
+    username_fields = screen.get_all_by_label_text("Username")
     assert len(username_fields) == 2  # TODO: Should be 5
 
     screen.driver.get(get_file_path("form.html"))
@@ -57,6 +57,7 @@ def test_by_label_text(screen: Screen):
     assert input_fields[0].get_attribute("type") == "text"
     assert input_fields[1].get_attribute("type") == "color"
 
+
 def test_by_alt_text(screen: Screen):
     screen.driver.get(get_file_path("index.html"))
     assert isinstance(screen.get_by_alt_text("Some Image"), WebElement)
@@ -66,13 +67,16 @@ def test_by_alt_text(screen: Screen):
     with pytest.raises(MultipleSuchElementsException):
         screen.query_by_alt_text("img2 alt")
 
-@pytest.mark.skip("Not implemented yet")
-def test_by_placeholder_text(screen:Screen):
-    pass
 
 @pytest.mark.skip("Not implemented yet")
-def test_by_xpath(screen:Screen):
+def test_by_placeholder_text(screen: Screen):
     pass
+
+
+@pytest.mark.skip("Not implemented yet")
+def test_by_xpath(screen: Screen):
+    pass
+
 
 @pytest.mark.skip("Not fully working yet")
 def test_by_role(screen: Screen):
