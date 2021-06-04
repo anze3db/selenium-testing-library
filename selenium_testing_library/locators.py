@@ -30,9 +30,6 @@ class Locator:
         self.selector = selector
 
     def __iter__(self):
-        if self.BY is None:
-            raise Exception
-
         yield self.BY
         yield self.selector
 
