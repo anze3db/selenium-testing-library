@@ -68,9 +68,25 @@ def test_by_alt_text(screen: Screen):
         screen.query_by_alt_text("img2 alt")
 
 
-@pytest.mark.skip("Not implemented yet")
 def test_by_placeholder_text(screen: Screen):
-    pass
+    funcs = (
+        screen.get_by_placeholder_text,
+        screen.query_by_placeholder_text,
+        screen.find_by_placeholder_text,
+    )
+    screen.driver.get(get_file_path("index.html"))
+    for fun in funcs:
+        assert isinstance(fun("My Placeholder"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_placeholder_text,
+        screen.query_all_by_placeholder_text,
+        screen.find_all_by_placeholder_text,
+    )
+    for fun in list_funcs:
+        items = fun("My Placeholder")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
 
 
 @pytest.mark.skip("Not implemented yet")
