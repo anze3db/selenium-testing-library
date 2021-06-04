@@ -41,15 +41,11 @@ by_to_locator = {
 
 
 class Screen:
-
-    TEST_ID_ATTRIBUTE = "data-testid"
-    WAIT_TIMEOUT = 1
-
     def __init__(self, driver: Driver):
         self.driver = driver
 
     def get_by(self, locator: Locator) -> WebElement:
-        if isinstance(locator, tuple):
+        if not isinstance(locator, locators.Locator):
             by, selector = locator
             locator = by_to_locator[by](selector)
         els = locator.find_elements(self.driver)
@@ -63,7 +59,7 @@ class Screen:
         return els[0]
 
     def query_by(self, locator: Locator) -> Optional[WebElement]:
-        if isinstance(locator, tuple):
+        if not isinstance(locator, locators.Locator):
             by, selector = locator
             locator = by_to_locator[by](selector)
         els = locator.find_elements(self.driver)
@@ -76,7 +72,7 @@ class Screen:
         return els[0]
 
     def find_by(self, locator: Locator, *, timeout=5, poll_frequency=0.5) -> WebElement:
-        if isinstance(locator, tuple):
+        if not isinstance(locator, locators.Locator):
             by, selector = locator
             locator = by_to_locator[by](selector)
 
@@ -93,7 +89,7 @@ class Screen:
         return els[0]
 
     def get_all_by(self, locator: Locator) -> List[WebElement]:
-        if isinstance(locator, tuple):
+        if not isinstance(locator, locators.Locator):
             by, selector = locator
             locator = by_to_locator[by](selector)
         els = locator.find_elements(self.driver)
@@ -111,7 +107,7 @@ class Screen:
     def find_all_by(
         self, locator: Locator, *, timeout=5, poll_frequency=0.5
     ) -> List[WebElement]:
-        if isinstance(locator, tuple):
+        if not isinstance(locator, locators.Locator):
             by, selector = locator
             locator = by_to_locator[by](selector)
 

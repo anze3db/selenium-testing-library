@@ -1,8 +1,8 @@
-from typing import List, Optional, Tuple, Union
+from typing import Iterable, List, Optional, Tuple, Union
 
-from selenium.webdriver import Remote as Driver
+from selenium.webdriver import Remote as Driver  # type: ignore
 from selenium.webdriver.common.by import By as SeleniumBy  # type: ignore
-from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 from typing_extensions import Literal
 
 
@@ -121,22 +121,7 @@ class AltText(Locator):
 
 
 LocatorType = Union[
-    Tuple[
-        Literal[
-            "class name",
-            "css selector",
-            "id",
-            "label text",
-            "link text",
-            "name",
-            "partial link text",
-            "placeholder text",
-            "role",
-            "tag_name",
-            "text",
-            "xpath",
-            "alt text",
-        ],
+    Iterable[
         str,
     ],
     Locator,

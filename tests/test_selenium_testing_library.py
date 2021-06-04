@@ -104,7 +104,16 @@ def test_within(screen: Screen):
         Within(el).find_all_by(locators.Css("img"))
 
 
-def test_basic_functions(screen):
+def test_parameter_types(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    screen.get_by(locators.Css("img"))
+    screen.get_by(("css selector", "img"))
+    screen.get_by([locators.By.CSS_SELECTOR, "img"])
+    screen.get_by(iter([locators.By.CSS_SELECTOR, "img"]))
+    screen.get_by(v for v in [locators.By.CSS_SELECTOR, "img"])
+
+
+def test_basic_functions(screen: Screen):
     IMG_LOC = locators.Css("img")
     A_LOC = locators.Css("a")
     F_LOC = locators.Css("footer")
