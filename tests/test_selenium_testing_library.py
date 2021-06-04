@@ -138,6 +138,50 @@ def test_by_text_index(screen: Screen):
         assert isinstance(items[0], WebElement)
 
 
+def test_by_label_text_index(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_label_text,
+        screen.query_by_label_text,
+        screen.find_by_label_text,
+    )
+    screen.driver.get(get_file_path("index.html"))
+    for fun in funcs:
+        isinstance(fun("My Label Text"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_label_text,
+        screen.query_all_by_label_text,
+        screen.find_all_by_label_text,
+    )
+    for fun in list_funcs:
+        items = fun("My Label Text")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_alt_text_index(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_alt_text,
+        screen.query_by_alt_text,
+        screen.find_by_alt_text,
+    )
+    screen.driver.get(get_file_path("index.html"))
+    for fun in funcs:
+        isinstance(fun("Some Image"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_alt_text,
+        screen.query_all_by_alt_text,
+        screen.find_all_by_alt_text,
+    )
+    for fun in list_funcs:
+        items = fun("Some Image")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
 def test_within(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     el = screen.get_by(locators.Css("#subsection"))
