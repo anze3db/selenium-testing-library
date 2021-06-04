@@ -94,10 +94,48 @@ def test_by_xpath(screen: Screen):
     pass
 
 
-@pytest.mark.skip("Not fully working yet")
 def test_by_role(screen: Screen):
-    screen.driver.get(get_file_path("form.html"))
-    assert isinstance(screen.get_by_role("button"), WebElement)
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_role,
+        screen.query_by_role,
+        screen.find_by_role,
+    )
+    screen.driver.get(get_file_path("index.html"))
+    for fun in funcs:
+        isinstance(fun("My Role Input"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_role,
+        screen.query_all_by_role,
+        screen.find_all_by_role,
+    )
+    for fun in list_funcs:
+        items = fun("My Role Input")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_text_index(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_text,
+        screen.query_by_text,
+        screen.find_by_text,
+    )
+    screen.driver.get(get_file_path("index.html"))
+    for fun in funcs:
+        isinstance(fun("My Text Input"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_text,
+        screen.query_all_by_text,
+        screen.find_all_by_text,
+    )
+    for fun in list_funcs:
+        items = fun("My Text Input")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
 
 
 def test_within(screen: Screen):
