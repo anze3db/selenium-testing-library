@@ -10,7 +10,7 @@ selenium = "^3.0.0"
 typing-extensions = "^3.10.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^6.2.4"
 black = "^21.5b0"
 pytest-cov = "^2.12.0"
 pytest-watch = "^4.2.0"
@@ -20,6 +20,10 @@ isort = "^5.8.0"
 [tool.isort]
 profile = "black"
 multi_line_output = 3
+
+[tool.pytest.ini_options]
+minversion = "6.2.4"
+addopts = "--selenium-headless --cov=selenium_testing_library --cov-report html --verbose --durations=10"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
