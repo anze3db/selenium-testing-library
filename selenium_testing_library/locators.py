@@ -104,8 +104,8 @@ class LabelText(Locator):
                 elements += driver.find_elements(*Id(for_))
                 continue
             id_ = label.get_attribute("id")
-            if id_ is not None:
-                elements += driver.find_elements(*Css(f"[aria-labelledby^='{id_}']"))
+            if id_:
+                elements += driver.find_elements(*Css(f"[aria-labelledby='{id_}']"))
                 continue
         return elements
 

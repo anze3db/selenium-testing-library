@@ -44,6 +44,9 @@ def test_by_label_text(screen: Screen):
     username_fields = screen.get_all_by_label_text("Username")
     assert len(username_fields) == 2  # TODO: Should be 5
 
+    inp = screen.query_by_label_text("Label Without Input")
+    assert inp is None
+
     screen.driver.get(get_file_path("form.html"))
     input_field = screen.get_by_label_text("Email address")
     assert isinstance(input_field, WebElement)
@@ -87,11 +90,6 @@ def test_by_placeholder_text(screen: Screen):
         items = fun("My Placeholder")
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
-
-
-@pytest.mark.skip("Not implemented yet")
-def test_by_xpath(screen: Screen):
-    pass
 
 
 def test_by_role(screen: Screen):
@@ -204,11 +202,23 @@ def test_within(screen: Screen):
 
 def test_parameter_types(screen: Screen):
     screen.driver.get(get_file_path("index.html"))
-    screen.get_by(locators.Css("img"))
-    screen.get_by(("css selector", "img"))
-    screen.get_by([locators.By.CSS_SELECTOR, "img"])
-    screen.get_by(iter([locators.By.CSS_SELECTOR, "img"]))
-    screen.get_by(v for v in [locators.By.CSS_SELECTOR, "img"])
+    funcs = (
+        screen.get_by,
+        screen.get_all_by,
+        screen.query_by,
+        screen.query_all_by,
+        # screen.find_by, # TODO: Figure out why mypy complains
+        # screen.find_all_by,
+    )
+    for fun in funcs:
+        fun(locators.Css("img"))
+        fun(("css selector", "img"))
+        fun([locators.By.CSS_SELECTOR, "img"])
+        fun(iter([locators.By.CSS_SELECTOR, "img"]))
+        fun(v for v in [locators.By.CSS_SELECTOR, "img"])
+
+    screen.find_by(("css selector", "img"))
+    screen.find_all_by(("css selector", "img"))
 
 
 IMG_LOC = locators.Css("img")
@@ -270,3 +280,10 @@ def test_find_all(screen: Screen):
     with pytest.raises(NoSuchElementException):
         screen.find_all_by(F_LOC, timeout=0.01, poll_frequency=0.005)
     assert len(screen.find_all_by(A_LOC)) > 1
+
+
+def test_wait_for_stale(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    img = screen.get_by(locators.Css("img"))
+    screen.driver.get(get_file_path("index.html"))
+    screen.wait_for_stale(img)
