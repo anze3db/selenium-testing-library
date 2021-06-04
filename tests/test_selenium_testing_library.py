@@ -101,7 +101,7 @@ def test_within(screen: Screen):
         Within(el).get_all_by(locators.Css("img"))
 
     with pytest.raises(NoSuchElementException):
-        Within(el).find_all_by(locators.Css("img"))
+        Within(el).find_all_by(locators.Css("img"), timeout=0.01, poll_frequency=0.005)
 
 
 def test_parameter_types(screen: Screen):
@@ -113,10 +113,13 @@ def test_parameter_types(screen: Screen):
     screen.get_by(v for v in [locators.By.CSS_SELECTOR, "img"])
 
 
+IMG_LOC = locators.Css("img")
+A_LOC = locators.Css("a")
+F_LOC = locators.Css("footer")
+
+
 def test_basic_functions(screen: Screen):
-    IMG_LOC = locators.Css("img")
-    A_LOC = locators.Css("a")
-    F_LOC = locators.Css("footer")
+
     screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.get_by(IMG_LOC), WebElement)
@@ -125,37 +128,47 @@ def test_basic_functions(screen: Screen):
     with pytest.raises(MultipleSuchElementsException):
         screen.get_by(A_LOC)
 
-    # test_query(selenium):
+
+def test_query(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.query_by(IMG_LOC), WebElement)
     assert screen.query_by(F_LOC) is None
     with pytest.raises(MultipleSuchElementsException):
         screen.query_by(A_LOC)
 
-    # test_find(selenium):
+
+def test_find(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.find_by(IMG_LOC), WebElement)
     with pytest.raises(NoSuchElementException):
-        screen.find_by(F_LOC) is None
+        screen.find_by(F_LOC, timeout=0.01, poll_frequency=0.005) is None
     with pytest.raises(MultipleSuchElementsException):
-        screen.find_by(A_LOC)
+        screen.find_by(A_LOC, timeout=0.01, poll_frequency=0.005)
 
-    # test_get_all_by(selenium):
+
+def test_get_all_by(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.get_all_by(IMG_LOC)[0], WebElement)
     with pytest.raises(NoSuchElementException):
         screen.get_all_by(F_LOC)
     assert len(screen.get_all_by(A_LOC)) > 1
 
-    # test_query_all(selenium):
+
+def test_query_all(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.query_all_by(IMG_LOC)[0], WebElement)
     assert len(screen.query_all_by(F_LOC)) == 0
     assert len(screen.query_all_by(A_LOC)) > 1
 
-    # test_find_all(selenium):
+
+def test_find_all(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.find_all_by(IMG_LOC)[0], WebElement)
     with pytest.raises(NoSuchElementException):
-        screen.find_all_by(F_LOC)
+        screen.find_all_by(F_LOC, timeout=0.01, poll_frequency=0.005)
     assert len(screen.find_all_by(A_LOC)) > 1
