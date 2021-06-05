@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "selenium-testing-library"
-version = "0.0.1"
+version = "2021.6.6a1"
 description = ""
 authors = ["Anže Pečar <anze@pecar.me>"]
 
