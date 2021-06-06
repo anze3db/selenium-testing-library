@@ -1,7 +1,9 @@
 [tool.poetry]
 name = "selenium-testing-library"
 version = "2021.6.6a1"
-description = ""
+description = "A Python Selenium library inspired by the Testing Library"
+readme = "README.md"
+license = "MIT"
 authors = ["Anže Pečar <anze@pecar.me>"]
 
 [tool.poetry.dependencies]
