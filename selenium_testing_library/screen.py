@@ -215,7 +215,7 @@ class Screen:
     def find_all_by_alt_text(self, value: str) -> List[WebElement]:
         return self.find_all_by(locators.AltText(value))
 
-    # By alt text
+    # By title
     def get_by_title(self, value: str) -> WebElement:
         return self.get_by(locators.Title(value))
 
@@ -233,6 +233,25 @@ class Screen:
 
     def find_all_by_title(self, value: str) -> List[WebElement]:
         return self.find_all_by(locators.Title(value))
+
+    # By test id
+    def get_by_test_id(self, value: str) -> WebElement:
+        return self.get_by(locators.TestId(value))
+
+    def query_by_test_id(self, value: str) -> Optional[WebElement]:
+        return self.query_by(locators.TestId(value))
+
+    def find_by_test_id(self, value: str) -> WebElement:
+        return self.find_by(locators.TestId(value))
+
+    def get_all_by_test_id(self, value: str) -> List[WebElement]:
+        return self.get_all_by(locators.TestId(value))
+
+    def query_all_by_test_id(self, value: str) -> List[WebElement]:
+        return self.query_all_by(locators.TestId(value))
+
+    def find_all_by_test_id(self, value: str) -> List[WebElement]:
+        return self.find_all_by(locators.TestId(value))
 
     def wait_for(
         self,

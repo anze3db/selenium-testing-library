@@ -21,7 +21,8 @@ class By:
     PLACEHOLDER_TEXT = "placeholder text"
     LABEL_TEXT = "label text"
     ALT_TEXT = "alt text"
-    TITLE = "alt text"
+    TITLE = "title"
+    TEST_ID = "test id"
 
 
 class Locator:
@@ -123,6 +124,13 @@ class Title(Locator):
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
         return driver.find_elements(*XPath(f'//*[@title = "{self.selector}"]'))
+
+
+class TestId(Locator):
+    BY = By.TITLE
+
+    def find_elements(self, driver: Driver) -> List[WebElement]:
+        return driver.find_elements(*XPath(f'//*[@data-testid = "{self.selector}"]'))
 
 
 LocatorType = Union[

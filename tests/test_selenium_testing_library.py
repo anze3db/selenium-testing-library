@@ -200,6 +200,27 @@ def test_by_title(screen: Screen):
         assert isinstance(items[0], WebElement)
 
 
+def test_by_test_id(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_test_id,
+        screen.query_by_test_id,
+        screen.find_by_test_id,
+    )
+    for fun in funcs:
+        isinstance(fun("Some Test Id"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_test_id,
+        screen.query_all_by_test_id,
+        screen.find_all_by_test_id,
+    )
+    for fun in list_funcs:
+        items = fun("Some Test Id")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
 def test_within(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     el = screen.get_by(locators.Css("#subsection"))
