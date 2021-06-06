@@ -48,7 +48,7 @@ screen.find_by(locators.Text("My text"), timeout=5, poll_frequency=0.5) # locato
 | `ByLabelText`            | `by_label_text`         | ⚠️ Partial  |
 | `ByPlaceholderText`      | `by_placeholder_text`   | ⚠️ Partial  |
 | `ByText`                 | `by_text`               | ⚠️ Partial  |
-| `ByDisplayValue`         | `by_display_value`      | ❌ Missing |
+| `ByDisplayValue`         | `by_display_value`      | ⚠️ Partial |
 | `ByAltText`              | `by_alt_text`           | ⚠️ Partial  |
 | `ByTitle`                | `by_title`              | ⚠️ Partial |
 | `ByTestId`               | `by_test_id`            | ⚠️ Partial |

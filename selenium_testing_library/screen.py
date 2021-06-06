@@ -253,6 +253,25 @@ class Screen:
     def find_all_by_test_id(self, value: str) -> List[WebElement]:
         return self.find_all_by(locators.TestId(value))
 
+    # By display value
+    def get_by_display_value(self, value: str) -> WebElement:
+        return self.get_by(locators.DisplayValue(value))
+
+    def query_by_display_value(self, value: str) -> Optional[WebElement]:
+        return self.query_by(locators.DisplayValue(value))
+
+    def find_by_display_value(self, value: str) -> WebElement:
+        return self.find_by(locators.DisplayValue(value))
+
+    def get_all_by_display_value(self, value: str) -> List[WebElement]:
+        return self.get_all_by(locators.DisplayValue(value))
+
+    def query_all_by_display_value(self, value: str) -> List[WebElement]:
+        return self.query_all_by(locators.DisplayValue(value))
+
+    def find_all_by_display_value(self, value: str) -> List[WebElement]:
+        return self.find_all_by(locators.DisplayValue(value))
+
     def wait_for(
         self,
         method: Callable[[Driver], T],

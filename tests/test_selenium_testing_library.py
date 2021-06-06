@@ -221,6 +221,30 @@ def test_by_test_id(screen: Screen):
         assert isinstance(items[0], WebElement)
 
 
+def test_by_display_value(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_display_value,
+        screen.query_by_display_value,
+        screen.find_by_display_value,
+    )
+    for fun in funcs:
+        isinstance(fun("Input Display Value"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_display_value,
+        screen.query_all_by_display_value,
+        screen.find_all_by_display_value,
+    )
+    for fun in list_funcs:
+        items = fun("Input Display Value")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+    els = screen.get_all_by_display_value("All Display Value")
+    assert len(els) == 3
+
+
 def test_within(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     el = screen.get_by(locators.Css("#subsection"))

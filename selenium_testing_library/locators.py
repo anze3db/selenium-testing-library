@@ -23,6 +23,7 @@ class By:
     ALT_TEXT = "alt text"
     TITLE = "title"
     TEST_ID = "test id"
+    DISPLAY_VALUE = "display value"
 
 
 class Locator:
@@ -131,6 +132,16 @@ class TestId(Locator):
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
         return driver.find_elements(*XPath(f'//*[@data-testid = "{self.selector}"]'))
+
+
+class DisplayValue(Locator):
+    BY = By.DISPLAY_VALUE
+
+    def find_elements(self, driver: Driver) -> List[WebElement]:
+        els = driver.find_elements(
+            *XPath(f"//*[self::input or self::textarea or self::select]")
+        )
+        return [el for el in els if el.get_attribute("value") == self.selector]
 
 
 LocatorType = Union[
