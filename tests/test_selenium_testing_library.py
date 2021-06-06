@@ -165,7 +165,6 @@ def test_by_alt_text_index(screen: Screen):
         screen.query_by_alt_text,
         screen.find_by_alt_text,
     )
-    screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
         isinstance(fun("Some Image"), WebElement)
 
@@ -176,6 +175,27 @@ def test_by_alt_text_index(screen: Screen):
     )
     for fun in list_funcs:
         items = fun("Some Image")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_title(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_title,
+        screen.query_by_title,
+        screen.find_by_title,
+    )
+    for fun in funcs:
+        isinstance(fun("Some Title"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_title,
+        screen.query_all_by_title,
+        screen.find_all_by_title,
+    )
+    for fun in list_funcs:
+        items = fun("Some Title")
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 

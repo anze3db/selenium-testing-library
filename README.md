@@ -50,7 +50,7 @@ screen.find_by(locators.Text("My text"), timeout=5, poll_frequency=0.5) # locato
 | `ByText`                 | `by_text`               | ⚠️ Partial  |
 | `ByDisplayValue`         | `by_display_value`      | ❌ Missing |
 | `ByAltText`              | `by_alt_text`           | ⚠️ Partial  |
-| `ByTitle`                | `by_title`              | ❌ Missing |
+| `ByTitle`                | `by_title`              | ⚠️ Partial |
 | `ByTestId`               | `by_test_id`            | ❌ Missing |
 
 Examples:
