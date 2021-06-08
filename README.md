@@ -52,6 +52,8 @@ screen.find_by(locators.Text("My text"), timeout=5, poll_frequency=0.5) # locato
 | `ByAltText`              | `by_alt_text`           | ⚠️ Partial  |
 | `ByTitle`                | `by_title`              | ⚠️ Partial |
 | `ByTestId`               | `by_test_id`            | ⚠️ Partial |
+| N/A                      | `by_css`                | 🟢 Done   |
+| N/A                      | `by_xpath`              | 🟢 Done   |
 
 Examples:
 
