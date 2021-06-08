@@ -245,6 +245,48 @@ def test_by_display_value(screen: Screen):
     assert len(els) == 3
 
 
+def test_by_css(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_css,
+        screen.query_by_css,
+        screen.find_by_css,
+    )
+    for fun in funcs:
+        isinstance(fun(".mycss"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_css,
+        screen.query_all_by_css,
+        screen.find_all_by_css,
+    )
+    for fun in list_funcs:
+        items = fun(".mycss")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_xpath(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_xpath,
+        screen.query_by_xpath,
+        screen.find_by_xpath,
+    )
+    for fun in funcs:
+        isinstance(fun("//div[@class = 'mycss']"), WebElement)
+
+    list_funcs = (
+        screen.get_all_by_xpath,
+        screen.query_all_by_xpath,
+        screen.find_all_by_xpath,
+    )
+    for fun in list_funcs:
+        items = fun("//div[@class = 'mycss']")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
 def test_within(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     el = screen.get_by(locators.Css("#subsection"))

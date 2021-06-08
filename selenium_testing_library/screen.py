@@ -272,6 +272,44 @@ class Screen:
     def find_all_by_display_value(self, value: str) -> List[WebElement]:
         return self.find_all_by(locators.DisplayValue(value))
 
+    # By css
+    def get_by_css(self, value: str) -> WebElement:
+        return self.get_by(locators.Css(value))
+
+    def query_by_css(self, value: str) -> Optional[WebElement]:
+        return self.query_by(locators.Css(value))
+
+    def find_by_css(self, value: str) -> WebElement:
+        return self.find_by(locators.Css(value))
+
+    def get_all_by_css(self, value: str) -> List[WebElement]:
+        return self.get_all_by(locators.Css(value))
+
+    def query_all_by_css(self, value: str) -> List[WebElement]:
+        return self.query_all_by(locators.Css(value))
+
+    def find_all_by_css(self, value: str) -> List[WebElement]:
+        return self.find_all_by(locators.Css(value))
+
+    # By xpath
+    def get_by_xpath(self, value: str) -> WebElement:
+        return self.get_by(locators.XPath(value))
+
+    def query_by_xpath(self, value: str) -> Optional[WebElement]:
+        return self.query_by(locators.XPath(value))
+
+    def find_by_xpath(self, value: str) -> WebElement:
+        return self.find_by(locators.XPath(value))
+
+    def get_all_by_xpath(self, value: str) -> List[WebElement]:
+        return self.get_all_by(locators.XPath(value))
+
+    def query_all_by_xpath(self, value: str) -> List[WebElement]:
+        return self.query_all_by(locators.XPath(value))
+
+    def find_all_by_xpath(self, value: str) -> List[WebElement]:
+        return self.find_all_by(locators.XPath(value))
+
     def wait_for(
         self,
         method: Callable[[Driver], T],
