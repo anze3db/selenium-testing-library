@@ -121,156 +121,176 @@ class Screen:
             raise NoSuchElementException()
 
     # By role
-    def get_by_role(self, role) -> WebElement:
-        return self.get_by(locators.Role(role))
+    def get_by_role(self, role: str, exact: bool = True) -> WebElement:
+        return self.get_by(locators.Role(role, exact))
 
-    def query_by_role(self, role: str) -> Optional[WebElement]:
-        return self.get_by(locators.Role(role))
+    def query_by_role(self, role: str, exact: bool = True) -> Optional[WebElement]:
+        return self.get_by(locators.Role(role, exact))
 
-    def find_by_role(self, role: str) -> WebElement:
-        return self.find_by(locators.Role(role))
+    def find_by_role(self, role: str, exact: bool = True) -> WebElement:
+        return self.find_by(locators.Role(role, exact))
 
-    def get_all_by_role(self, role) -> List[WebElement]:
-        return self.get_all_by(locators.Role(role))
+    def get_all_by_role(self, role: str, exact: bool = True) -> List[WebElement]:
+        return self.get_all_by(locators.Role(role, exact))
 
-    def query_all_by_role(self, role: str) -> List[WebElement]:
-        return self.query_all_by(locators.Role(role))
+    def query_all_by_role(self, role: str, exact: bool = True) -> List[WebElement]:
+        return self.query_all_by(locators.Role(role, exact))
 
-    def find_all_by_role(self, role: str) -> List[WebElement]:
-        return self.find_all_by(locators.Role(role))
+    def find_all_by_role(self, role: str, exact: bool = True) -> List[WebElement]:
+        return self.find_all_by(locators.Role(role, exact))
 
     # By text
-    def get_by_text(self, text: str) -> WebElement:
-        return self.get_by(locators.Text(text))
+    def get_by_text(self, text: str, exact: bool = True) -> WebElement:
+        return self.get_by(locators.Text(text, exact))
 
-    def query_by_text(self, text: str) -> Optional[WebElement]:
-        return self.query_by(locators.Text(text))
+    def query_by_text(self, text: str, exact: bool = True) -> Optional[WebElement]:
+        return self.query_by(locators.Text(text, exact))
 
-    def find_by_text(self, text: str) -> WebElement:
-        return self.find_by(locators.Text(text))
+    def find_by_text(self, text: str, exact: bool = True) -> WebElement:
+        return self.find_by(locators.Text(text, exact))
 
-    def get_all_by_text(self, text: str) -> List[WebElement]:
-        return self.get_all_by(locators.Text(text))
+    def get_all_by_text(self, text: str, exact: bool = True) -> List[WebElement]:
+        return self.get_all_by(locators.Text(text, exact))
 
-    def query_all_by_text(self, text: str) -> List[WebElement]:
-        return self.query_all_by(locators.Text(text))
+    def query_all_by_text(self, text: str, exact: bool = True) -> List[WebElement]:
+        return self.query_all_by(locators.Text(text, exact))
 
-    def find_all_by_text(self, text: str) -> List[WebElement]:
-        return self.find_all_by(locators.Text(text))
+    def find_all_by_text(self, text: str, exact: bool = True) -> List[WebElement]:
+        return self.find_all_by(locators.Text(text, exact))
 
     # By placeholder
-    def get_by_placeholder_text(self, value: str) -> WebElement:
-        return self.get_by(locators.PlaceholderText(value))
+    def get_by_placeholder_text(self, value: str, exact: bool = True) -> WebElement:
+        return self.get_by(locators.PlaceholderText(value, exact))
 
-    def query_by_placeholder_text(self, value: str) -> Optional[WebElement]:
-        return self.query_by(locators.PlaceholderText(value))
+    def query_by_placeholder_text(
+        self, value: str, exact: bool = True
+    ) -> Optional[WebElement]:
+        return self.query_by(locators.PlaceholderText(value, exact))
 
-    def find_by_placeholder_text(self, value: str) -> WebElement:
-        return self.find_by(locators.PlaceholderText(value))
+    def find_by_placeholder_text(self, value: str, exact: bool = True) -> WebElement:
+        return self.find_by(locators.PlaceholderText(value, exact))
 
-    def get_all_by_placeholder_text(self, value: str) -> List[WebElement]:
-        return self.get_all_by(locators.PlaceholderText(value))
+    def get_all_by_placeholder_text(
+        self, value: str, exact: bool = True
+    ) -> List[WebElement]:
+        return self.get_all_by(locators.PlaceholderText(value, exact))
 
-    def query_all_by_placeholder_text(self, value: str) -> List[WebElement]:
-        return self.query_all_by(locators.PlaceholderText(value))
+    def query_all_by_placeholder_text(
+        self, value: str, exact: bool = True
+    ) -> List[WebElement]:
+        return self.query_all_by(locators.PlaceholderText(value, exact))
 
-    def find_all_by_placeholder_text(self, value: str) -> List[WebElement]:
-        return self.find_all_by(locators.PlaceholderText(value))
+    def find_all_by_placeholder_text(
+        self, value: str, exact: bool = True
+    ) -> List[WebElement]:
+        return self.find_all_by(locators.PlaceholderText(value, exact))
 
     # By label text
-    def get_by_label_text(self, text: str) -> WebElement:
-        return self.get_by(locators.LabelText(text))
+    def get_by_label_text(self, text: str, exact: bool = True) -> WebElement:
+        return self.get_by(locators.LabelText(text, exact))
 
-    def query_by_label_text(self, text: str) -> Optional[WebElement]:
-        return self.query_by(locators.LabelText(text))
+    def query_by_label_text(
+        self, text: str, exact: bool = True
+    ) -> Optional[WebElement]:
+        return self.query_by(locators.LabelText(text, exact))
 
-    def find_by_label_text(self, text: str) -> WebElement:
-        return self.find_by(locators.LabelText(text))
+    def find_by_label_text(self, text: str, exact: bool = True) -> WebElement:
+        return self.find_by(locators.LabelText(text, exact))
 
-    def get_all_by_label_text(self, text: str) -> List[WebElement]:
-        return self.get_all_by(locators.LabelText(text))
+    def get_all_by_label_text(self, text: str, exact: bool = True) -> List[WebElement]:
+        return self.get_all_by(locators.LabelText(text, exact))
 
-    def query_all_by_label_text(self, text: str) -> List[WebElement]:
-        return self.query_all_by(locators.LabelText(text))
+    def query_all_by_label_text(
+        self, text: str, exact: bool = True
+    ) -> List[WebElement]:
+        return self.query_all_by(locators.LabelText(text, exact))
 
-    def find_all_by_label_text(self, text: str) -> List[WebElement]:
-        return self.find_all_by(locators.LabelText(text))
+    def find_all_by_label_text(self, text: str, exact: bool = True) -> List[WebElement]:
+        return self.find_all_by(locators.LabelText(text, exact))
 
     # By alt text
-    def get_by_alt_text(self, value: str) -> WebElement:
-        return self.get_by(locators.AltText(value))
+    def get_by_alt_text(self, value: str, exact: bool = True) -> WebElement:
+        return self.get_by(locators.AltText(value, exact))
 
-    def query_by_alt_text(self, value: str) -> Optional[WebElement]:
-        return self.query_by(locators.AltText(value))
+    def query_by_alt_text(self, value: str, exact: bool = True) -> Optional[WebElement]:
+        return self.query_by(locators.AltText(value, exact))
 
-    def find_by_alt_text(self, value: str) -> WebElement:
-        return self.find_by(locators.AltText(value))
+    def find_by_alt_text(self, value: str, exact: bool = True) -> WebElement:
+        return self.find_by(locators.AltText(value, exact))
 
-    def get_all_by_alt_text(self, value: str) -> List[WebElement]:
-        return self.get_all_by(locators.AltText(value))
+    def get_all_by_alt_text(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.get_all_by(locators.AltText(value, exact))
 
-    def query_all_by_alt_text(self, value: str) -> List[WebElement]:
-        return self.query_all_by(locators.AltText(value))
+    def query_all_by_alt_text(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.query_all_by(locators.AltText(value, exact))
 
-    def find_all_by_alt_text(self, value: str) -> List[WebElement]:
-        return self.find_all_by(locators.AltText(value))
+    def find_all_by_alt_text(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.find_all_by(locators.AltText(value, exact))
 
     # By title
-    def get_by_title(self, value: str) -> WebElement:
-        return self.get_by(locators.Title(value))
+    def get_by_title(self, value: str, exact: bool = True) -> WebElement:
+        return self.get_by(locators.Title(value, exact))
 
-    def query_by_title(self, value: str) -> Optional[WebElement]:
-        return self.query_by(locators.Title(value))
+    def query_by_title(self, value: str, exact: bool = True) -> Optional[WebElement]:
+        return self.query_by(locators.Title(value, exact))
 
-    def find_by_title(self, value: str) -> WebElement:
-        return self.find_by(locators.Title(value))
+    def find_by_title(self, value: str, exact: bool = True) -> WebElement:
+        return self.find_by(locators.Title(value, exact))
 
-    def get_all_by_title(self, value: str) -> List[WebElement]:
-        return self.get_all_by(locators.Title(value))
+    def get_all_by_title(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.get_all_by(locators.Title(value, exact))
 
-    def query_all_by_title(self, value: str) -> List[WebElement]:
-        return self.query_all_by(locators.Title(value))
+    def query_all_by_title(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.query_all_by(locators.Title(value, exact))
 
-    def find_all_by_title(self, value: str) -> List[WebElement]:
-        return self.find_all_by(locators.Title(value))
+    def find_all_by_title(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.find_all_by(locators.Title(value, exact))
 
     # By test id
-    def get_by_test_id(self, value: str) -> WebElement:
-        return self.get_by(locators.TestId(value))
+    def get_by_test_id(self, value: str, exact: bool = True) -> WebElement:
+        return self.get_by(locators.TestId(value, exact))
 
-    def query_by_test_id(self, value: str) -> Optional[WebElement]:
-        return self.query_by(locators.TestId(value))
+    def query_by_test_id(self, value: str, exact: bool = True) -> Optional[WebElement]:
+        return self.query_by(locators.TestId(value, exact))
 
-    def find_by_test_id(self, value: str) -> WebElement:
-        return self.find_by(locators.TestId(value))
+    def find_by_test_id(self, value: str, exact: bool = True) -> WebElement:
+        return self.find_by(locators.TestId(value, exact))
 
-    def get_all_by_test_id(self, value: str) -> List[WebElement]:
-        return self.get_all_by(locators.TestId(value))
+    def get_all_by_test_id(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.get_all_by(locators.TestId(value, exact))
 
-    def query_all_by_test_id(self, value: str) -> List[WebElement]:
-        return self.query_all_by(locators.TestId(value))
+    def query_all_by_test_id(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.query_all_by(locators.TestId(value, exact))
 
-    def find_all_by_test_id(self, value: str) -> List[WebElement]:
-        return self.find_all_by(locators.TestId(value))
+    def find_all_by_test_id(self, value: str, exact: bool = True) -> List[WebElement]:
+        return self.find_all_by(locators.TestId(value, exact))
 
     # By display value
-    def get_by_display_value(self, value: str) -> WebElement:
-        return self.get_by(locators.DisplayValue(value))
+    def get_by_display_value(self, value: str, exact: bool = True) -> WebElement:
+        return self.get_by(locators.DisplayValue(value, exact))
 
-    def query_by_display_value(self, value: str) -> Optional[WebElement]:
-        return self.query_by(locators.DisplayValue(value))
+    def query_by_display_value(
+        self, value: str, exact: bool = True
+    ) -> Optional[WebElement]:
+        return self.query_by(locators.DisplayValue(value, exact))
 
-    def find_by_display_value(self, value: str) -> WebElement:
-        return self.find_by(locators.DisplayValue(value))
+    def find_by_display_value(self, value: str, exact: bool = True) -> WebElement:
+        return self.find_by(locators.DisplayValue(value, exact))
 
-    def get_all_by_display_value(self, value: str) -> List[WebElement]:
-        return self.get_all_by(locators.DisplayValue(value))
+    def get_all_by_display_value(
+        self, value: str, exact: bool = True
+    ) -> List[WebElement]:
+        return self.get_all_by(locators.DisplayValue(value, exact))
 
-    def query_all_by_display_value(self, value: str) -> List[WebElement]:
-        return self.query_all_by(locators.DisplayValue(value))
+    def query_all_by_display_value(
+        self, value: str, exact: bool = True
+    ) -> List[WebElement]:
+        return self.query_all_by(locators.DisplayValue(value, exact))
 
-    def find_all_by_display_value(self, value: str) -> List[WebElement]:
-        return self.find_all_by(locators.DisplayValue(value))
+    def find_all_by_display_value(
+        self, value: str, exact: bool = True
+    ) -> List[WebElement]:
+        return self.find_all_by(locators.DisplayValue(value, exact))
 
     # By css
     def get_by_css(self, value: str) -> WebElement:

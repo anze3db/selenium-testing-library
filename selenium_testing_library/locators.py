@@ -29,8 +29,9 @@ class By:
 class Locator:
     BY: Optional[str] = None
 
-    def __init__(self, selector: str):
+    def __init__(self, selector: str, exact: bool = True):
         self.selector = selector
+        self.exact = exact
 
     def __iter__(self):
         yield self.BY
@@ -38,6 +39,11 @@ class Locator:
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
         return driver.find_elements(*self)
+
+    def _exact_or_not(self, operator):
+        if self.exact:
+            return f'{operator} = "{self.selector}"'
+        return f'contains({operator}, "{self.selector}")'
 
 
 class Css(Locator):
@@ -76,21 +82,23 @@ class Role(Locator):
     BY = By.ROLE
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
-        return driver.find_elements(*XPath(f"//*[@role='{self.selector}']"))
+        return driver.find_elements(*XPath(f"//*[{self._exact_or_not('@role')}]"))
 
 
 class Text(Locator):
     BY = By.TEXT
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
-        return driver.find_elements(*XPath(f'//*[text() = "{self.selector}"]'))
+        return driver.find_elements(*XPath(f'//*[{self._exact_or_not("text()")}]'))
 
 
 class PlaceholderText(Locator):
     BY = By.PLACEHOLDER_TEXT
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
-        return driver.find_elements(*XPath(f'//*[@placeholder = "{self.selector}"]'))
+        return driver.find_elements(
+            *XPath(f'//*[{self._exact_or_not("@placeholder")}]')
+        )
 
 
 class LabelText(Locator):
@@ -98,7 +106,7 @@ class LabelText(Locator):
 
     def find_elements(self, driver):
         labels: WebElement = driver.find_elements(
-            *XPath(f'//label[text() = "{self.selector}"]')
+            *XPath(f'//label[{self._exact_or_not("text()")}]')
         )
         elements = []
         for label in labels:
@@ -117,21 +125,23 @@ class AltText(Locator):
     BY = By.ALT_TEXT
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
-        return driver.find_elements(*XPath(f'//*[@alt = "{self.selector}"]'))
+        return driver.find_elements(*XPath(f'//*[{self._exact_or_not("@alt")}]'))
 
 
 class Title(Locator):
     BY = By.TITLE
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
-        return driver.find_elements(*XPath(f'//*[@title = "{self.selector}"]'))
+        return driver.find_elements(*XPath(f'//*[{self._exact_or_not("@title")}]'))
 
 
 class TestId(Locator):
     BY = By.TITLE
 
     def find_elements(self, driver: Driver) -> List[WebElement]:
-        return driver.find_elements(*XPath(f'//*[@data-testid = "{self.selector}"]'))
+        return driver.find_elements(
+            *XPath(f'//*[{self._exact_or_not("@data-testid")}]')
+        )
 
 
 class DisplayValue(Locator):
@@ -141,7 +151,9 @@ class DisplayValue(Locator):
         els = driver.find_elements(
             *XPath(f"//*[self::input or self::textarea or self::select]")
         )
-        return [el for el in els if el.get_attribute("value") == self.selector]
+        if self.exact:
+            return [el for el in els if self.selector == el.get_attribute("value")]
+        return [el for el in els if self.selector in el.get_attribute("value")]
 
 
 LocatorType = Union[

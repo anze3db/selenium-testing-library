@@ -29,14 +29,18 @@ def get_file_path(name):
 def test_by_text(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     assert isinstance(screen.get_by_text("Email address"), WebElement)
+    assert isinstance(screen.get_by_text("Email add", exact=False), WebElement)
     assert screen.query_by_text("address") is None
+    assert isinstance(screen.query_by_text("address", exact=False), WebElement)
     assert len(screen.find_all_by_text("Item")) == 3
+    assert len(screen.find_all_by_text("tem", exact=False)) == 3
 
     # Go through get with a text selector
-    screen.driver.get(get_file_path("form.html"))
     assert isinstance(screen.get_by(locators.Text("Email address")), WebElement)
+    assert isinstance(screen.get_by(locators.Text("Email add", False)), WebElement)
     assert screen.query_by(locators.Text("address")) is None
-    assert len(screen.find_all_by(locators.Text("Item"))) == 3
+    assert screen.query_by(locators.Text("addrsdfsdess", False)) is None
+    assert len(screen.find_all_by(locators.Text("Ite", exact=False))) == 3
 
 
 def test_by_label_text(screen: Screen):
@@ -44,8 +48,11 @@ def test_by_label_text(screen: Screen):
     username_fields = screen.get_all_by_label_text("Username")
     assert len(username_fields) == 2  # TODO: Should be 5
 
-    inp = screen.query_by_label_text("Label Without Input")
-    assert inp is None
+    username_fields = screen.get_all_by_label_text("sername", exact=False)
+    assert len(username_fields) == 2  # TODO: Should be 5
+
+    assert screen.query_by_label_text("Label Without Input") is None
+    assert screen.query_by_label_text("el Without In", exact=False) is None
 
     screen.driver.get(get_file_path("form.html"))
     input_field = screen.get_by_label_text("Email address")
@@ -64,9 +71,11 @@ def test_by_label_text(screen: Screen):
 def test_by_alt_text(screen: Screen):
     screen.driver.get(get_file_path("index.html"))
     assert isinstance(screen.get_by_alt_text("Some Image"), WebElement)
+    assert isinstance(screen.get_by_alt_text("Some", exact=False), WebElement)
 
     screen.driver.get(get_file_path("form.html"))
     assert len(screen.find_all_by_alt_text("img2 alt")) == 2
+    assert len(screen.find_all_by_alt_text("2 alt", exact=False)) == 2
     with pytest.raises(MultipleSuchElementsException):
         screen.query_by_alt_text("img2 alt")
 
@@ -80,6 +89,7 @@ def test_by_placeholder_text(screen: Screen):
     screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
         assert isinstance(fun("My Placeholder"), WebElement)
+        assert isinstance(fun("My Place", exact=False), WebElement)
 
     list_funcs = (
         screen.get_all_by_placeholder_text,
@@ -88,6 +98,10 @@ def test_by_placeholder_text(screen: Screen):
     )
     for fun in list_funcs:
         items = fun("My Placeholder")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+        items = fun("My Place", exact=False)
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -102,6 +116,7 @@ def test_by_role(screen: Screen):
     screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
         isinstance(fun("My Role Input"), WebElement)
+        isinstance(fun("Role Input", exact=False), WebElement)
 
     list_funcs = (
         screen.get_all_by_role,
@@ -110,6 +125,10 @@ def test_by_role(screen: Screen):
     )
     for fun in list_funcs:
         items = fun("My Role Input")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+        items = fun("My Role Inp", exact=False)
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -124,6 +143,7 @@ def test_by_text_index(screen: Screen):
     screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
         isinstance(fun("My Text Input"), WebElement)
+        isinstance(fun("Text Input", exact=False), WebElement)
 
     list_funcs = (
         screen.get_all_by_text,
@@ -135,6 +155,10 @@ def test_by_text_index(screen: Screen):
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
+        items = fun("Text Input", exact=False)
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
 
 def test_by_label_text_index(screen: Screen):
     screen.driver.get(get_file_path("index.html"))
@@ -143,9 +167,9 @@ def test_by_label_text_index(screen: Screen):
         screen.query_by_label_text,
         screen.find_by_label_text,
     )
-    screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
         isinstance(fun("My Label Text"), WebElement)
+        isinstance(fun("Label Text", exact=False), WebElement)
 
     list_funcs = (
         screen.get_all_by_label_text,
@@ -154,6 +178,10 @@ def test_by_label_text_index(screen: Screen):
     )
     for fun in list_funcs:
         items = fun("My Label Text")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+        items = fun("Label Text", exact=False)
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -167,6 +195,7 @@ def test_by_alt_text_index(screen: Screen):
     )
     for fun in funcs:
         isinstance(fun("Some Image"), WebElement)
+        isinstance(fun("me Image", exact=False), WebElement)
 
     list_funcs = (
         screen.get_all_by_alt_text,
@@ -175,6 +204,10 @@ def test_by_alt_text_index(screen: Screen):
     )
     for fun in list_funcs:
         items = fun("Some Image")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+        items = fun("Some Ima", exact=False)
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -188,6 +221,7 @@ def test_by_title(screen: Screen):
     )
     for fun in funcs:
         isinstance(fun("Some Title"), WebElement)
+        isinstance(fun("Some Tit", exact=False), WebElement)
 
     list_funcs = (
         screen.get_all_by_title,
@@ -196,6 +230,10 @@ def test_by_title(screen: Screen):
     )
     for fun in list_funcs:
         items = fun("Some Title")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+        items = fun("Some T", exact=False)
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -209,6 +247,7 @@ def test_by_test_id(screen: Screen):
     )
     for fun in funcs:
         isinstance(fun("Some Test Id"), WebElement)
+        isinstance(fun("Some Test", exact=False), WebElement)
 
     list_funcs = (
         screen.get_all_by_test_id,
@@ -217,6 +256,9 @@ def test_by_test_id(screen: Screen):
     )
     for fun in list_funcs:
         items = fun("Some Test Id")
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+        items = fun("Some Test", exact=False)
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -230,6 +272,7 @@ def test_by_display_value(screen: Screen):
     )
     for fun in funcs:
         isinstance(fun("Input Display Value"), WebElement)
+        isinstance(fun("Input Display", exact=False), WebElement)
 
     list_funcs = (
         screen.get_all_by_display_value,
@@ -241,7 +284,14 @@ def test_by_display_value(screen: Screen):
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
+        items = fun("Input Display", exact=False)
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
     els = screen.get_all_by_display_value("All Display Value")
+    assert len(els) == 3
+
+    els = screen.get_all_by_display_value("All Display", exact=False)
     assert len(els) == 3
 
 
