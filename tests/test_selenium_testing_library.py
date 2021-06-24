@@ -88,8 +88,8 @@ def test_by_placeholder_text(screen: Screen):
     )
     screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
-        assert isinstance(fun("My Placeholder"), WebElement)
-        assert isinstance(fun("My Place", exact=False), WebElement)
+        assert isinstance(fun("My Placeholder"), WebElement)  # type: ignore
+        assert isinstance(fun("My Place", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_placeholder_text,
@@ -97,11 +97,11 @@ def test_by_placeholder_text(screen: Screen):
         screen.find_all_by_placeholder_text,
     )
     for fun in list_funcs:
-        items = fun("My Placeholder")
+        items = fun("My Placeholder")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
-        items = fun("My Place", exact=False)
+        items = fun("My Place", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -115,8 +115,8 @@ def test_by_role(screen: Screen):
     )
     screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
-        isinstance(fun("My Role Input"), WebElement)
-        isinstance(fun("Role Input", exact=False), WebElement)
+        isinstance(fun("My Role Input"), WebElement)  # type: ignore
+        isinstance(fun("Role Input", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_role,
@@ -124,11 +124,11 @@ def test_by_role(screen: Screen):
         screen.find_all_by_role,
     )
     for fun in list_funcs:
-        items = fun("My Role Input")
+        items = fun("My Role Input")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
-        items = fun("My Role Inp", exact=False)
+        items = fun("My Role Inp", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -142,8 +142,8 @@ def test_by_text_index(screen: Screen):
     )
     screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
-        isinstance(fun("My Text Input"), WebElement)
-        isinstance(fun("Text Input", exact=False), WebElement)
+        isinstance(fun("My Text Input"), WebElement)  # type: ignore
+        isinstance(fun("Text Input", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_text,
@@ -151,11 +151,11 @@ def test_by_text_index(screen: Screen):
         screen.find_all_by_text,
     )
     for fun in list_funcs:
-        items = fun("My Text Input")
+        items = fun("My Text Input")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
-        items = fun("Text Input", exact=False)
+        items = fun("Text Input", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -168,8 +168,8 @@ def test_by_label_text_index(screen: Screen):
         screen.find_by_label_text,
     )
     for fun in funcs:
-        isinstance(fun("My Label Text"), WebElement)
-        isinstance(fun("Label Text", exact=False), WebElement)
+        isinstance(fun("My Label Text"), WebElement)  # type: ignore
+        isinstance(fun("Label Text", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_label_text,
@@ -177,11 +177,11 @@ def test_by_label_text_index(screen: Screen):
         screen.find_all_by_label_text,
     )
     for fun in list_funcs:
-        items = fun("My Label Text")
+        items = fun("My Label Text")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
-        items = fun("Label Text", exact=False)
+        items = fun("Label Text", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -194,8 +194,8 @@ def test_by_alt_text_index(screen: Screen):
         screen.find_by_alt_text,
     )
     for fun in funcs:
-        isinstance(fun("Some Image"), WebElement)
-        isinstance(fun("me Image", exact=False), WebElement)
+        isinstance(fun("Some Image"), WebElement)  # type: ignore
+        isinstance(fun("me Image", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_alt_text,
@@ -203,11 +203,11 @@ def test_by_alt_text_index(screen: Screen):
         screen.find_all_by_alt_text,
     )
     for fun in list_funcs:
-        items = fun("Some Image")
+        items = fun("Some Image")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
-        items = fun("Some Ima", exact=False)
+        items = fun("Some Ima", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -220,8 +220,8 @@ def test_by_title(screen: Screen):
         screen.find_by_title,
     )
     for fun in funcs:
-        isinstance(fun("Some Title"), WebElement)
-        isinstance(fun("Some Tit", exact=False), WebElement)
+        isinstance(fun("Some Title"), WebElement)  # type: ignore
+        isinstance(fun("Some Tit", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_title,
@@ -229,11 +229,11 @@ def test_by_title(screen: Screen):
         screen.find_all_by_title,
     )
     for fun in list_funcs:
-        items = fun("Some Title")
+        items = fun("Some Title")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
-        items = fun("Some T", exact=False)
+        items = fun("Some T", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -246,8 +246,8 @@ def test_by_test_id(screen: Screen):
         screen.find_by_test_id,
     )
     for fun in funcs:
-        isinstance(fun("Some Test Id"), WebElement)
-        isinstance(fun("Some Test", exact=False), WebElement)
+        isinstance(fun("Some Test Id"), WebElement)  # type: ignore
+        isinstance(fun("Some Test", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_test_id,
@@ -255,10 +255,10 @@ def test_by_test_id(screen: Screen):
         screen.find_all_by_test_id,
     )
     for fun in list_funcs:
-        items = fun("Some Test Id")
+        items = fun("Some Test Id")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
-        items = fun("Some Test", exact=False)
+        items = fun("Some Test", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -271,8 +271,8 @@ def test_by_display_value(screen: Screen):
         screen.find_by_display_value,
     )
     for fun in funcs:
-        isinstance(fun("Input Display Value"), WebElement)
-        isinstance(fun("Input Display", exact=False), WebElement)
+        isinstance(fun("Input Display Value"), WebElement)  # type: ignore
+        isinstance(fun("Input Display", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_display_value,
@@ -280,11 +280,11 @@ def test_by_display_value(screen: Screen):
         screen.find_all_by_display_value,
     )
     for fun in list_funcs:
-        items = fun("Input Display Value")
+        items = fun("Input Display Value")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
-        items = fun("Input Display", exact=False)
+        items = fun("Input Display", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -303,7 +303,7 @@ def test_by_css(screen: Screen):
         screen.find_by_css,
     )
     for fun in funcs:
-        isinstance(fun(".mycss"), WebElement)
+        isinstance(fun(".mycss"), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_css,
@@ -311,7 +311,7 @@ def test_by_css(screen: Screen):
         screen.find_all_by_css,
     )
     for fun in list_funcs:
-        items = fun(".mycss")
+        items = fun(".mycss")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
@@ -324,7 +324,7 @@ def test_by_xpath(screen: Screen):
         screen.find_by_xpath,
     )
     for fun in funcs:
-        isinstance(fun("//div[@class = 'mycss']"), WebElement)
+        isinstance(fun("//div[@class = 'mycss']"), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_xpath,
@@ -332,7 +332,7 @@ def test_by_xpath(screen: Screen):
         screen.find_all_by_xpath,
     )
     for fun in list_funcs:
-        items = fun("//div[@class = 'mycss']")
+        items = fun("//div[@class = 'mycss']")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
