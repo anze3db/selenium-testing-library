@@ -3,7 +3,6 @@ from typing import Iterable, List, Optional, Tuple, Union
 from selenium.webdriver import Remote as Driver  # type: ignore
 from selenium.webdriver.common.by import By as SeleniumBy  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
-from typing_extensions import Literal
 
 
 class By:

@@ -9,17 +9,16 @@ authors = ["Anže Pečar <anze@pecar.me>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-selenium = "^3.0.0"
-typing-extensions = "^3.10.0"
+selenium = ">3.0.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.4"
-black = "^21.5b0"
-pytest-cov = "^2.12.0"
-pytest-watch = "^4.2.0"
-mypy = "^0.812"
-isort = "^5.8.0"
-tox = "^3.23.1"
+pytest = "*"
+black = "*"
+pytest-cov = "*"
+pytest-watch = "*"
+mypy = "*"
+isort = "*"
+tox = "*"
 
 [tool.isort]
 profile = "black"
