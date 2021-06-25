@@ -2,6 +2,34 @@
 
 Slenium Testing Library (STL) is a Python library for Selenium inspired by [Testing-Library](https://testing-library.com/).
 
+## Dependencies
+
+* Python 3.6, 3.7, 3.8, or 3.9
+* Selenium > 3.0.0
+
+## Installation
+
+```
+pip install selenium-testing-library
+```
+
+## Quick Start
+
+```python
+from selenium import webdriver
+from selenium_testing_library import Screen
+
+driver = webdriver.Chrome()
+driver.open('https://google.com/')
+
+screen = Screen(driver)
+search_input = screen.find_by_title("Search")
+search.send_keys("Dogs")
+search_button = screen.find_by_text("Google Search")
+search_button.click()
+screen.wait_for_stale(search_button)
+```
+
 ## Finding elements
 
 `get_by` returns the element matched and throws an exception if zero or more than one elements matched.
