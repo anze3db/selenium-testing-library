@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from typing import Callable, List, Optional, TypeVar
+from typing import Callable, List, Optional, Protocol, TypeVar
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
-from selenium.webdriver import Remote as Driver  # type: ignore
+from selenium.webdriver.remote.webdriver import (
+    WebDriver as RemoteWebDriver,  # type: ignore
+)
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 from selenium.webdriver.support import expected_conditions as EC  # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
@@ -40,15 +42,23 @@ by_to_locator = {
 }
 
 
+class ElementsFinder(Protocol):
+    def find_elements(
+        self, by: str = locators.By.ID, value: str = None
+    ) -> List[WebElement]:
+        ...
+
+
 class Screen:
-    def __init__(self, driver: Driver):
+    def __init__(self, driver: RemoteWebDriver):
         self.driver = driver
+        self._finder: ElementsFinder = driver
 
     def get_by(self, locator: Locator) -> WebElement:
         if not isinstance(locator, locators.Locator):
             by, selector = locator
             locator = by_to_locator[by](selector)
-        els = locator.find_elements(self.driver)
+        els = locator.find_elements(self._finder)
 
         if not els:
             raise NoSuchElementException()
@@ -62,7 +72,7 @@ class Screen:
         if not isinstance(locator, locators.Locator):
             by, selector = locator
             locator = by_to_locator[by](selector)
-        els = locator.find_elements(self.driver)
+        els = locator.find_elements(self._finder)
 
         if not els:
             return None
@@ -92,7 +102,7 @@ class Screen:
         if not isinstance(locator, locators.Locator):
             by, selector = locator
             locator = by_to_locator[by](selector)
-        els = locator.find_elements(self.driver)
+        els = locator.find_elements(self._finder)
         if not els:
             raise NoSuchElementException()
 
@@ -424,7 +434,7 @@ class Screen:
 
     def wait_for(
         self,
-        method: Callable[[Driver], T],
+        method: Callable[[RemoteWebDriver], T],
         *,
         timeout=5,
         poll_frequency=0.5,
@@ -445,7 +455,23 @@ class Screen:
 
 class Within(Screen):
     def __init__(self, element: WebElement):
-        self.driver = element
+        self.element = element
+        self._finder: ElementsFinder = element
+
+    def wait_for(
+        self,
+        method: Callable[[WebElement], T],
+        *,
+        timeout=5,
+        poll_frequency=0.5,
+        ignored_exceptions=None,
+    ) -> T:
+        return WebDriverWait(
+            self.element,
+            timeout=timeout,
+            poll_frequency=poll_frequency,
+            ignored_exceptions=ignored_exceptions,
+        ).until(method)
 
 
 __all__ = [
