@@ -1,11 +1,8 @@
 from __future__ import annotations
 
-from typing import Callable, List, Optional, Protocol, TypeVar
+from typing import Callable, Generic, List, Optional, Protocol, TypeVar
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
-from selenium.webdriver.remote.webdriver import (
-    WebDriver as RemoteWebDriver,  # type: ignore
-)
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 from selenium.webdriver.support import expected_conditions as EC  # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
@@ -49,8 +46,11 @@ class ElementsFinder(Protocol):
         ...
 
 
-class Screen:
-    def __init__(self, driver: RemoteWebDriver):
+DriverType = TypeVar("DriverType", bound=ElementsFinder)
+
+
+class Screen(Generic[DriverType]):
+    def __init__(self, driver: DriverType):
         self.driver = driver
         self._finder: ElementsFinder = driver
 
@@ -434,7 +434,7 @@ class Screen:
 
     def wait_for(
         self,
-        method: Callable[[RemoteWebDriver], T],
+        method: Callable[[DriverType], T],
         *,
         timeout=5,
         poll_frequency=0.5,
