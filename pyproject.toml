@@ -19,6 +19,7 @@ pytest-watch = "*"
 mypy = "*"
 isort = "*"
 tox = "*"
+tox-py = "*"
 
 [tool.isort]
 profile = "black"
