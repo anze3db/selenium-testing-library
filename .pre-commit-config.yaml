@@ -20,7 +20,3 @@ repos:
     rev: '5.8.0'
     hooks:
     -   id: isort
-        name: isort
-        entry: poetry run isort
-        language: python
-        types: [file, python]
