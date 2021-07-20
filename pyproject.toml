@@ -27,7 +27,7 @@ multi_line_output = 3
 
 [tool.pytest.ini_options]
 minversion = "6.2.4"
-addopts = "--selenium-headless --cov=selenium_testing_library --cov-report html --verbose --durations=10"
+addopts = "--selenium-headless --cov=selenium_testing_library --cov-report html --cov-report xml --verbose --durations=10"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
