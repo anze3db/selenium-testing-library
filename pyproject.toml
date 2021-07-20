@@ -8,7 +8,7 @@ repository = "https://github.com/Smotko/selenium-testing-library"
 authors = ["Anže Pečar <anze@pecar.me>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6"
 selenium = ">3.0.0"
 
 [tool.poetry.dev-dependencies]
