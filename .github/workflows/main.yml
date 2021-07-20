@@ -41,5 +41,3 @@ jobs:
     - uses: codecov/codecov-action@v2
       with:
         name: python-${{ matrix.python-version }}
-        fail_ci_if_error: true # optional (default = false)
-        verbose: true # optional (default = false)
