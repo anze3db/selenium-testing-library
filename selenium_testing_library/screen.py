@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import Callable, Generic, List, Optional, TypeVar
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
