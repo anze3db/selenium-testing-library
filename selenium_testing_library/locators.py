@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Iterable, List, Optional, Union
 from selenium.webdriver.common.by import By as SeleniumBy  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
-if TYPE_CHECKING:  # pragma: no cover
+if TYPE_CHECKING:
     from .screen import ElementsFinder
 
 

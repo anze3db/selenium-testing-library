@@ -21,6 +21,13 @@ exclude_lines =
     if 0:
     if __name__ == .__main__.:
 
+    # typing-related code
+    ^if (False|TYPE_CHECKING):
+    : \.\.\.(\s*#.*)?$
+    ^ +\.\.\.$
+    -> ['"]?NoReturn['"]?:
+
+
 ignore_errors = True
 
 [html]

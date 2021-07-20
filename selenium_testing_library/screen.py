@@ -42,7 +42,7 @@ class ElementsFinder(Protocol):
     def find_elements(
         self, by: str = locators.By.ID, value: str = None
     ) -> List[WebElement]:
-        ...  # pragma: no cover
+        ...
 
 
 DriverType = TypeVar("DriverType", bound=ElementsFinder)
