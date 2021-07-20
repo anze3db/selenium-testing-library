@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-from typing import Callable, Generic, List, Optional, Protocol, TypeVar
+from typing import Callable, Generic, List, Optional, TypeVar
 
 from selenium.common.exceptions import TimeoutException  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 from selenium.webdriver.support import expected_conditions as EC  # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
+from typing_extensions import Protocol
 
 from . import locators
 

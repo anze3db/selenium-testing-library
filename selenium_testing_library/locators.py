@@ -1,10 +1,12 @@
-from typing import Iterable, List, Optional, Tuple, Union
+from __future__ import annotations
 
-from selenium.webdriver import Remote as Driver  # type: ignore
+from typing import TYPE_CHECKING, Iterable, List, Optional, Union
+
 from selenium.webdriver.common.by import By as SeleniumBy  # type: ignore
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
-from .screen import ElementsFinder
+if TYPE_CHECKING:
+    from .screen import ElementsFinder
 
 
 class By:
