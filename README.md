@@ -1,5 +1,6 @@
 # Selenium Testing Library
 
+[![PyPI version](https://badge.fury.io/py/selenium-testing-library.svg)](https://badge.fury.io/py/selenium-testing-library)
 [![test](https://github.com/Smotko/selenium-testing-library/actions/workflows/main.yml/badge.svg)](https://github.com/Smotko/selenium-testing-library/actions/workflows/main.yml) [![codecov](https://codecov.io/gh/Smotko/selenium-testing-library/branch/main/graph/badge.svg?token=L1M7HO3DL7)](https://codecov.io/gh/Smotko/selenium-testing-library)
 
 Slenium Testing Library (STL) is a Python library for Selenium inspired by [Testing-Library](https://testing-library.com/).
