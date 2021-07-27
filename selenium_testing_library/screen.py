@@ -1,6 +1,10 @@
 from typing import Callable, Generic, List, Optional, TypeVar
 
-from selenium.common.exceptions import TimeoutException  # type: ignore
+from selenium.common.exceptions import (  # type: ignore
+    NoSuchElementException,
+    TimeoutException,
+    WebDriverException,
+)
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 from selenium.webdriver.support import expected_conditions as EC  # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
@@ -13,11 +17,7 @@ Locator = locators.LocatorType
 T = TypeVar("T")
 
 
-class MultipleSuchElementsException(Exception):
-    ...
-
-
-class NoSuchElementException(Exception):
+class MultipleSuchElementsException(WebDriverException):
     ...
 
 
