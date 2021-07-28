@@ -356,6 +356,10 @@ def test_within(screen: Screen):
     with pytest.raises(NoSuchElementException):
         Within(el).find_all_by(locators.Css("img"), timeout=0.01, poll_frequency=0.005)
 
+    Within(el).get_by_text("Hello")
+    with pytest.raises(NoSuchElementException):
+        Within(el).get_by_text("Password")
+
 
 def test_parameter_types(screen: Screen):
     screen.driver.get(get_file_path("index.html"))

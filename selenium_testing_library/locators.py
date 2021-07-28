@@ -86,14 +86,14 @@ class Role(Locator):
     BY = By.ROLE
 
     def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f"//*[{self._exact_or_not('@role')}]"))
+        return finder.find_elements(*XPath(f".//*[{self._exact_or_not('@role')}]"))
 
 
 class Text(Locator):
     BY = By.TEXT
 
     def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f'//*[{self._exact_or_not("text()")}]'))
+        return finder.find_elements(*XPath(f'.//*[{self._exact_or_not("text()")}]'))
 
 
 class PlaceholderText(Locator):
@@ -101,7 +101,7 @@ class PlaceholderText(Locator):
 
     def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
         return finder.find_elements(
-            *XPath(f'//*[{self._exact_or_not("@placeholder")}]')
+            *XPath(f'.//*[{self._exact_or_not("@placeholder")}]')
         )
 
 
@@ -110,7 +110,7 @@ class LabelText(Locator):
 
     def find_elements(self, finder: "ElementsFinder"):
         labels: WebElement = finder.find_elements(
-            *XPath(f'//label[{self._exact_or_not("text()")}]')
+            *XPath(f'.//label[{self._exact_or_not("text()")}]')
         )
         elements = []
         for label in labels:
@@ -129,14 +129,14 @@ class AltText(Locator):
     BY = By.ALT_TEXT
 
     def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f'//*[{self._exact_or_not("@alt")}]'))
+        return finder.find_elements(*XPath(f'.//*[{self._exact_or_not("@alt")}]'))
 
 
 class Title(Locator):
     BY = By.TITLE
 
     def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f'//*[{self._exact_or_not("@title")}]'))
+        return finder.find_elements(*XPath(f'.//*[{self._exact_or_not("@title")}]'))
 
 
 class TestId(Locator):
@@ -144,7 +144,7 @@ class TestId(Locator):
 
     def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
         return finder.find_elements(
-            *XPath(f'//*[{self._exact_or_not("@data-testid")}]')
+            *XPath(f'.//*[{self._exact_or_not("@data-testid")}]')
         )
 
 
@@ -153,7 +153,7 @@ class DisplayValue(Locator):
 
     def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
         els = finder.find_elements(
-            *XPath(f"//*[self::input or self::textarea or self::select]")
+            *XPath(f".//*[self::input or self::textarea or self::select]")
         )
         if self.exact:
             return [el for el in els if self.selector == el.get_attribute("value")]
