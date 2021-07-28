@@ -444,3 +444,39 @@ def test_wait_for_stale(screen: Screen):
     img = screen.get_by(locators.Css("img"))
     screen.driver.get(get_file_path("index.html"))
     screen.wait_for_stale(img)
+
+
+def test_no_elements_error(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    with pytest.raises(NoSuchElementException) as excinfo:
+        screen.get_by(locators.Css("section"))
+    message = str(excinfo.value)
+    assert "No element found with locator Css('section', exact=True)" in message
+    assert "<main>" in message
+    assert "</main>" in message
+    assert "</body></html>" in message
+
+
+def test_no_elements_error_within(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    parent = screen.get_by_css("main")
+    with pytest.raises(NoSuchElementException) as excinfo:
+        Within(parent).get_by(locators.Css("section"))
+    message = str(excinfo.value)
+    assert "No element found with locator Css('section', exact=True)" in message
+    assert "</body></html>" not in message
+    assert "<main>" in message
+    assert "</main>" in message
+    assert "</body></html>" not in message
+
+
+def test_multiple_elements_error(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    with pytest.raises(MultipleSuchElementsException) as excinfo:
+        screen.get_by(locators.Css("div"))
+    message = str(excinfo.value)
+    assert "7 elements found with locator Css('div', exact=True)" in message
+    assert "0. <div>             <h1>My Text Input</h1>" in message
+    assert (
+        '1. <div>                 <a href="https://example.com/">Link 1</a>' in message
+    )

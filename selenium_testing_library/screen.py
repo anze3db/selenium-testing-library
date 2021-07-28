@@ -60,10 +60,12 @@ class Screen(Generic[DriverType]):
         els = locator.find_elements(self._finder)
 
         if not els:
-            raise NoSuchElementException()
+            raise NoSuchElementException(self._get_no_element_message(locator))
 
         if len(els) > 1:
-            raise MultipleSuchElementsException()
+            raise MultipleSuchElementsException(
+                self._get_multiple_elements_message(locator, els)
+            )
 
         return els[0]
 
@@ -76,7 +78,9 @@ class Screen(Generic[DriverType]):
         if not els:
             return None
         if len(els) > 1:
-            raise MultipleSuchElementsException()
+            raise MultipleSuchElementsException(
+                self._get_multiple_elements_message(locator, els)
+            )
 
         return els[0]
 
@@ -92,9 +96,11 @@ class Screen(Generic[DriverType]):
                 poll_frequency=poll_frequency,
             )
         except TimeoutException:
-            raise NoSuchElementException()
+            raise NoSuchElementException(self._get_no_element_message(locator))
         if len(els) > 1:
-            raise MultipleSuchElementsException()
+            raise MultipleSuchElementsException(
+                self._get_multiple_elements_message(locator, els)
+            )
         return els[0]
 
     def get_all_by(self, locator: Locator) -> List[WebElement]:
@@ -103,7 +109,7 @@ class Screen(Generic[DriverType]):
             locator = by_to_locator[by](selector)
         els = locator.find_elements(self._finder)
         if not els:
-            raise NoSuchElementException()
+            raise NoSuchElementException(self._get_no_element_message(locator))
 
         return els
 
@@ -127,7 +133,7 @@ class Screen(Generic[DriverType]):
                 poll_frequency=poll_frequency,
             )
         except TimeoutException:
-            raise NoSuchElementException()
+            raise NoSuchElementException(self._get_no_element_message(locator))
 
     # By role
     def get_by_role(self, role: str, exact: bool = True) -> WebElement:
@@ -451,6 +457,17 @@ class Screen(Generic[DriverType]):
             EC.staleness_of(element), timeout=timeout, poll_frequency=poll_frequency
         )
 
+    def _get_no_element_message(self, locator):
+        return f"No element found with locator {locator}:\n{self.driver.page_source}"
+
+    def _get_multiple_elements_message(self, locator, els: List[WebElement]):
+        el_str = ""
+        for i, el in enumerate(els):
+            el_str += f"{i}. {' '.join(el.get_attribute('outerHTML').splitlines())}\n"
+        raise MultipleSuchElementsException(
+            f"{len(els)} elements found with locator {locator}:\n{el_str}"
+        )
+
 
 class Within(Screen):
     def __init__(self, element: WebElement):
@@ -471,6 +488,9 @@ class Within(Screen):
             poll_frequency=poll_frequency,
             ignored_exceptions=ignored_exceptions,
         ).until(method)
+
+    def _get_no_element_message(self, locator):
+        return f"No element found with locator {locator}:\n{self.element.get_attribute('outerHTML')}"
 
 
 __all__ = [
