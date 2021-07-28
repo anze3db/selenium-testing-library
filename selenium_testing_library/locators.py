@@ -46,6 +46,9 @@ class Locator:
             return f'{operator} = "{self.selector}"'
         return f'contains({operator}, "{self.selector}")'
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.selector}', exact={self.exact})"
+
 
 class Css(Locator):
     BY = By.CSS_SELECTOR
