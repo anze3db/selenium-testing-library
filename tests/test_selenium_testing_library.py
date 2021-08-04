@@ -484,3 +484,12 @@ def test_multiple_elements_error(screen: Screen):
     assert (
         '1. <div>                 <a href="https://example.com/">Link 1</a>' in message
     )
+
+
+def test_quote_escaping(screen: Screen):
+    screen.driver.get(get_file_path("bugs.html"))
+    screen.get_by_text('Hello "world"')
+    screen.get_by_text("Hello 'world'")
+    screen.get_by_text("Hello `world`")
+    screen.get_by_text("Hello\" `world` '!'")
+    screen.get_by_text("\"Hello' `world` '!\"")

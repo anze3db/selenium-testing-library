@@ -42,9 +42,18 @@ class Locator:
         return finder.find_elements(*self)
 
     def _exact_or_not(self, operator):
+        escaped_selector = self._escape_selector(self.selector)
         if self.exact:
-            return f'{operator} = "{self.selector}"'
-        return f'contains({operator}, "{self.selector}")'
+            return f"{operator} = {escaped_selector}"
+        return f"contains({operator}, {escaped_selector})"
+
+    def _escape_selector(self, selector: str) -> str:
+        if '"' in selector and "'" in selector:
+            selector = selector.replace('"', '", \'"\',"')
+            return f'concat("{selector}")'
+        elif '"' in selector:
+            return f"'{selector}'"
+        return f'"{selector}"'
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.selector}', exact={self.exact})"
