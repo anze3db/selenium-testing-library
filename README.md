@@ -160,3 +160,10 @@ pytest --selenium-headless --cov=selenium_testing_library --cov-report html
 # `export PATH=$(pyenv root)/shims:$PATH`). Then run tox:
 tox
 ```
+
+# Releasing a new version
+
+```shell
+bumpver update --tag-num  # Wait and see if the CI is green
+poetry build && poetry publish
+```
