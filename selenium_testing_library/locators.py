@@ -28,7 +28,7 @@ class By:
 
 
 class Locator:
-    BY: Optional[str] = None
+    BY: str
 
     def __init__(self, selector: str, exact: bool = True):
         self.selector = selector
@@ -118,7 +118,7 @@ class LabelText(Locator):
     BY = By.LABEL_TEXT
 
     def find_elements(self, finder: "ElementsFinder"):
-        labels: WebElement = finder.find_elements(
+        labels = finder.find_elements(
             *XPath(f'.//label[{self._exact_or_not("text()")}]')
         )
         elements = []
