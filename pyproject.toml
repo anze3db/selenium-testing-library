@@ -20,6 +20,7 @@ mypy = "*"
 isort = "*"
 tox = "*"
 tox-py = "*"
+bumpver = "*"
 
 [tool.isort]
 profile = "black"
@@ -32,3 +33,23 @@ addopts = "--selenium-headless --cov=selenium_testing_library --cov-report html 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.bumpver]
+current_version = "2021.8.4b0"
+version_pattern = "YYYY.MM.DD[PYTAGNUM]"
+commit_message = "Bump version from {old_version} to {new_version} 🚀"
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+    'version = "{version}"',
+]
+"selenium_testing_library/__init__.py" = [
+    '__version__ = "{version}"'
+]
+"tests/test_selenium_testing_library.py" = [
+    'assert __version__ == "{version}"'
+]
