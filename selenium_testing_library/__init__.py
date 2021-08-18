@@ -1,3 +1,3 @@
 from .screen import *
 
-__version__ = "2021.8.17b0"
+__version__ = "2021.8.18b0"
