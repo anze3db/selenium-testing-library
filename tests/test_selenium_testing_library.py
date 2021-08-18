@@ -61,6 +61,7 @@ def test_by_label_text(screen: Screen):
     assert input_field.get_attribute("type") == "email"
 
     input_field = screen.query_by_label_text("Password")
+    assert input_field
     assert input_field.get_attribute("type") == "password"
 
     input_fields = list(screen.get_all_by_label_text("Same Label"))
