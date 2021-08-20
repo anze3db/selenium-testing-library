@@ -525,7 +525,10 @@ class Screen(Generic[DriverType]):
         )
 
     def _get_no_element_message(self, locator: Locator):
-        return f"No element found with locator {locator}:\n{self.driver.page_source}"  # type: ignore
+        msg = f"No element found with locator {locator}"
+        if hasattr(self.driver, "page_source"):
+            msg += ":\n{self.driver.page_source}"
+        return msg
 
     def _get_multiple_elements_message(self, locator: Locator, els: List[WebElement]):
         el_str = ""
