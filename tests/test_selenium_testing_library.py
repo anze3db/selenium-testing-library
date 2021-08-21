@@ -1,7 +1,7 @@
 import pathlib
 
 import pytest  # type: ignore
-from selenium.webdriver.remote.webelement import WebElement  # type: ignore
+from selenium.webdriver.remote.webelement import WebElement
 
 from selenium_testing_library import (
     MultipleSuchElementsException,

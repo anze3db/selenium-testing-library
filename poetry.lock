@@ -429,6 +429,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "types-selenium"
+version = "3.141.2"
+description = "Typing stubs for selenium"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "3.10.0.0"
 description = "Backported and Experimental Type Hints for Python 3.5+"
@@ -496,7 +504,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "35dd5d6ba609c0a192161e15745d7366c53af37ea9803c6c5351d0ec6d377fcc"
+content-hash = "5eb88fa1e1437cff7b2d3bca59482c62d11ab44a1b1071b8b42380b71c00f750"
 
 [metadata.files]
 appdirs = [
@@ -781,6 +789,10 @@ typed-ast = [
     {file = "typed_ast-1.4.3-cp39-cp39-win32.whl", hash = "sha256:209596a4ec71d990d71d5e0d312ac935d86930e6eecff6ccc7007fe54d703808"},
     {file = "typed_ast-1.4.3-cp39-cp39-win_amd64.whl", hash = "sha256:9c6d1a54552b5330bc657b7ef0eae25d00ba7ffe85d9ea8ae6540d2197a3788c"},
     {file = "typed_ast-1.4.3.tar.gz", hash = "sha256:fb1bbeac803adea29cedd70781399c99138358c26d05fcbd23c13016b7f5ec65"},
+]
+types-selenium = [
+    {file = "types-selenium-3.141.2.tar.gz", hash = "sha256:0be007c04fbde691e00aa04169b4ed50d53557e0aaf2f6461e4b4e4ffad17d17"},
+    {file = "types_selenium-3.141.2-py3-none-any.whl", hash = "sha256:8a127a1bd6ea70c294f56146245c6be1edde0ebfc3ef3638aa020f2614eeaf9a"},
 ]
 typing-extensions = [
     {file = "typing_extensions-3.10.0.0-py2-none-any.whl", hash = "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497"},
