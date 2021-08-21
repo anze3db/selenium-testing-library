@@ -1,13 +1,13 @@
 from typing import Any, Callable, Generic, List, Optional, TypeVar
 
-from selenium.common.exceptions import (  # type: ignore
+from selenium.common.exceptions import (
     NoSuchElementException,
     TimeoutException,
     WebDriverException,
 )
-from selenium.webdriver.remote.webelement import WebElement  # type: ignore
-from selenium.webdriver.support import expected_conditions as EC  # type: ignore
-from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from typing_extensions import Protocol
 
 from . import locators

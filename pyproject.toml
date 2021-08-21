@@ -21,6 +21,7 @@ isort = "*"
 tox = "*"
 tox-py = "*"
 bumpver = "*"
+types-selenium = "*"
 
 [tool.isort]
 profile = "black"
@@ -53,3 +54,7 @@ push = true
 "tests/test_selenium_testing_library.py" = [
     'assert __version__ == "{version}"'
 ]
+
+[tool.mypy]
+python_version = "3.6"
+warn_unused_configs = true

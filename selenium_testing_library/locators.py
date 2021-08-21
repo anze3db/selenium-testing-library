@@ -1,7 +1,7 @@
-from typing import TYPE_CHECKING, Iterable, List, Optional, Union
+from typing import TYPE_CHECKING, Iterable, List, Union
 
-from selenium.webdriver.common.by import By as SeleniumBy  # type: ignore
-from selenium.webdriver.remote.webelement import WebElement  # type: ignore
+from selenium.webdriver.common.by import By as SeleniumBy
+from selenium.webdriver.remote.webelement import WebElement
 
 if TYPE_CHECKING:
     from .screen import ElementsFinder
