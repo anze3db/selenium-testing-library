@@ -35,12 +35,16 @@ screen.wait_for_stale(search_button)
 
 ## Finding elements
 
-`get_by` returns the element matched and throws an exception if zero or more than one elements matched.
-`query_by` returns the element matched or `None` if no element matched. It throws and exception if more than 1 elements matched.
+`get_by` returns the element matched and throws an exception if zero or more than one elements matched. This is the main function that we should be using to locate elements on a page.
+
+`query_by` returns the element matched or `None` if no element matched. It throws and exception if more than 1 elements matched. Mostly used for asserting that an element is **not** present: `assert not screen.query_by_text("not on page")`.
+
 `find_by` behaves like `get_by`, but uses a `WebDriverWait` to wait until the element is present in the DOM.
 
 `get_all_by` returns a list of elements matched. It raises an exception if no elements matched.
+
 `query_all_by` returns a list of elements matched. It returns an empty list when no elements matched.
+
 `find_all_by` behaves like `get_all_by`, but uses a `WebDriverWait` to wait until the elements jare present in the DOM.
 
 Examples:
