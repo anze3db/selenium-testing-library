@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "selenium-testing-library"
-version = "2021.8.22b0"
+version = "2021.9.13b1"
 description = "A Python Selenium library inspired by the Testing Library"
 readme = "README.md"
 license = "MIT"
@@ -36,7 +36,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.bumpver]
-current_version = "2021.8.22b0"
+current_version = "2021.9.13b1"
 version_pattern = "YYYY.MM.DD[PYTAGNUM]"
 commit_message = "Bump version from {old_version} to {new_version} 🚀"
 commit = true
