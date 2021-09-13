@@ -457,9 +457,6 @@ def test_no_elements_error(screen: Screen):
         screen.get_by(locators.Css("section"))
     message = str(excinfo.value)
     assert "No element found with locator Css('section', exact=True)" in message
-    assert "<main>" in message
-    assert "</main>" in message
-    assert "</body></html>" in message
 
 
 def test_no_elements_error_within(screen: Screen):
