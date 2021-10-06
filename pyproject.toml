@@ -22,6 +22,7 @@ tox = "*"
 tox-py = "*"
 bumpver = "*"
 types-selenium = "*"
+coverage = "*"
 
 [tool.isort]
 profile = "black"
