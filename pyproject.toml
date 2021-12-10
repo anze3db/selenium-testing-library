@@ -4,7 +4,7 @@ version = "2021.10.6b0"
 description = "A Python Selenium library inspired by the Testing Library"
 readme = "README.md"
 license = "MIT"
-repository = "https://github.com/Smotko/selenium-testing-library"
+repository = "https://github.com/anze3db/selenium-testing-library"
 authors = ["Anže Pečar <anze@pecar.me>"]
 
 [tool.poetry.dependencies]
