@@ -8,7 +8,7 @@ repository = "https://github.com/anze3db/selenium-testing-library"
 authors = ["Anže Pečar <anze@pecar.me>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 selenium = ">3.0.0"
 
 [tool.poetry.dev-dependencies]
@@ -57,5 +57,5 @@ push = true
 ]
 
 [tool.mypy]
-python_version = "3.6"
+python_version = "3.7"
 warn_unused_configs = true

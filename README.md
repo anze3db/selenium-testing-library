@@ -7,8 +7,8 @@ Slenium Testing Library (STL) is a Python library for Selenium inspired by [Test
 
 ## Dependencies
 
-* Python 3.6, 3.7, 3.8, 3.9, 3.10
-* Selenium > 3.0.0
+- Python 3.7, 3.8, 3.9, 3.10
+- Selenium > 3.0.0
 
 ## Installation
 
@@ -59,6 +59,7 @@ screen.query_by((By.ID, "my_id")) # you can use regular tuples as if you were us
 screen.find_by((By.XPATH, "//div"), timeout=5, poll_frequency=0.5) # locators for searching through text also work
 screen.get_by((By.CSS, ".my_class")) # Will throw an exception if the element is not found
 ```
+
 For a more detail description check out the [Testing-Library](https://testing-library.com/docs/queries/about)'s documentation.
 
 ## Helper functions
@@ -113,7 +114,6 @@ screen.query_all_by(locators.ClassName("my-class-name"))
 
 `wait_for(condition_function)` Waits until condition function returns a truthy value.
 `wait_for_stale(element)` Waits until the element is removed from the DOM.
-
 
 Examples:
 
