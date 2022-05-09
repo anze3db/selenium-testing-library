@@ -6,6 +6,11 @@
 
 - ...
 
+## 2022.3b0
+
+- Add Python 3.11 support
+- Dependency updates
+
 ## 2022.2b0
 
 - Link to Changelog from PyPI
