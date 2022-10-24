@@ -4,7 +4,9 @@
 
 ## In development
 
-- ...
+## 2022.4b0
+- Add Python 3.11 to the list of supported versions in the README
+- Dependency updates
 
 ## 2022.3b0
 
