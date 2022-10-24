@@ -30,6 +30,7 @@ def test_by_text(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     assert isinstance(screen.get_by_text("Email address"), WebElement)
     assert isinstance(screen.get_by_text("Email add", exact=False), WebElement)
+    assert isinstance(screen.get_by_text("Dashboard", exact=False), WebElement)
     assert screen.query_by_text("address") is None
     assert isinstance(screen.query_by_text("address", exact=False), WebElement)
     assert len(screen.find_all_by_text("Item")) == 3
