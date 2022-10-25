@@ -102,7 +102,7 @@ class Text(Locator):
     BY = By.TEXT
 
     def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f'.//*[{self._exact_or_not("text()")}]'))
+        return finder.find_elements(*XPath(f'.//*[text()[{self._exact_or_not(".")}]]'))
 
 
 class PlaceholderText(Locator):
