@@ -44,6 +44,9 @@ class ElementsFinder(Protocol):
     ) -> List[WebElement]:
         ...
 
+    def execute_script(self, script: str, *args) -> List[WebElement]:
+        ...
+
 
 DriverType = TypeVar("DriverType", bound=ElementsFinder)
 

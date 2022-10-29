@@ -7,3 +7,4 @@ __pycache__
 coverage_html_report
 htmlcov
 coverage.xml
+node_modules
