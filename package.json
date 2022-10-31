@@ -4,7 +4,7 @@
     "description": "Generate Testing Library self-contained script so `screen` can be used in the browser",
     "main": "index.js",
     "scripts": {
-        "build": "webpack --mode production",
+        "build": "webpack --mode production --output-path ./selenium_testing_library",
         "deploy": "npm outdated && npm run build"
     },
     "keywords": [],

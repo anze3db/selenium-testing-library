@@ -7,7 +7,7 @@ license = "MIT"
 repository = "https://github.com/anze3db/selenium-testing-library"
 authors = ["Anže Pečar <anze@pecar.me>"]
 include = [
-    {path = "dist/*.js"}
+    "selenium_testing_library/main.js"
 ]
 
 [tool.poetry.urls]

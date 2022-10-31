@@ -15,6 +15,8 @@ from typing_extensions import Protocol
 
 from . import locators
 
+testing_library = (Path(__file__).parent / Path("main.js")).read_text()
+
 Locator = locators.LocatorType
 
 T = TypeVar("T")
@@ -52,8 +54,6 @@ class ElementsFinder(Protocol):
 
 
 DriverType = TypeVar("DriverType", bound=ElementsFinder)
-
-testing_library = Path(__file__).parent / Path("dist/main.js").read_text()
 
 
 class Screen(Generic[DriverType]):
