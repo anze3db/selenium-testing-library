@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Any, Callable, Generic, List, Optional, TypeVar
 
 from selenium.common.exceptions import (
+    JavascriptException,
     NoSuchElementException,
     TimeoutException,
     WebDriverException,
@@ -80,10 +81,13 @@ class Screen(Generic[DriverType]):
             ),
         ):
             return self._finder.find_elements(*loc)
-
-        return self._finder.execute_script(
-            f"{testing_library};return __stl__.queryAllBy{loc.__class__.__name__}(document, {escaped_selector}, {{exact: {ex}}});"
-        )
+        script_to_run = f"return __stl__.queryAllBy{loc.__class__.__name__}(document, {escaped_selector}, {{exact: {ex}}});"
+        try:
+            # Optimistically run the query, if __stl__ isn't defined on the page we'll get a JavaScript exception
+            return self._finder.execute_script(script_to_run)
+        except JavascriptException:
+            # We assume that the error was `__stl__ is not defined` so we add __stl__ to the DOM and run the command again
+            return self._finder.execute_script(f"{testing_library};{script_to_run}")
 
     def _ensure_locator(self, locator: Locator) -> locators.Locator:
         if isinstance(locator, locators.Locator):

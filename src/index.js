@@ -1,4 +1,4 @@
-import { screen, queryAllByText, queryAllByRole, queryAllByPlaceholderText, queryAllByLabelText, queryAllByAltText, queryAllByTitle, queryAllByTestId, queryAllByDisplayValue } from '@testing-library/dom'
+import { queryAllByText, queryAllByRole, queryAllByPlaceholderText, queryAllByLabelText, queryAllByAltText, queryAllByTitle, queryAllByTestId, queryAllByDisplayValue } from '@testing-library/dom'
 
 window.__stl__ = {}
 window.__stl__.queryAllByText = queryAllByText
