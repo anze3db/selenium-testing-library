@@ -38,9 +38,11 @@ def test_by_text(screen: Screen):
 
     # Go through get with a text selector
     assert isinstance(screen.get_by(locators.Text("Email address")), WebElement)
-    assert isinstance(screen.get_by(locators.Text("Email add", False)), WebElement)
+    assert isinstance(
+        screen.get_by(locators.Text("Email add", exact=False)), WebElement
+    )
     assert screen.query_by(locators.Text("address")) is None
-    assert screen.query_by(locators.Text("addrsdfsdess", False)) is None
+    assert screen.query_by(locators.Text("addrsdfsdess", exact=False)) is None
     assert len(screen.find_all_by(locators.Text("Ite", exact=False))) == 3
 
 

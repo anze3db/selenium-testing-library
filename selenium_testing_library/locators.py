@@ -1,4 +1,5 @@
-from typing import TYPE_CHECKING, Iterable, List, Union
+import json
+from typing import TYPE_CHECKING, Iterable, Optional, Union
 
 from selenium.webdriver.common.by import By as SeleniumBy
 from selenium.webdriver.remote.webelement import WebElement
@@ -30,7 +31,7 @@ class By:
 class Locator:
     BY: str
 
-    def __init__(self, selector: str, exact: bool = True):
+    def __init__(self, selector: str, *, exact: bool = True):
         self.selector = selector
         self.exact = exact
 
@@ -77,33 +78,211 @@ class ClassName(Locator):
 class Role(Locator):
     BY = By.ROLE
 
+    def __init__(
+        self,
+        role: str,
+        *,
+        exact: bool = True,
+        hidden: bool = False,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        selected: Optional[bool] = None,
+        checked: Optional[bool] = None,
+        pressed: Optional[bool] = None,
+        current: Optional[Union[bool, str]] = None,
+        expanded: Optional[bool] = None,
+        queryFallbacks: Optional[bool] = None,
+        level: Optional[int] = None,
+    ):
+        self.role = role
+        self.exact = exact
+        self.hidden = hidden
+        self.name = name
+        self.description = description
+        self.selected = selected
+        self.checked = checked
+        self.pressed = pressed
+        self.current = current
+        self.expanded = expanded
+        self.queryFallbacks = queryFallbacks
+        self.level = level
+
+    def __repr__(self):
+        return f"""{self.__class__.__name__}(
+    '{self.role}',
+    exact={self.exact},
+    hidden={self.hidden},
+    name={self.name},
+    description={self.description},
+    selected={self.selected},
+    checked={self.checked},
+    pressed={self.pressed},
+    current={self.current},
+    expanded={self.expanded},
+    queryFallbacks={self.queryFallbacks},
+    level={self.level},
+)"""
+
+    def _testing_library_js_str(self):
+        return f"""return __stl__.queryAllByRole(document, {json.dumps(self.role)}, {{
+            exact: {json.dumps(self.exact)},
+            hidden: {json.dumps(self.hidden)},
+            // TODO: Figure out how to set these
+            // name: {json.dumps(self.name)},
+            // description: {json.dumps(self.description)},
+            // selected: {json.dumps(self.selected)},
+            // checked: {json.dumps(self.checked)},
+            // pressed: {json.dumps(self.pressed)},
+            // current: {json.dumps(self.current)},
+            // expanded: {json.dumps(self.expanded)},
+            // queryFallbacks: {json.dumps(self.queryFallbacks)},
+            // level: {json.dumps(self.level)}
+
+        }});"""
+
 
 class Text(Locator):
     BY = By.TEXT
+
+    def __init__(
+        self,
+        text: str,
+        *,
+        selector: str = "*",
+        exact: bool = True,
+        ignore: Union[str, bool] = "script, style",
+    ):
+        self.text = text
+        self.selector = selector
+        self.exact = exact
+        self.ignore = ignore
+
+    def __repr__(self):
+        return f"""{self.__class__.__name__}(
+    '{self.text}',
+    selector='{self.selector}',
+    exact={self.exact},
+    ignore='{self.ignore}',
+)"""
+
+    def _testing_library_js_str(self):
+        return f"return __stl__.queryAllByText(document, {json.dumps(self.text)}, {{selector: {json.dumps(self.selector)}, exact: {json.dumps(self.exact)}, ignore: {json.dumps(self.ignore)}}});"
 
 
 class PlaceholderText(Locator):
     BY = By.PLACEHOLDER_TEXT
 
+    def __init__(
+        self,
+        text: str,
+        *,
+        exact: bool = True,
+    ):
+        self.text = text
+        self.exact = exact
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.text}', exact={self.exact})"
+
+    def _testing_library_js_str(self):
+        return f"return __stl__.queryAllByPlaceholderText(document, {json.dumps(self.text)}, {{exact: {json.dumps(self.exact)}}});"
+
 
 class LabelText(Locator):
     BY = By.LABEL_TEXT
+
+    def __init__(
+        self,
+        text: str,
+        *,
+        selector: str = "*",
+        exact: bool = True,
+    ):
+        self.text = text
+        self.selector = selector
+        self.exact = exact
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.text}', selector={self.selector}, exact={self.exact})"
+
+    def _testing_library_js_str(self):
+        return f"return __stl__.queryAllByLabelText(document, {json.dumps(self.text)}, {{selector: {json.dumps(self.selector)}, exact: {json.dumps(self.exact)}}});"
 
 
 class AltText(Locator):
     BY = By.ALT_TEXT
 
+    def __init__(
+        self,
+        text: str,
+        *,
+        exact: bool = True,
+    ):
+        self.text = text
+        self.exact = exact
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.text}', exact={self.exact})"
+
+    def _testing_library_js_str(self):
+        return f"return __stl__.queryAllByAltText(document, {json.dumps(self.text)}, {{exact: {json.dumps(self.exact)}}});"
+
 
 class Title(Locator):
     BY = By.TITLE
+
+    def __init__(
+        self,
+        title: str,
+        *,
+        exact: bool = True,
+    ):
+        self.title = title
+        self.exact = exact
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.title}', exact={self.exact})"
+
+    def _testing_library_js_str(self):
+        return f"return __stl__.queryAllByTitle(document, {json.dumps(self.title)}, {{exact: {json.dumps(self.exact)}}});"
 
 
 class TestId(Locator):
     BY = By.TITLE
 
+    def __init__(
+        self,
+        text: str,
+        *,
+        exact: bool = True,
+    ):
+        self.text = text
+        self.exact = exact
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.text}', exact={self.exact})"
+
+    def _testing_library_js_str(self):
+        return f"return __stl__.queryAllByTestId(document, {json.dumps(self.text)}, {{exact: {json.dumps(self.exact)}}});"
+
 
 class DisplayValue(Locator):
     BY = By.DISPLAY_VALUE
+
+    def __init__(
+        self,
+        value: str,
+        *,
+        exact: bool = True,
+    ):
+        self.value = value
+        self.exact = exact
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.value}', exact={self.exact})"
+
+    def _testing_library_js_str(self):
+        return f"return __stl__.queryAllByDisplayValue(document, {json.dumps(self.value)}, {{exact: {json.dumps(self.exact)}}});"
 
 
 LocatorType = Union[

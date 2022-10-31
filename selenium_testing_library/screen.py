@@ -63,24 +63,21 @@ class Screen(Generic[DriverType]):
 
     def _find_elements(self, locator: Locator) -> List[WebElement]:
         loc = self._ensure_locator(locator)
-        ex = "true" if loc.exact else "false"
-        escaped_selector = json.dumps(loc.selector)
-
-        if isinstance(
+        if not isinstance(
             loc,
             (
-                locators.Css,
-                locators.XPath,
-                locators.Id,
-                locators.Name,
-                locators.TagName,
-                locators.LinkText,
-                locators.PartialLinkText,
-                locators.ClassName,
+                locators.Role,
+                locators.Text,
+                locators.PlaceholderText,
+                locators.LabelText,
+                locators.AltText,
+                locators.Title,
+                locators.TestId,
+                locators.DisplayValue,
             ),
         ):
             return self._finder.find_elements(*loc)
-        script_to_run = f"return __stl__.queryAllBy{loc.__class__.__name__}(document, {escaped_selector}, {{exact: {ex}}});"
+        script_to_run = loc._testing_library_js_str()
         try:
             # Optimistically run the query, if __stl__ isn't defined on the page we'll get a JavaScript exception
             return self._finder.execute_script(script_to_run)
@@ -163,10 +160,10 @@ class Screen(Generic[DriverType]):
 
     # By role
     def get_by_role(self, role: str, exact: bool = True) -> WebElement:
-        return self.get_by(locators.Role(role, exact))
+        return self.get_by(locators.Role(role, exact=exact))
 
     def query_by_role(self, role: str, exact: bool = True) -> Optional[WebElement]:
-        return self.get_by(locators.Role(role, exact))
+        return self.get_by(locators.Role(role, exact=exact))
 
     def find_by_role(
         self,
@@ -176,14 +173,16 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> WebElement:
         return self.find_by(
-            locators.Role(role, exact), timeout=timeout, poll_frequency=poll_frequency
+            locators.Role(role, exact=exact),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
         )
 
     def get_all_by_role(self, role: str, exact: bool = True) -> List[WebElement]:
-        return self.get_all_by(locators.Role(role, exact))
+        return self.get_all_by(locators.Role(role, exact=exact))
 
     def query_all_by_role(self, role: str, exact: bool = True) -> List[WebElement]:
-        return self.query_all_by(locators.Role(role, exact))
+        return self.query_all_by(locators.Role(role, exact=exact))
 
     def find_all_by_role(
         self,
@@ -193,15 +192,17 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.Role(role, exact), timeout=timeout, poll_frequency=poll_frequency
+            locators.Role(role, exact=exact),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
         )
 
     # By text
     def get_by_text(self, text: str, exact: bool = True) -> WebElement:
-        return self.get_by(locators.Text(text, exact))
+        return self.get_by(locators.Text(text, exact=exact))
 
     def query_by_text(self, text: str, exact: bool = True) -> Optional[WebElement]:
-        return self.query_by(locators.Text(text, exact))
+        return self.query_by(locators.Text(text, exact=exact))
 
     def find_by_text(
         self,
@@ -211,14 +212,16 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> WebElement:
         return self.find_by(
-            locators.Text(text, exact), timeout=timeout, poll_frequency=poll_frequency
+            locators.Text(text, exact=exact),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
         )
 
     def get_all_by_text(self, text: str, exact: bool = True) -> List[WebElement]:
-        return self.get_all_by(locators.Text(text, exact))
+        return self.get_all_by(locators.Text(text, exact=exact))
 
     def query_all_by_text(self, text: str, exact: bool = True) -> List[WebElement]:
-        return self.query_all_by(locators.Text(text, exact))
+        return self.query_all_by(locators.Text(text, exact=exact))
 
     def find_all_by_text(
         self,
@@ -228,17 +231,19 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.Text(text, exact), timeout=timeout, poll_frequency=poll_frequency
+            locators.Text(text, exact=exact),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
         )
 
     # By placeholder
     def get_by_placeholder_text(self, value: str, exact: bool = True) -> WebElement:
-        return self.get_by(locators.PlaceholderText(value, exact))
+        return self.get_by(locators.PlaceholderText(value, exact=exact))
 
     def query_by_placeholder_text(
         self, value: str, exact: bool = True
     ) -> Optional[WebElement]:
-        return self.query_by(locators.PlaceholderText(value, exact))
+        return self.query_by(locators.PlaceholderText(value, exact=exact))
 
     def find_by_placeholder_text(
         self,
@@ -248,7 +253,7 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> WebElement:
         return self.find_by(
-            locators.PlaceholderText(value, exact),
+            locators.PlaceholderText(value, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
@@ -256,12 +261,12 @@ class Screen(Generic[DriverType]):
     def get_all_by_placeholder_text(
         self, value: str, exact: bool = True
     ) -> List[WebElement]:
-        return self.get_all_by(locators.PlaceholderText(value, exact))
+        return self.get_all_by(locators.PlaceholderText(value, exact=exact))
 
     def query_all_by_placeholder_text(
         self, value: str, exact: bool = True
     ) -> List[WebElement]:
-        return self.query_all_by(locators.PlaceholderText(value, exact))
+        return self.query_all_by(locators.PlaceholderText(value, exact=exact))
 
     def find_all_by_placeholder_text(
         self,
@@ -271,19 +276,19 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.PlaceholderText(value, exact),
+            locators.PlaceholderText(value, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
 
     # By label text
     def get_by_label_text(self, text: str, exact: bool = True) -> WebElement:
-        return self.get_by(locators.LabelText(text, exact))
+        return self.get_by(locators.LabelText(text, exact=exact))
 
     def query_by_label_text(
         self, text: str, exact: bool = True
     ) -> Optional[WebElement]:
-        return self.query_by(locators.LabelText(text, exact))
+        return self.query_by(locators.LabelText(text, exact=exact))
 
     def find_by_label_text(
         self,
@@ -293,18 +298,18 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> WebElement:
         return self.find_by(
-            locators.LabelText(text, exact),
+            locators.LabelText(text, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
 
     def get_all_by_label_text(self, text: str, exact: bool = True) -> List[WebElement]:
-        return self.get_all_by(locators.LabelText(text, exact))
+        return self.get_all_by(locators.LabelText(text, exact=exact))
 
     def query_all_by_label_text(
         self, text: str, exact: bool = True
     ) -> List[WebElement]:
-        return self.query_all_by(locators.LabelText(text, exact))
+        return self.query_all_by(locators.LabelText(text, exact=exact))
 
     def find_all_by_label_text(
         self,
@@ -314,17 +319,17 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.LabelText(text, exact),
+            locators.LabelText(text, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
 
     # By alt text
     def get_by_alt_text(self, value: str, exact: bool = True) -> WebElement:
-        return self.get_by(locators.AltText(value, exact))
+        return self.get_by(locators.AltText(value, exact=exact))
 
     def query_by_alt_text(self, value: str, exact: bool = True) -> Optional[WebElement]:
-        return self.query_by(locators.AltText(value, exact))
+        return self.query_by(locators.AltText(value, exact=exact))
 
     def find_by_alt_text(
         self,
@@ -334,16 +339,16 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> WebElement:
         return self.find_by(
-            locators.AltText(value, exact),
+            locators.AltText(value, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
 
     def get_all_by_alt_text(self, value: str, exact: bool = True) -> List[WebElement]:
-        return self.get_all_by(locators.AltText(value, exact))
+        return self.get_all_by(locators.AltText(value, exact=exact))
 
     def query_all_by_alt_text(self, value: str, exact: bool = True) -> List[WebElement]:
-        return self.query_all_by(locators.AltText(value, exact))
+        return self.query_all_by(locators.AltText(value, exact=exact))
 
     def find_all_by_alt_text(
         self,
@@ -353,17 +358,17 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.AltText(value, exact),
+            locators.AltText(value, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
 
     # By title
     def get_by_title(self, value: str, exact: bool = True) -> WebElement:
-        return self.get_by(locators.Title(value, exact))
+        return self.get_by(locators.Title(value, exact=exact))
 
     def query_by_title(self, value: str, exact: bool = True) -> Optional[WebElement]:
-        return self.query_by(locators.Title(value, exact))
+        return self.query_by(locators.Title(value, exact=exact))
 
     def find_by_title(
         self,
@@ -373,14 +378,16 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> WebElement:
         return self.find_by(
-            locators.Title(value, exact), timeout=timeout, poll_frequency=poll_frequency
+            locators.Title(value, exact=exact),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
         )
 
     def get_all_by_title(self, value: str, exact: bool = True) -> List[WebElement]:
-        return self.get_all_by(locators.Title(value, exact))
+        return self.get_all_by(locators.Title(value, exact=exact))
 
     def query_all_by_title(self, value: str, exact: bool = True) -> List[WebElement]:
-        return self.query_all_by(locators.Title(value, exact))
+        return self.query_all_by(locators.Title(value, exact=exact))
 
     def find_all_by_title(
         self,
@@ -390,15 +397,17 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.Title(value, exact), timeout=timeout, poll_frequency=poll_frequency
+            locators.Title(value, exact=exact),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
         )
 
     # By test id
     def get_by_test_id(self, value: str, exact: bool = True) -> WebElement:
-        return self.get_by(locators.TestId(value, exact))
+        return self.get_by(locators.TestId(value, exact=exact))
 
     def query_by_test_id(self, value: str, exact: bool = True) -> Optional[WebElement]:
-        return self.query_by(locators.TestId(value, exact))
+        return self.query_by(locators.TestId(value, exact=exact))
 
     def find_by_test_id(
         self,
@@ -408,16 +417,16 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> WebElement:
         return self.find_by(
-            locators.TestId(value, exact),
+            locators.TestId(value, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
 
     def get_all_by_test_id(self, value: str, exact: bool = True) -> List[WebElement]:
-        return self.get_all_by(locators.TestId(value, exact))
+        return self.get_all_by(locators.TestId(value, exact=exact))
 
     def query_all_by_test_id(self, value: str, exact: bool = True) -> List[WebElement]:
-        return self.query_all_by(locators.TestId(value, exact))
+        return self.query_all_by(locators.TestId(value, exact=exact))
 
     def find_all_by_test_id(
         self,
@@ -427,19 +436,19 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.TestId(value, exact),
+            locators.TestId(value, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
 
     # By display value
     def get_by_display_value(self, value: str, exact: bool = True) -> WebElement:
-        return self.get_by(locators.DisplayValue(value, exact))
+        return self.get_by(locators.DisplayValue(value, exact=exact))
 
     def query_by_display_value(
         self, value: str, exact: bool = True
     ) -> Optional[WebElement]:
-        return self.query_by(locators.DisplayValue(value, exact))
+        return self.query_by(locators.DisplayValue(value, exact=exact))
 
     def find_by_display_value(
         self,
@@ -449,7 +458,7 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> WebElement:
         return self.find_by(
-            locators.DisplayValue(value, exact),
+            locators.DisplayValue(value, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
@@ -457,12 +466,12 @@ class Screen(Generic[DriverType]):
     def get_all_by_display_value(
         self, value: str, exact: bool = True
     ) -> List[WebElement]:
-        return self.get_all_by(locators.DisplayValue(value, exact))
+        return self.get_all_by(locators.DisplayValue(value, exact=exact))
 
     def query_all_by_display_value(
         self, value: str, exact: bool = True
     ) -> List[WebElement]:
-        return self.query_all_by(locators.DisplayValue(value, exact))
+        return self.query_all_by(locators.DisplayValue(value, exact=exact))
 
     def find_all_by_display_value(
         self,
@@ -472,7 +481,7 @@ class Screen(Generic[DriverType]):
         poll_frequency: float = 0.5,
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.DisplayValue(value, exact),
+            locators.DisplayValue(value, exact=exact),
             timeout=timeout,
             poll_frequency=poll_frequency,
         )
@@ -535,9 +544,9 @@ class Screen(Generic[DriverType]):
         self,
         method: Callable[[DriverType], T],
         *,
-        timeout=5,
-        poll_frequency=0.5,
-        ignored_exceptions=None,
+        timeout: float = 5,
+        poll_frequency: float = 0.5,
+        ignored_exceptions: Optional[bool] = None,
     ) -> T:
         return WebDriverWait(
             self.driver,
@@ -575,22 +584,24 @@ class Within(Screen[WebElement]):
         ex = "true" if loc.exact else "false"
         escaped_selector = json.dumps(loc.selector)
 
-        if isinstance(
+        if not isinstance(
             loc,
             (
-                locators.Css,
-                locators.XPath,
-                locators.Id,
-                locators.Name,
-                locators.TagName,
-                locators.LinkText,
-                locators.PartialLinkText,
-                locators.ClassName,
+                locators.Role,
+                locators.Text,
+                locators.PlaceholderText,
+                locators.LabelText,
+                locators.AltText,
+                locators.Title,
+                locators.TestId,
+                locators.DisplayValue,
             ),
         ):
             return self.element.find_elements(*loc)
 
-        script_to_run = f"return __stl__.queryAllBy{loc.__class__.__name__}(arguments[0], {escaped_selector}, {{exact: {ex}}});"
+        script_to_run = loc._testing_library_js_str().replace(
+            "(document", "(arguments[0]"
+        )
         try:
             return self.element.parent.execute_script(
                 script_to_run,
