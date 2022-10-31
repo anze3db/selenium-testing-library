@@ -4,6 +4,8 @@
 
 ## In development
 
+## 2022.7b0
+- Fix packaging issue
 ## 2022.6b0
 - Use [@testing-library/dom](https://www.npmjs.com/package/@testing-library/dom) under the hood for all Testing Library queries. (This resolves [Issue #10](https://github.com/anze3db/selenium-testing-library/issues/10))
 - Remove `find_elements`, `_exact_or_not`, `_escape_selector` functions from all `Locator` classes (these were not indended to be public API).
