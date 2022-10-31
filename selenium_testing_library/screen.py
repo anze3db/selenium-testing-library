@@ -54,7 +54,6 @@ class ElementsFinder(Protocol):
 DriverType = TypeVar("DriverType", bound=ElementsFinder)
 
 testing_library = Path(__file__).parent / Path("dist/main.js").read_text()
-print(testing_library)
 
 
 class Screen(Generic[DriverType]):
