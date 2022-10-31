@@ -38,23 +38,6 @@ class Locator:
         yield self.BY
         yield self.selector
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*self)
-
-    def _exact_or_not(self, operator):
-        escaped_selector = self._escape_selector(self.selector)
-        if self.exact:
-            return f"{operator} = {escaped_selector}"
-        return f"contains({operator}, {escaped_selector})"
-
-    def _escape_selector(self, selector: str) -> str:
-        if '"' in selector and "'" in selector:
-            selector = selector.replace('"', '", \'"\',"')
-            return f'concat("{selector}")'
-        elif '"' in selector:
-            return f"'{selector}'"
-        return f'"{selector}"'
-
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.selector}', exact={self.exact})"
 
@@ -94,77 +77,33 @@ class ClassName(Locator):
 class Role(Locator):
     BY = By.ROLE
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f".//*[{self._exact_or_not('@role')}]"))
-
 
 class Text(Locator):
     BY = By.TEXT
-
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f'.//*[text()[{self._exact_or_not(".")}]]'))
 
 
 class PlaceholderText(Locator):
     BY = By.PLACEHOLDER_TEXT
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(
-            *XPath(f'.//*[{self._exact_or_not("@placeholder")}]')
-        )
-
 
 class LabelText(Locator):
     BY = By.LABEL_TEXT
-
-    def find_elements(self, finder: "ElementsFinder"):
-        labels = finder.find_elements(*XPath(f'.//label[{self._exact_or_not(".")}]'))
-        elements = []
-        for label in labels:
-            for_ = label.get_attribute("for")
-            if for_ is not None:
-                elements += finder.find_elements(*Id(for_))
-                continue
-            id_ = label.get_attribute("id")
-            if id_:
-                elements += finder.find_elements(*Css(f"[aria-labelledby='{id_}']"))
-                continue
-        return elements
 
 
 class AltText(Locator):
     BY = By.ALT_TEXT
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f'.//*[{self._exact_or_not("@alt")}]'))
-
 
 class Title(Locator):
     BY = By.TITLE
-
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*XPath(f'.//*[{self._exact_or_not("@title")}]'))
 
 
 class TestId(Locator):
     BY = By.TITLE
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(
-            *XPath(f'.//*[{self._exact_or_not("@data-testid")}]')
-        )
-
 
 class DisplayValue(Locator):
     BY = By.DISPLAY_VALUE
-
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        els = finder.find_elements(
-            *XPath(f".//*[self::input or self::textarea or self::select]")
-        )
-        if self.exact:
-            return [el for el in els if self.selector == el.get_attribute("value")]
-        return [el for el in els if self.selector in el.get_attribute("value")]
 
 
 LocatorType = Union[

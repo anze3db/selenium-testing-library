@@ -47,10 +47,10 @@ def test_by_text(screen: Screen):
 def test_by_label_text(screen: Screen):
     screen.driver.get(get_file_path("label.html"))
     username_fields = screen.get_all_by_label_text("Username")
-    assert len(username_fields) == 2  # TODO: Should be 5
+    assert len(username_fields) == 5
 
     username_fields = screen.get_all_by_label_text("sername", exact=False)
-    assert len(username_fields) == 2  # TODO: Should be 5
+    assert len(username_fields) == 5
 
     assert screen.query_by_label_text("Label Without Input") is None
     assert screen.query_by_label_text("el Without In", exact=False) is None
@@ -109,7 +109,6 @@ def test_by_placeholder_text(screen: Screen):
 
 
 def test_by_role(screen: Screen):
-    screen.driver.get(get_file_path("index.html"))
     funcs = (
         screen.get_by_role,
         screen.query_by_role,
@@ -117,8 +116,8 @@ def test_by_role(screen: Screen):
     )
     screen.driver.get(get_file_path("index.html"))
     for fun in funcs:
-        isinstance(fun("My Role Input"), WebElement)  # type: ignore
-        isinstance(fun("Role Input", exact=False), WebElement)  # type: ignore
+        isinstance(fun("my-role-input"), WebElement)  # type: ignore
+        isinstance(fun("my-role", exact=False), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_role,
@@ -126,11 +125,11 @@ def test_by_role(screen: Screen):
         screen.find_all_by_role,
     )
     for fun in list_funcs:
-        items = fun("My Role Input")  # type: ignore
+        items = fun("my-role-input")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 
-        items = fun("My Role Inp", exact=False)  # type: ignore
+        items = fun("my-role-inp", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 

@@ -1,6 +1,9 @@
+import json
+from pathlib import Path
 from typing import Any, Callable, Generic, List, Optional, TypeVar
 
 from selenium.common.exceptions import (
+    JavascriptException,
     NoSuchElementException,
     TimeoutException,
     WebDriverException,
@@ -44,14 +47,46 @@ class ElementsFinder(Protocol):
     ) -> List[WebElement]:
         ...
 
+    def execute_script(self, script: str, *args) -> List[WebElement]:
+        ...
+
 
 DriverType = TypeVar("DriverType", bound=ElementsFinder)
+
+testing_library = Path(__file__).parent / Path("dist/main.js").read_text()
 
 
 class Screen(Generic[DriverType]):
     def __init__(self, driver: DriverType):
         self.driver = driver
         self._finder: ElementsFinder = driver
+
+    def _find_elements(self, locator: Locator) -> List[WebElement]:
+        loc = self._ensure_locator(locator)
+        ex = "true" if loc.exact else "false"
+        escaped_selector = json.dumps(loc.selector)
+
+        if isinstance(
+            loc,
+            (
+                locators.Css,
+                locators.XPath,
+                locators.Id,
+                locators.Name,
+                locators.TagName,
+                locators.LinkText,
+                locators.PartialLinkText,
+                locators.ClassName,
+            ),
+        ):
+            return self._finder.find_elements(*loc)
+        script_to_run = f"return __stl__.queryAllBy{loc.__class__.__name__}(document, {escaped_selector}, {{exact: {ex}}});"
+        try:
+            # Optimistically run the query, if __stl__ isn't defined on the page we'll get a JavaScript exception
+            return self._finder.execute_script(script_to_run)
+        except JavascriptException:
+            # We assume that the error was `__stl__ is not defined` so we add __stl__ to the DOM and run the command again
+            return self._finder.execute_script(f"{testing_library};{script_to_run}")
 
     def _ensure_locator(self, locator: Locator) -> locators.Locator:
         if isinstance(locator, locators.Locator):
@@ -60,8 +95,7 @@ class Screen(Generic[DriverType]):
         return by_to_locator[by](selector)
 
     def get_by(self, locator: Locator) -> WebElement:
-        loc = self._ensure_locator(locator)
-        els = loc.find_elements(self._finder)
+        els = self._find_elements(locator)
 
         if not els:
             raise NoSuchElementException(self._get_no_element_message(locator))
@@ -74,8 +108,7 @@ class Screen(Generic[DriverType]):
         return els[0]
 
     def query_by(self, locator: Locator) -> Optional[WebElement]:
-        loc = self._ensure_locator(locator)
-        els = loc.find_elements(self._finder)
+        els = self._find_elements(locator)
 
         if not els:
             return None
@@ -89,10 +122,9 @@ class Screen(Generic[DriverType]):
     def find_by(
         self, locator: Locator, *, timeout: float = 5, poll_frequency: float = 0.5
     ) -> WebElement:
-        loc = self._ensure_locator(locator)
         try:
             els = self.wait_for(
-                loc.find_elements,
+                lambda _: self._find_elements(locator),
                 timeout=timeout,
                 poll_frequency=poll_frequency,
             )
@@ -105,8 +137,7 @@ class Screen(Generic[DriverType]):
         return els[0]
 
     def get_all_by(self, locator: Locator) -> List[WebElement]:
-        loc = self._ensure_locator(locator)
-        els = loc.find_elements(self._finder)
+        els = self._find_elements(locator)
         if not els:
             raise NoSuchElementException(self._get_no_element_message(locator))
 
@@ -121,11 +152,9 @@ class Screen(Generic[DriverType]):
     def find_all_by(
         self, locator: Locator, *, timeout: float = 5, poll_frequency: float = 0.5
     ) -> List[WebElement]:
-        loc = self._ensure_locator(locator)
-
         try:
             return self.wait_for(
-                loc.find_elements,
+                lambda _: self._find_elements(locator),
                 timeout=timeout,
                 poll_frequency=poll_frequency,
             )
@@ -539,7 +568,39 @@ class Screen(Generic[DriverType]):
 class Within(Screen[WebElement]):
     def __init__(self, element: WebElement):
         self.element = element
-        self._finder: ElementsFinder = element
+        self._finder: ElementsFinder = element.parent
+
+    def _find_elements(self, locator: Locator) -> List[WebElement]:
+        loc = self._ensure_locator(locator)
+        ex = "true" if loc.exact else "false"
+        escaped_selector = json.dumps(loc.selector)
+
+        if isinstance(
+            loc,
+            (
+                locators.Css,
+                locators.XPath,
+                locators.Id,
+                locators.Name,
+                locators.TagName,
+                locators.LinkText,
+                locators.PartialLinkText,
+                locators.ClassName,
+            ),
+        ):
+            return self.element.find_elements(*loc)
+
+        script_to_run = f"return __stl__.queryAllBy{loc.__class__.__name__}(arguments[0], {escaped_selector}, {{exact: {ex}}});"
+        try:
+            return self.element.parent.execute_script(
+                script_to_run,
+                self.element,
+            )
+        except JavascriptException:
+            return self.element.parent.execute_script(
+                f"{testing_library};{script_to_run}",
+                self.element,
+            )
 
     def wait_for(
         self,
