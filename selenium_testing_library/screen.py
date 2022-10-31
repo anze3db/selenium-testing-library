@@ -590,10 +590,17 @@ class Within(Screen[WebElement]):
         ):
             return self.element.find_elements(*loc)
 
-        return self.element.parent.execute_script(
-            f"{testing_library};return __stl__.queryAllBy{loc.__class__.__name__}(arguments[0], {escaped_selector}, {{exact: {ex}}});",
-            self.element,
-        )
+        script_to_run = f"return __stl__.queryAllBy{loc.__class__.__name__}(arguments[0], {escaped_selector}, {{exact: {ex}}});"
+        try:
+            return self.element.parent.execute_script(
+                script_to_run,
+                self.element,
+            )
+        except JavascriptException:
+            return self.element.parent.execute_script(
+                f"{testing_library};{script_to_run}",
+                self.element,
+            )
 
     def wait_for(
         self,
