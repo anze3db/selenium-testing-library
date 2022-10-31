@@ -1,5 +1,3 @@
-import json
-from pathlib import Path
 from typing import TYPE_CHECKING, Iterable, List, Union
 
 from selenium.webdriver.common.by import By as SeleniumBy
@@ -7,9 +5,6 @@ from selenium.webdriver.remote.webelement import WebElement
 
 if TYPE_CHECKING:
     from .screen import ElementsFinder
-
-
-testing_library = Path(__file__).parent / Path("dist/main.js").read_text()
 
 
 class By:
@@ -37,24 +32,11 @@ class Locator:
 
     def __init__(self, selector: str, exact: bool = True):
         self.selector = selector
-        self.escaped_selector = self._escape_selector(selector)
         self.exact = exact
 
     def __iter__(self):
         yield self.BY
         yield self.selector
-
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        return finder.find_elements(*self)
-
-    def _exact_or_not(self, operator):
-        escaped_selector = self._escape_selector(self.selector)
-        if self.exact:
-            return f"{operator} = {escaped_selector}"
-        return f"contains({operator}, {escaped_selector})"
-
-    def _escape_selector(self, selector: str) -> str:
-        return json.dumps(selector)
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.selector}', exact={self.exact})"
@@ -95,81 +77,33 @@ class ClassName(Locator):
 class Role(Locator):
     BY = By.ROLE
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        ex = "true" if self.exact else "false"
-        return finder.execute_script(
-            f"{testing_library};return screen.queryAllByRole({self.escaped_selector}, {{exact: {ex}}});"
-        )
-
 
 class Text(Locator):
     BY = By.TEXT
-
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        ex = "true" if self.exact else "false"
-        return finder.execute_script(
-            f"{testing_library};return screen.queryAllByText({self.escaped_selector}, {{exact: {ex}}});"
-        )
 
 
 class PlaceholderText(Locator):
     BY = By.PLACEHOLDER_TEXT
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        ex = "true" if self.exact else "false"
-        return finder.execute_script(
-            f"{testing_library};return screen.queryAllByPlaceholderText({self.escaped_selector}, {{exact: {ex}}});"
-        )
-
 
 class LabelText(Locator):
     BY = By.LABEL_TEXT
-
-    def find_elements(self, finder: "ElementsFinder"):
-        ex = "true" if self.exact else "false"
-        return finder.execute_script(
-            f"{testing_library};return screen.queryAllByLabelText({self.escaped_selector}, {{exact: {ex}}});"
-        )
 
 
 class AltText(Locator):
     BY = By.ALT_TEXT
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        ex = "true" if self.exact else "false"
-        return finder.execute_script(
-            f"{testing_library};return screen.queryAllByAltText({self.escaped_selector}, {{exact: {ex}}});"
-        )
-
 
 class Title(Locator):
     BY = By.TITLE
-
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        ex = "true" if self.exact else "false"
-        return finder.execute_script(
-            f"{testing_library};return screen.queryAllByTitle({self.escaped_selector}, {{exact: {ex}}});"
-        )
 
 
 class TestId(Locator):
     BY = By.TITLE
 
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        ex = "true" if self.exact else "false"
-        return finder.execute_script(
-            f"{testing_library};return screen.queryAllByTestId({self.escaped_selector}, {{exact: {ex}}});"
-        )
-
 
 class DisplayValue(Locator):
     BY = By.DISPLAY_VALUE
-
-    def find_elements(self, finder: "ElementsFinder") -> List[WebElement]:
-        ex = "true" if self.exact else "false"
-        return finder.execute_script(
-            f"{testing_library};return screen.queryAllByDisplayValue({self.escaped_selector}, {{exact: {ex}}});"
-        )
 
 
 LocatorType = Union[
