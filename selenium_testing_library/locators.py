@@ -124,21 +124,29 @@ class Role(Locator):
 )"""
 
     def _testing_library_js_str(self):
-        return f"""return __stl__.queryAllByRole(document, {json.dumps(self.role)}, {{
-            exact: {json.dumps(self.exact)},
-            hidden: {json.dumps(self.hidden)},
-            // TODO: Figure out how to set these
-            // name: {json.dumps(self.name)},
-            // description: {json.dumps(self.description)},
-            // selected: {json.dumps(self.selected)},
-            // checked: {json.dumps(self.checked)},
-            // pressed: {json.dumps(self.pressed)},
-            // current: {json.dumps(self.current)},
-            // expanded: {json.dumps(self.expanded)},
-            // queryFallbacks: {json.dumps(self.queryFallbacks)},
-            // level: {json.dumps(self.level)}
-
-        }});"""
+        res = f"return __stl__.queryAllByRole(document, {json.dumps(self.role)}, {{ exact: {json.dumps(self.exact)},"
+        if self.hidden is not None:
+            res += f"hidden: {json.dumps(self.hidden)},"
+        if self.name is not None:
+            res += f"name: {json.dumps(self.name)},"
+        if self.description is not None:
+            res += f"description: {json.dumps(self.description)},"
+        if self.selected is not None:
+            res += f"selected: {json.dumps(self.selected)},"
+        if self.checked is not None:
+            res += f"checked: {json.dumps(self.checked)},"
+        if self.pressed is not None:
+            res += f"pressed: {json.dumps(self.pressed)},"
+        if self.current is not None:
+            res += f"current: {json.dumps(self.current)},"
+        if self.expanded is not None:
+            res += f"expanded: {json.dumps(self.expanded)},"
+        if self.queryFallbacks is not None:
+            res += f"queryFallbacks: {json.dumps(self.queryFallbacks)},"
+        if self.level is not None:
+            res += f"level: {json.dumps(self.level)},"
+        res += "});"
+        return res
 
 
 class Text(Locator):
