@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Extra Test</title>
+</head>
+
+<body>
+
+    <section>
+        <button aria-pressed="true">👍</button>
+        <button aria-pressed="false">👎</button>
+    </section>
+
+    <nav>
+        <ul>
+            <li>
+                <a aria-expanded="false" aria-haspopup="true" href="...">Expandable Menu Item</a>
+                <ul>
+                    <li><a href="#">Submenu Item 1</a></li>
+                    <li><a href="#">Submenu Item 1</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Regular Menu Item</a></li>
+        </ul>
+    </nav>
+
+    <div role="switch checkbox" />
+
+    <section>
+        <h1>Heading Level One</h1>
+        <h2>First Heading Level Two</h2>
+        <h3>Heading Level Three</h3>
+        <div role="heading" aria-level="2">Second Heading Level Two</div>
+    </section>
+
+    <ul>
+        <li role="alertdialog" aria-describedby="notification-id-1">
+            <div><button>Close</button></div>
+            <div id="notification-id-1">You have unread emails</div>
+        </li>
+        <li role="alertdialog" aria-describedby="notification-id-2">
+            <div><button>Close</button></div>
+            <div id="notification-id-2">Your session is about to expire</div>
+        </li>
+    </ul>
+</body>

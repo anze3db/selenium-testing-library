@@ -46,6 +46,21 @@ def test_by_text(screen: Screen):
     assert len(screen.find_all_by(locators.Text("Ite", exact=False))) == 3
 
 
+def test_by_text_extra(screen: Screen):
+    screen.driver.get(get_file_path("extra.html"))
+    assert isinstance(screen.get_by_text("We Are Not Men", selector="div"), WebElement)
+    assert isinstance(
+        screen.get_by_text("We Are Not Men", selector=".pclass"), WebElement
+    )
+    assert isinstance(screen.get_by_text("We Are Not Men", ignore="p,span"), WebElement)
+    with pytest.raises(NoSuchElementException):
+        screen.get_by_text("We Are Not Men", selector="#myid")
+    assert screen.query_by_text("We Are Not Men", ignore="p,span,div") is None
+    assert len(screen.find_all_by_text("We Are Not Men", ignore="span")) == 2
+    assert len(screen.query_all_by_text("We Are Not Men", ignore="p")) == 2
+    assert len(screen.get_all_by_text("We Are Not Men", ignore="div")) == 2
+
+
 def test_by_label_text(screen: Screen):
     screen.driver.get(get_file_path("label.html"))
     username_fields = screen.get_all_by_label_text("Username")
@@ -70,6 +85,17 @@ def test_by_label_text(screen: Screen):
     input_fields = list(screen.get_all_by_label_text("Same Label"))
     assert input_fields[0].get_attribute("type") == "text"
     assert input_fields[1].get_attribute("type") == "color"
+
+
+def test_by_label_text_extra(screen: Screen):
+    screen.driver.get(get_file_path("extra.html"))
+
+    assert isinstance(
+        screen.get_by_label_text("We Are Diva", selector="input"), WebElement
+    )
+    assert isinstance(
+        screen.get_by_label_text("We Are Diva", selector="select"), WebElement
+    )
 
 
 def test_by_alt_text(screen: Screen):
@@ -134,6 +160,39 @@ def test_by_role(screen: Screen):
         items = fun("my-role-inp", exact=False)  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
+
+
+def test_by_role_extra(screen: Screen):
+    screen.driver.get(get_file_path("extra.html"))
+    assert len(screen.get_all_by_role("button", hidden=True)) == 2
+    assert len(screen.get_all_by_role("button")) == 1
+
+    assert len(screen.get_all_by_role("tab", selected=True)) == 1
+    assert len(screen.get_all_by_role("tab", selected=False)) == 2
+
+    assert len(screen.get_all_by_role("checkbox", checked=True)) == 1
+    assert len(screen.get_all_by_role("checkbox", checked=False)) == 2
+
+    assert len(screen.get_all_by_role("link", current=True)) == 1
+    assert len(screen.get_all_by_role("link", current=False)) == 2
+
+    screen.driver.get(get_file_path("extra_role.html"))
+
+    assert len(screen.get_all_by_role("button", pressed=True)) == 1
+    assert len(screen.get_all_by_role("button", pressed=False)) == 1
+
+    assert len(screen.get_all_by_role("link", expanded=False)) == 1
+
+    assert len(screen.get_all_by_role("switch")) == 1
+    assert len(screen.query_all_by_role("checkbox")) == 0
+    assert len(screen.query_all_by_role("checkbox", queryFallbacks=True)) == 1
+
+    assert screen.get_by_role("heading", level=3).text == "Heading Level Three"
+    assert len(screen.get_all_by_role("heading", level=2)) == 2
+
+    assert screen.get_by_role(
+        "alertdialog", description="Your session is about to expire"
+    )
 
 
 def test_by_text_index(screen: Screen):
