@@ -194,6 +194,8 @@ def test_by_role_extra(screen: Screen):
         "alertdialog", description="Your session is about to expire"
     )
 
+    assert screen.get_by_role("input", name="Submit Me")
+
 
 def test_by_text_index(screen: Screen):
     screen.driver.get(get_file_path("index.html"))
