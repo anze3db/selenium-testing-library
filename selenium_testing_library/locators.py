@@ -124,9 +124,9 @@ class Role(Locator):
 )"""
 
     def _testing_library_js_str(self):
-        res = f"return __stl__.queryAllByRole(document, {json.dumps(self.role)}, {{ exact: {json.dumps(self.exact)},"
-        if self.hidden is not None:
-            res += f"hidden: {json.dumps(self.hidden)},"
+        res = f"return __stl__.queryAllByRole(document, {json.dumps(self.role)}, {{ "
+        res += f"exact: {json.dumps(self.exact)},"
+        res += f"hidden: {json.dumps(self.hidden)},"
         if self.name is not None:
             res += f"name: {json.dumps(self.name)},"
         if self.description is not None:
