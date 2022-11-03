@@ -2,6 +2,10 @@
 
 `selenium-testing-library` will be in pre-release until ~~[Issue #10](https://github.com/anze3db/selenium-testing-library/issues/10) is unresolved and~~ all gaps between [Testing Library Core Query APIs](https://testing-library.com/docs/queries/about) and the the selenium-testing-library APIs are removed.
 
+## 2022.9b0
+- Add `typing-extensions` to the requirements
+- README improvements
+
 ## 2022.8b0
 - Additional parameters `selector`, `ignore` have been added to the Text Locator and screen functions
 - Additional parameter `selector` has been added to the LabelText Locator and screen functions
