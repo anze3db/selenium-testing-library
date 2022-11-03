@@ -8,8 +8,7 @@ Slenium Testing Library (STL) is a Python library for Selenium inspired by [Test
 ## Dependencies
 
 - Python 3.7, 3.8, 3.9, 3.10, 3.11
-- Selenium > 3.0.0
-
+- [`selenium`](https://pypi.org/project/selenium/) >= 3.0.0, [`typing-extensions`](https://pypi.org/project/typing-extensions/) >= 4.0.0
 ## Installation
 
 ```
