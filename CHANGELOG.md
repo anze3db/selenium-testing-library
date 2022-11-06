@@ -2,6 +2,10 @@
 
 `selenium-testing-library` will be in pre-release until ~~[Issue #10](https://github.com/anze3db/selenium-testing-library/issues/10) is unresolved and~~ all gaps between [Testing Library Core Query APIs](https://testing-library.com/docs/queries/about) and the the selenium-testing-library APIs are removed.
 
+## 2022.10b0
+- Add helper functions for missing selenium locators (`id`, `name`, `tag_name`, `link_text`, `partial_link_text`, `class_name`)
+- Make timeout and frequency keyword only arguments
+
 ## 2022.9b0
 - Add `typing-extensions` to the requirements
 - README improvements
