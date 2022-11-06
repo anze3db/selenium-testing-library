@@ -158,6 +158,7 @@ class Screen(Generic[DriverType]):
         except TimeoutException:
             raise NoSuchElementException(self._get_no_element_message(locator))
 
+    ## Testing Library Selectors
     # By role
     def get_by_role(
         self,
@@ -724,58 +725,229 @@ class Screen(Generic[DriverType]):
             poll_frequency=poll_frequency,
         )
 
+    ## Selenium Selectors
     # By css
-    def get_by_css(self, value: str) -> WebElement:
-        return self.get_by(locators.Css(value))
+    def get_by_css(self, css: str) -> WebElement:
+        return self.get_by(locators.Css(css))
 
-    def query_by_css(self, value: str) -> Optional[WebElement]:
-        return self.query_by(locators.Css(value))
+    def query_by_css(self, css: str) -> Optional[WebElement]:
+        return self.query_by(locators.Css(css))
 
     def find_by_css(
-        self, value: str, timeout: float = 5, poll_frequency: float = 0.5
+        self, css: str, *, timeout: float = 5, poll_frequency: float = 0.5
     ) -> WebElement:
         return self.find_by(
-            locators.Css(value), timeout=timeout, poll_frequency=poll_frequency
+            locators.Css(css), timeout=timeout, poll_frequency=poll_frequency
         )
 
-    def get_all_by_css(self, value: str) -> List[WebElement]:
-        return self.get_all_by(locators.Css(value))
+    def get_all_by_css(self, css: str) -> List[WebElement]:
+        return self.get_all_by(locators.Css(css))
 
-    def query_all_by_css(self, value: str) -> List[WebElement]:
-        return self.query_all_by(locators.Css(value))
+    def query_all_by_css(self, css: str) -> List[WebElement]:
+        return self.query_all_by(locators.Css(css))
 
     def find_all_by_css(
-        self, value: str, timeout: float = 5, poll_frequency: float = 0.5
+        self, css: str, *, timeout: float = 5, poll_frequency: float = 0.5
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.Css(value), timeout=timeout, poll_frequency=poll_frequency
+            locators.Css(css), timeout=timeout, poll_frequency=poll_frequency
         )
 
     # By xpath
-    def get_by_xpath(self, value: str) -> WebElement:
-        return self.get_by(locators.XPath(value))
+    def get_by_xpath(self, xpath: str) -> WebElement:
+        return self.get_by(locators.XPath(xpath))
 
-    def query_by_xpath(self, value: str) -> Optional[WebElement]:
-        return self.query_by(locators.XPath(value))
+    def query_by_xpath(self, xpath: str) -> Optional[WebElement]:
+        return self.query_by(locators.XPath(xpath))
 
     def find_by_xpath(
-        self, value: str, timeout: float = 5, poll_frequency: float = 0.5
+        self, xpath: str, *, timeout: float = 5, poll_frequency: float = 0.5
     ) -> WebElement:
         return self.find_by(
-            locators.XPath(value), timeout=timeout, poll_frequency=poll_frequency
+            locators.XPath(xpath), timeout=timeout, poll_frequency=poll_frequency
         )
 
-    def get_all_by_xpath(self, value: str) -> List[WebElement]:
-        return self.get_all_by(locators.XPath(value))
+    def get_all_by_xpath(self, xpath: str) -> List[WebElement]:
+        return self.get_all_by(locators.XPath(xpath))
 
-    def query_all_by_xpath(self, value: str) -> List[WebElement]:
-        return self.query_all_by(locators.XPath(value))
+    def query_all_by_xpath(self, xpath: str) -> List[WebElement]:
+        return self.query_all_by(locators.XPath(xpath))
 
     def find_all_by_xpath(
-        self, value: str, timeout: float = 5, poll_frequency: float = 0.5
+        self, xpath: str, *, timeout: float = 5, poll_frequency: float = 0.5
     ) -> List[WebElement]:
         return self.find_all_by(
-            locators.XPath(value), timeout=timeout, poll_frequency=poll_frequency
+            locators.XPath(xpath), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    # By id
+    def get_by_id(self, id: str) -> WebElement:
+        return self.get_by(locators.Id(id))
+
+    def query_by_id(self, id: str) -> Optional[WebElement]:
+        return self.query_by(locators.Id(id))
+
+    def find_by_id(
+        self, id: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> WebElement:
+        return self.find_by(
+            locators.Id(id), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    def get_all_by_id(self, id: str) -> List[WebElement]:
+        return self.get_all_by(locators.Id(id))
+
+    def query_all_by_id(self, id: str) -> List[WebElement]:
+        return self.query_all_by(locators.Id(id))
+
+    def find_all_by_id(
+        self, id: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> List[WebElement]:
+        return self.find_all_by(
+            locators.Id(id), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    # By name
+    def get_by_name(self, name: str) -> WebElement:
+        return self.get_by(locators.Name(name))
+
+    def query_by_name(self, name: str) -> Optional[WebElement]:
+        return self.query_by(locators.Name(name))
+
+    def find_by_name(
+        self, name: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> WebElement:
+        return self.find_by(
+            locators.Name(name), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    def get_all_by_name(self, name: str) -> List[WebElement]:
+        return self.get_all_by(locators.Name(name))
+
+    def query_all_by_name(self, name: str) -> List[WebElement]:
+        return self.query_all_by(locators.Name(name))
+
+    def find_all_by_name(
+        self, name: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> List[WebElement]:
+        return self.find_all_by(
+            locators.Name(name), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    # By tag name
+    def get_by_tag_name(self, name: str) -> WebElement:
+        return self.get_by(locators.TagName(name))
+
+    def query_by_tag_name(self, name: str) -> Optional[WebElement]:
+        return self.query_by(locators.TagName(name))
+
+    def find_by_tag_name(
+        self, name: str, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> WebElement:
+        return self.find_by(
+            locators.TagName(name), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    def get_all_by_tag_name(self, name: str) -> List[WebElement]:
+        return self.get_all_by(locators.TagName(name))
+
+    def query_all_by_tag_name(self, name: str) -> List[WebElement]:
+        return self.query_all_by(locators.TagName(name))
+
+    def find_all_by_tag_name(
+        self, name: str, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> List[WebElement]:
+        return self.find_all_by(
+            locators.TagName(name), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    # By link text
+    def get_by_link_text(self, value: str) -> WebElement:
+        return self.get_by(locators.LinkText(value))
+
+    def query_by_link_text(self, value: str) -> Optional[WebElement]:
+        return self.query_by(locators.LinkText(value))
+
+    def find_by_link_text(
+        self, value: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> WebElement:
+        return self.find_by(
+            locators.LinkText(value), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    def get_all_by_link_text(self, value: str) -> List[WebElement]:
+        return self.get_all_by(locators.LinkText(value))
+
+    def query_all_by_link_text(self, value: str) -> List[WebElement]:
+        return self.query_all_by(locators.LinkText(value))
+
+    def find_all_by_link_text(
+        self, value: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> List[WebElement]:
+        return self.find_all_by(
+            locators.LinkText(value), timeout=timeout, poll_frequency=poll_frequency
+        )
+
+    # By partial text
+    def get_by_partial_link_text(self, text: str) -> WebElement:
+        return self.get_by(locators.PartialLinkText(text))
+
+    def query_by_partial_link_text(self, text: str) -> Optional[WebElement]:
+        return self.query_by(locators.PartialLinkText(text))
+
+    def find_by_partial_link_text(
+        self, text: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> WebElement:
+        return self.find_by(
+            locators.PartialLinkText(text),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
+        )
+
+    def get_all_by_partial_link_text(self, text: str) -> List[WebElement]:
+        return self.get_all_by(locators.PartialLinkText(text))
+
+    def query_all_by_partial_link_text(self, text: str) -> List[WebElement]:
+        return self.query_all_by(locators.PartialLinkText(text))
+
+    def find_all_by_partial_link_text(
+        self, text: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> List[WebElement]:
+        return self.find_all_by(
+            locators.PartialLinkText(text),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
+        )
+
+    # By class name
+    def get_by_class_name(self, name: str) -> WebElement:
+        return self.get_by(locators.ClassName(name))
+
+    def query_by_class_name(self, name: str) -> Optional[WebElement]:
+        return self.query_by(locators.ClassName(name))
+
+    def find_by_class_name(
+        self, name: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> WebElement:
+        return self.find_by(
+            locators.ClassName(name),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
+        )
+
+    def get_all_by_class_name(self, name: str) -> List[WebElement]:
+        return self.get_all_by(locators.ClassName(name))
+
+    def query_all_by_class_name(self, name: str) -> List[WebElement]:
+        return self.query_all_by(locators.ClassName(name))
+
+    def find_all_by_class_name(
+        self, name: str, *, timeout: float = 5, poll_frequency: float = 0.5
+    ) -> List[WebElement]:
+        return self.find_all_by(
+            locators.ClassName(name),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
         )
 
     def wait_for(

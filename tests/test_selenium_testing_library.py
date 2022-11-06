@@ -401,6 +401,132 @@ def test_by_xpath(screen: Screen):
         assert isinstance(items[0], WebElement)
 
 
+def test_by_id(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_id,
+        screen.query_by_id,
+        screen.find_by_id,
+    )
+    for fun in funcs:
+        isinstance(fun("myid"), WebElement)  # type: ignore
+
+    list_funcs = (
+        screen.get_all_by_id,
+        screen.query_all_by_id,
+        screen.find_all_by_id,
+    )
+    for fun in list_funcs:
+        items = fun("myid")  # type: ignore
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_name(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_name,
+        screen.query_by_name,
+        screen.find_by_name,
+    )
+    for fun in funcs:
+        isinstance(fun("myname"), WebElement)  # type: ignore
+
+    list_funcs = (
+        screen.get_all_by_name,
+        screen.query_all_by_name,
+        screen.find_all_by_name,
+    )
+    for fun in list_funcs:
+        items = fun("myname")  # type: ignore
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_tag_name(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_tag_name,
+        screen.query_by_tag_name,
+        screen.find_by_tag_name,
+    )
+    for fun in funcs:
+        isinstance(fun("button"), WebElement)  # type: ignore
+
+    list_funcs = (
+        screen.get_all_by_tag_name,
+        screen.query_all_by_tag_name,
+        screen.find_all_by_tag_name,
+    )
+    for fun in list_funcs:
+        items = fun("button")  # type: ignore
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_link_text(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_link_text,
+        screen.query_by_link_text,
+        screen.find_by_link_text,
+    )
+    for fun in funcs:
+        isinstance(fun("Link 1"), WebElement)  # type: ignore
+
+    list_funcs = (
+        screen.get_all_by_link_text,
+        screen.query_all_by_link_text,
+        screen.find_all_by_link_text,
+    )
+    for fun in list_funcs:
+        items = fun("Link 1")  # type: ignore
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_partial_link_text(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_partial_link_text,
+        screen.query_by_partial_link_text,
+        screen.find_by_partial_link_text,
+    )
+    for fun in funcs:
+        isinstance(fun("nk 1"), WebElement)  # type: ignore
+
+    list_funcs = (
+        screen.get_all_by_partial_link_text,
+        screen.query_all_by_partial_link_text,
+        screen.find_all_by_partial_link_text,
+    )
+    for fun in list_funcs:
+        items = fun("nk 1")  # type: ignore
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
+def test_by_class_name(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    funcs = (
+        screen.get_by_class_name,
+        screen.query_by_class_name,
+        screen.find_by_class_name,
+    )
+    for fun in funcs:
+        isinstance(fun("mycss"), WebElement)  # type: ignore
+
+    list_funcs = (
+        screen.get_all_by_class_name,
+        screen.query_all_by_class_name,
+        screen.find_all_by_class_name,
+    )
+    for fun in list_funcs:
+        items = fun("mycss")  # type: ignore
+        assert isinstance(items, list)
+        assert isinstance(items[0], WebElement)
+
+
 def test_within(screen: Screen):
     screen.driver.get(get_file_path("form.html"))
     el = screen.get_by(locators.Css("#subsection"))
