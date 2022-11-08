@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Any, Callable, Generic, List, Optional, TypeVar, Union
 
 from selenium.common.exceptions import (
-    JavascriptException,
     NoSuchElementException,
     TimeoutException,
     WebDriverException,
@@ -81,7 +80,7 @@ class Screen(Generic[DriverType]):
         try:
             # Optimistically run the query, if __stl__ isn't defined on the page we'll get a JavaScript exception
             return self._finder.execute_script(script_to_run)
-        except JavascriptException:
+        except WebDriverException:
             # We assume that the error was `__stl__ is not defined` so we add __stl__ to the DOM and run the command again
             return self._finder.execute_script(f"{testing_library};{script_to_run}")
 
@@ -1017,7 +1016,7 @@ class Within(Screen[WebElement]):
                 script_to_run,
                 self.element,
             )
-        except JavascriptException:
+        except WebDriverException:
             return self.element.parent.execute_script(
                 f"{testing_library};{script_to_run}",
                 self.element,
