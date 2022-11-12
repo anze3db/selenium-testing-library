@@ -1,6 +1,8 @@
 # Changelog
 
-`selenium-testing-library` will be in pre-release until ~~[Issue #10](https://github.com/anze3db/selenium-testing-library/issues/10) is unresolved and~~ all gaps between [Testing Library Core Query APIs](https://testing-library.com/docs/queries/about) and the the selenium-testing-library APIs are removed.
+## 2022.12
+- First stable release! 🎉
+- No other notable changes in this release
 
 ## 2022.11b0
 - Fix bug on iOS where WebDriverException is raised instead of JavascriptException
