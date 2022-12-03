@@ -45,7 +45,7 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "bumpver"
-version = "2022.1119"
+version = "2022.1120"
 description = "Bump version numbers in project files."
 category = "dev"
 optional = false
@@ -400,7 +400,7 @@ watchdog = ">=0.6.0"
 
 [[package]]
 name = "selenium"
-version = "4.6.1"
+version = "4.7.2"
 description = ""
 category = "main"
 optional = false
@@ -660,8 +660,8 @@ black = [
     {file = "black-22.10.0.tar.gz", hash = "sha256:f513588da599943e0cde4e32cc9879e825d58720d6557062d1098c5ad80080e1"},
 ]
 bumpver = [
-    {file = "bumpver-2022.1119-py2.py3-none-any.whl", hash = "sha256:c4cc84a881bf945510a4831200fd082c3520665c61e73ff7732e26249a6a86c9"},
-    {file = "bumpver-2022.1119.tar.gz", hash = "sha256:afed711d286403ed848daabba6006318ed2fb8d4c1f192466ac20756afc31a61"},
+    {file = "bumpver-2022.1120-py2.py3-none-any.whl", hash = "sha256:9da18a6997ade04c66bec05f5349acc5f2f146b16fb77b307f91ef3370c6aa55"},
+    {file = "bumpver-2022.1120.tar.gz", hash = "sha256:ff8ad562a2ed87e862e07683cb68c4b61046679bf155f7a7ebb20b2ea47775cd"},
 ]
 certifi = [
     {file = "certifi-2022.9.24-py3-none-any.whl", hash = "sha256:90c1a32f1d68f940488354e36370f6cca89f0f106db09518524c88d6ed83f382"},
@@ -921,7 +921,7 @@ pytest-watch = [
     {file = "pytest-watch-4.2.0.tar.gz", hash = "sha256:06136f03d5b361718b8d0d234042f7b2f203910d8568f63df2f866b547b3d4b9"},
 ]
 selenium = [
-    {file = "selenium-4.6.1-py3-none-any.whl", hash = "sha256:2384829279d41c7f5b338ce87453cc4e120099b6c093318207376c19f5d2c254"},
+    {file = "selenium-4.7.2-py3-none-any.whl", hash = "sha256:06a1c7d9f313130b21c3218ddd8852070d0e7419afdd31f96160cd576555a5ce"},
 ]
 setuptools = [
     {file = "setuptools-65.6.3-py3-none-any.whl", hash = "sha256:57f6f22bde4e042978bcd50176fdb381d7c21a9efa4041202288d3737a0c6a54"},
