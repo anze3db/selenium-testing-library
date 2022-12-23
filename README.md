@@ -185,6 +185,7 @@ tox
 # Releasing a new version
 
 ```shell
+npm run deploy
 bumpver update --tag-num  # Wait and see if the CI is green
 poetry build && poetry publish
 ```
