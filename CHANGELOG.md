@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2023.1
-- Add support for `screen.log_testing_playground_url`
+- Add `screen.log_testing_playground_url()` for debugging with [testing-playground](https://testing-playground.com/)
 - Dev dependency updates
 
 ## 2022.13
