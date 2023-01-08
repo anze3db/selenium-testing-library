@@ -164,7 +164,7 @@ Within(parent_element).get_by_title("My title inside the container")
 
 # Testing Playground URLs
 
-For debugging using testing-playground, `screen` exposes `log_testing_playground_url()` which prints end returns a URL that can be opened in the browser.
+For debugging using [testing-playground](https://testing-playground.com/), `screen` exposes `log_testing_playground_url()` which prints end returns a URL that can be opened in the browser.
 
 ```python
 # log entire document to testing-playground
