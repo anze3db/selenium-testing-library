@@ -680,3 +680,17 @@ def test_quote_escaping(screen: Screen):
     screen.get_by_text("Hello `world`")
     screen.get_by_text("Hello\" `world` '!'")
     screen.get_by_text("\"Hello' `world` '!\"")
+
+
+def test_log_testing_playground_url(screen: Screen):
+    screen.driver.get(get_file_path("index.html"))
+    url = screen.log_testing_playground_url()
+    assert url is not None
+    assert "https://testing-playground.com/#markup=" in url
+
+    url = screen.log_testing_playground_url(screen.get_by_tag_name("main"))
+    assert url is not None
+    assert "https://testing-playground.com/#markup=" in url
+
+    url = screen.log_testing_playground_url(screen.get_by_id("myid"))
+    assert url is None

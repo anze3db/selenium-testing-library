@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Any, Callable, Generic, List, Optional, TypeVar, Union
+from typing import Any, Callable, Generic, List, Optional, TypeVar, Union, cast
 
 from selenium.common.exceptions import (
     NoSuchElementException,
@@ -970,6 +970,26 @@ class Screen(Generic[DriverType]):
         return self.wait_for(
             EC.staleness_of(element), timeout=timeout, poll_frequency=poll_frequency
         )
+
+    def log_testing_playground_url(
+        self, element: Optional[WebElement] = None
+    ) -> Optional[str]:
+        if element:
+            script_to_run = "return __stl__.logTestingPlaygroundURL(arguments[0])"
+        else:
+            script_to_run = "return __stl__.logTestingPlaygroundURL()"
+        url = None
+        try:
+            # Optimistically run the query, if __stl__ isn't defined on the page we'll get a JavaScript exception
+            url = self._finder.execute_script(script_to_run, element)
+        except WebDriverException:
+            # We assume that the error was `__stl__ is not defined` so we add __stl__ to the DOM and run the command again
+            url = self._finder.execute_script(
+                f"{testing_library};{script_to_run}", element
+            )
+
+        print(url)
+        return cast(str, url)
 
     def _get_no_element_message(self, locator: Locator):
         return f"No element found with locator {locator}"

@@ -162,6 +162,17 @@ parent_element = screen.get_by_css(".container")
 Within(parent_element).get_by_title("My title inside the container")
 ```
 
+# Testing Playground URLs
+
+For debugging using testing-playground, `screen` exposes `log_testing_playground_url()` which prints end returns a URL that can be opened in the browser.
+
+```python
+# log entire document to testing-playground
+url = screen.log_testing_playground_url()
+# log a single element
+url = screen.log_testing_playground_url(screen.get_by_text("test"))
+```
+
 # Contributing
 
 Setting up a local development environment
@@ -186,6 +197,6 @@ tox
 
 ```shell
 npm run deploy
-bumpver update --tag-num  # Wait and see if the CI is green
+bumpver update  # Wait and see if the CI is green
 poetry build && poetry publish
 ```

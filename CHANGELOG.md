@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023.1
+- Add support for `screen.log_testing_playground_url`
+- Dev dependency updates
+
 ## 2022.13
 - Update @testing-library/dom to [8.19.1](https://github.com/testing-library/dom-testing-library/releases/tag/v8.19.1)
 - Dev dependency updates
