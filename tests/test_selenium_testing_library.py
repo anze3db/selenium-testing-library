@@ -578,7 +578,6 @@ F_LOC = locators.Css("footer")
 
 
 def test_basic_functions(screen: Screen):
-
     screen.driver.get(get_file_path("index.html"))
 
     assert isinstance(screen.get_by(IMG_LOC), WebElement)
