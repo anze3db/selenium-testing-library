@@ -294,8 +294,6 @@ class DisplayValue(Locator):
 
 
 LocatorType = Union[
-    Iterable[
-        str,
-    ],
+    Iterable[str,],
     Locator,
 ]
