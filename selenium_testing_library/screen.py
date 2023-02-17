@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 from typing import Any, Callable, Generic, List, Optional, TypeVar, Union, cast
 
@@ -8,7 +7,7 @@ from selenium.common.exceptions import (
     WebDriverException,
 )
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
 from typing_extensions import Protocol
 
@@ -194,7 +193,6 @@ class Screen(Generic[DriverType]):
         self,
         role: str,
         *,
-        exact: bool = True,
         hidden: bool = False,
         name: Optional[str] = None,
         description: Optional[str] = None,
@@ -226,7 +224,6 @@ class Screen(Generic[DriverType]):
         self,
         role: str,
         *,
-        exact: bool = True,
         hidden: bool = False,
         name: Optional[str] = None,
         description: Optional[str] = None,
@@ -262,7 +259,6 @@ class Screen(Generic[DriverType]):
         self,
         role: str,
         *,
-        exact: bool = True,
         hidden: bool = False,
         name: Optional[str] = None,
         description: Optional[str] = None,
@@ -294,7 +290,6 @@ class Screen(Generic[DriverType]):
         self,
         role: str,
         *,
-        exact: bool = True,
         hidden: bool = False,
         name: Optional[str] = None,
         description: Optional[str] = None,
@@ -326,7 +321,6 @@ class Screen(Generic[DriverType]):
         self,
         role: str,
         *,
-        exact: bool = True,
         hidden: bool = False,
         name: Optional[str] = None,
         description: Optional[str] = None,
@@ -961,7 +955,9 @@ class Screen(Generic[DriverType]):
         self, element: WebElement, *, timeout: float = 5, poll_frequency: float = 0.5
     ):
         return self.wait_for(
-            EC.staleness_of(element), timeout=timeout, poll_frequency=poll_frequency
+            expected_conditions.staleness_of(element),
+            timeout=timeout,
+            poll_frequency=poll_frequency,
         )
 
     def log_testing_playground_url(
@@ -1003,8 +999,6 @@ class Within(Screen[WebElement]):
 
     def _find_elements(self, locator: Locator) -> List[WebElement]:
         loc = self._ensure_locator(locator)
-        ex = "true" if loc.exact else "false"
-        escaped_selector = json.dumps(loc.selector)
 
         if not isinstance(
             loc,

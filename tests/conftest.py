@@ -16,4 +16,4 @@ def session_selenium(request):
     chrome_options = webdriver.ChromeOptions()
     if headless:
         chrome_options.add_argument("headless")
-    yield webdriver.Chrome(options=chrome_options)
+    return webdriver.Chrome(options=chrome_options)

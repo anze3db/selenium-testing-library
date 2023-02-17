@@ -17,6 +17,7 @@ include = [
 python = "^3.7"
 selenium = ">3.0.0"
 typing_extensions = ">=4.0.0"
+ruff = "^0.0.247"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
@@ -66,3 +67,26 @@ push = true
 [tool.mypy]
 python_version = "3.7"
 warn_unused_configs = true
+
+[tool.ruff]
+target-version = "py37"
+select = [
+    # Pyflakes
+    "F",
+    # Pycodestyle
+    "E",
+    "W",
+    # isort
+    "I",
+    # Pyupgrade
+    "UP",
+    # Pylint
+    "PL",
+    # Ruff
+    "RUF",
+    # flake8
+    "PT",
+    "ARG",
+    "YTT",
+]
+ignore = ["E501", "PLR2004"]

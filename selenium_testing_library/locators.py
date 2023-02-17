@@ -1,11 +1,7 @@
 import json
-from typing import TYPE_CHECKING, Iterable, Optional, Union
+from typing import Iterable, Optional, Union
 
 from selenium.webdriver.common.by import By as SeleniumBy
-from selenium.webdriver.remote.webelement import WebElement
-
-if TYPE_CHECKING:
-    from .screen import ElementsFinder
 
 
 class By:
