@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023.2
+- Testing Library upgraded to [v9.0.0](https://github.com/testing-library/dom-testing-library/releases/tag/v9.0.0)
+- **BREAKING** The `exact` parameter for `ByRole` selectors has been removed. This is because the exact parameter [was also removed in Testing Library 9.0.0](https://github.com/testing-library/dom-testing-library/pull/1211).
+- Dev dependency updates
 ## 2023.1
 - Add `screen.log_testing_playground_url()` for debugging with [testing-playground](https://testing-playground.com/)
 - Dev dependency updates
