@@ -142,10 +142,9 @@ def test_by_role(screen: Screen):
         screen.query_by_role,
         screen.find_by_role,
     )
-    screen.driver.get(get_file_path("index.html"))
+    screen.driver.get(get_file_path("role.html"))
     for fun in funcs:
-        isinstance(fun("my-role-input"), WebElement)  # type: ignore
-        isinstance(fun("my-role", exact=False), WebElement)  # type: ignore
+        isinstance(fun("dialog"), WebElement)  # type: ignore
 
     list_funcs = (
         screen.get_all_by_role,
@@ -153,11 +152,7 @@ def test_by_role(screen: Screen):
         screen.find_all_by_role,
     )
     for fun in list_funcs:
-        items = fun("my-role-input")  # type: ignore
-        assert isinstance(items, list)
-        assert isinstance(items[0], WebElement)
-
-        items = fun("my-role-inp", exact=False)  # type: ignore
+        items = fun("dialog")  # type: ignore
         assert isinstance(items, list)
         assert isinstance(items[0], WebElement)
 

@@ -163,7 +163,6 @@ class Screen(Generic[DriverType]):
         self,
         role: str,
         *,
-        exact: bool = True,
         hidden: bool = False,
         name: Optional[str] = None,
         description: Optional[str] = None,
@@ -178,7 +177,6 @@ class Screen(Generic[DriverType]):
         return self.get_by(
             locators.Role(
                 role,
-                exact=exact,
                 hidden=hidden,
                 name=name,
                 description=description,
@@ -211,7 +209,6 @@ class Screen(Generic[DriverType]):
         return self.get_by(
             locators.Role(
                 role,
-                exact=exact,
                 hidden=hidden,
                 name=name,
                 description=description,
@@ -246,7 +243,6 @@ class Screen(Generic[DriverType]):
         return self.find_by(
             locators.Role(
                 role,
-                exact=exact,
                 hidden=hidden,
                 name=name,
                 description=description,
@@ -281,7 +277,6 @@ class Screen(Generic[DriverType]):
         return self.get_all_by(
             locators.Role(
                 role,
-                exact=exact,
                 hidden=hidden,
                 name=name,
                 description=description,
@@ -314,7 +309,6 @@ class Screen(Generic[DriverType]):
         return self.query_all_by(
             locators.Role(
                 role,
-                exact=exact,
                 hidden=hidden,
                 name=name,
                 description=description,
@@ -349,7 +343,6 @@ class Screen(Generic[DriverType]):
         return self.find_all_by(
             locators.Role(
                 role,
-                exact=exact,
                 hidden=hidden,
                 name=name,
                 description=description,
