@@ -195,8 +195,16 @@ tox
 
 # Releasing a new version
 
+1. Update Changelog
+2. Update npm dependencies
 ```shell
 npm run deploy
+```
+3. Bump the version
+```shell
 bumpver update  # Wait and see if the CI is green
+```
+4. Publish to PyPI
+```shell
 poetry build && poetry publish
 ```
