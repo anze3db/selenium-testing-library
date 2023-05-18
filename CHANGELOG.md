@@ -1,5 +1,7 @@
 # Changelog
 
+## 2023.4
+- Testing Library upgraded to [v9.3.0](https://github.com/testing-library/dom-testing-library/releases/tag/v9.3.0)
 ## 2023.3
 - Testing Library upgraded to [v9.2.0](https://github.com/testing-library/dom-testing-library/releases/tag/v9.2.0)
 - Dev tooling improvemetns (add ruff, remove isort)
