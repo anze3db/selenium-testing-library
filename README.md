@@ -200,6 +200,12 @@ tox
 ```shell
 npm run deploy
 ```
+If `npm run deploy` fails because of outdated dependencies run:
+
+```shell
+npm update
+```
+
 3. Bump the version
 ```shell
 bumpver update  # Wait and see if the CI is green
