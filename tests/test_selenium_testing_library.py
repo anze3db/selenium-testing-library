@@ -14,7 +14,7 @@ from selenium_testing_library import (
 
 
 def test_version():
-    assert __version__ == "2023.5"
+    assert __version__ == "2023.6"
 
 
 @pytest.fixture()
