@@ -1,5 +1,15 @@
 from pathlib import Path
-from typing import Any, Callable, Generic, List, Optional, TypeVar, Union, cast
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    List,
+    Optional,
+    Protocol,
+    TypeVar,
+    Union,
+    cast,
+)
 
 from selenium.common.exceptions import (
     NoSuchElementException,
@@ -9,7 +19,6 @@ from selenium.common.exceptions import (
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
-from typing_extensions import Protocol
 
 from . import locators
 
