@@ -16,10 +16,9 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.8"
 selenium = ">3.0.0"
-typing_extensions = ">=4.0.0"
-ruff = "^0.0.247"
 
 [tool.poetry.dev-dependencies]
+ruff = "^0.0.247"
 pytest = "*"
 black = "*"
 pytest-cov = "*"
