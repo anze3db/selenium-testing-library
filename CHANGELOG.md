@@ -1,5 +1,8 @@
 # Changelog
 
+## 2023.6
+- Drop Python 3.7 support
+
 ## 2023.5
 - Add Python 3.12 support
 - Testing Library upgraded to [v9.3.1](https://github.com/testing-library/dom-testing-library/releases/tag/v9.3.1)

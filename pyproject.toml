@@ -14,12 +14,11 @@ include = [
 "Changelog" = "https://github.com/anze3db/selenium-testing-library/blob/main/CHANGELOG.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 selenium = ">3.0.0"
-typing_extensions = ">=4.0.0"
-ruff = "^0.0.247"
 
 [tool.poetry.dev-dependencies]
+ruff = "^0.0.247"
 pytest = "*"
 black = "*"
 pytest-cov = "*"
@@ -65,11 +64,11 @@ push = true
 ]
 
 [tool.mypy]
-python_version = "3.7"
+python_version = "3.8"
 warn_unused_configs = true
 
 [tool.ruff]
-target-version = "py37"
+target-version = "py38"
 select = [
     # Pyflakes
     "F",

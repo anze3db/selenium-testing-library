@@ -11,9 +11,9 @@ pytest --selenium-headless
 # run tests and display coverage info:
 pytest --selenium-headless --cov=selenium_testing_library --cov-report html
 
-# To test on multiple Python versions make sure that py37, py38, py39 are
-# installed on your system and available through python3.7, python3.8,
-# python3.9. (Use pyenv and add the pyenv shims to your path
+# To test on multiple Python versions make sure that py38, py39, 310, 311, 312 are
+# installed on your system and available through python3.8,
+# python3.9, python3.10, python3.11, python3.12. (Use pyenv and add the pyenv shims to your path
 # `export PATH=$(pyenv root)/shims:$PATH`). Then run tox:
 tox
 ```
