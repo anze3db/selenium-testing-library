@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023.7
+- Dependency updates
+- Minor README.md file improvements
+
 ## 2023.6
 - Drop Python 3.7 support
 
