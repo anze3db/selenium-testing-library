@@ -12,12 +12,12 @@ repos:
     -   id: black
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v1.4.1'  # Use the sha / tag you want to point at
+    rev: 'v1.5.1'  # Use the sha / tag you want to point at
     hooks:
     -   id: mypy
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 'v0.0.281'
+    rev: 'v0.0.287'
     hooks:
     -   id: ruff
         args: [--fix, --exit-non-zero-on-fix]
