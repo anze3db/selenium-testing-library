@@ -208,7 +208,7 @@ npm update
 
 3. Bump the version
 ```shell
-bumpaver update  # Wait and see if the CI is green
+bumpver update  # Wait and see if the CI is green
 ```
 4. Publish to PyPI
 ```shell
