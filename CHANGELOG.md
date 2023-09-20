@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2023.7
+- Testing Library upgraded to [v9.3.3](https://github.com/testing-library/dom-testing-library/releases/tag/v9.3.3)
 - Dependency updates
 - Minor README.md file improvements
 
