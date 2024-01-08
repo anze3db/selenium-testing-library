@@ -7,7 +7,7 @@ Selenium Testing Library (STL) is a Python library implementing [Testing-Library
 
 ## Dependencies
 
-- Python 3.8, 3.9, 3.10, 3.11, 3.12-dev
+- Python 3.8, 3.9, 3.10, 3.11, 3.12, 3.13-dev
 - [`selenium`](https://pypi.org/project/selenium/) >= 3.0.0
 ## Installation
 

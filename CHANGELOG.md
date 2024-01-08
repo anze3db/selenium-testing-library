@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024.1
+- Testing Library upgraded to [v9.3.4](https://github.com/testing-library/dom-testing-library/releases/tag/v9.3.4)
+- Add Python 3.13 support
+
 ## 2023.7
 - Testing Library upgraded to [v9.3.3](https://github.com/testing-library/dom-testing-library/releases/tag/v9.3.3)
 - Dependency updates
