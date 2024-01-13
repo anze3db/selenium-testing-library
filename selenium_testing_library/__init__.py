@@ -1,3 +1,3 @@
 from .screen import *  # noqa: F403
 
-__version__ = "2024.1"
+__version__ = "2024.2"
