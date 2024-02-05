@@ -29,8 +29,7 @@ Locator = locators.LocatorType
 T = TypeVar("T")
 
 
-class MultipleSuchElementsException(WebDriverException):
-    ...
+class MultipleSuchElementsException(WebDriverException): ...
 
 
 by_to_locator = {
@@ -53,11 +52,9 @@ by_to_locator = {
 class ElementsFinder(Protocol):
     def find_elements(
         self, by: str = locators.By.ID, value: Optional[str] = None
-    ) -> List[WebElement]:
-        ...
+    ) -> List[WebElement]: ...
 
-    def execute_script(self, script: str, *args) -> List[WebElement]:
-        ...
+    def execute_script(self, script: str, *args) -> List[WebElement]: ...
 
 
 DriverType = TypeVar("DriverType", bound=ElementsFinder)
