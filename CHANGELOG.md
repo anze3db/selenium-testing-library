@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024.3
+
+- Testing Library upgraded to [v10.0.0](https://github.com/testing-library/dom-testing-library/releases/tag/v10.0.0)
+
 ## 2024.2
 - Fix FileNotFoundError: No such file or directory
 
