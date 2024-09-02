@@ -17,7 +17,7 @@ def test_version():
     assert __version__ == "2024.3"
 
 
-@pytest.fixture()
+@pytest.fixture
 def screen(session_selenium):
     return Screen(session_selenium)
 
