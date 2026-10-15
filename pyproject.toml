@@ -1,7 +1,7 @@
 [project]
 name = "selenium-testing-library"
 # CalVer: YYYY.N = the Nth release of the year (2026.1, 2026.2, ..., 2027.1). Bumped by scripts/release.py.
-version = "2024.3"
+version = "2026.1"
 description = "A Python Selenium library inspired by the Testing Library"
 readme = "README.md"
 requires-python = ">=3.11"

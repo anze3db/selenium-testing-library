@@ -11,8 +11,29 @@ prepared (see [RELEASING.md](https://github.com/anze3db/selenium-testing-library
 
 ## Unreleased
 
+## [2026.1](https://github.com/anze3db/selenium-testing-library/releases/tag/2026.1) - 2026-10-15
+
+### Highlights
+
 - Testing Library upgraded to [v10.4.2](https://github.com/testing-library/dom-testing-library/releases/tag/v10.4.2)
 - Python 3.11 to 3.15 are supported. Dropped Python 3.8, 3.9 and 3.10, which are end of life.
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+### What's Changed
+#### 🧰 Maintenance
+* Bump idna from 3.6 to 3.7 by @dependabot[bot] in https://github.com/anze3db/selenium-testing-library/pull/155
+* Bump urllib3 from 2.2.1 to 2.2.2 by @dependabot[bot] in https://github.com/anze3db/selenium-testing-library/pull/160
+* Bump certifi from 2024.6.2 to 2024.7.4 by @dependabot[bot] in https://github.com/anze3db/selenium-testing-library/pull/163
+* Bump webpack from 5.91.0 to 5.94.0 by @dependabot[bot] in https://github.com/anze3db/selenium-testing-library/pull/166
+* Bump @babel/runtime from 7.24.4 to 7.26.10 by @dependabot[bot] in https://github.com/anze3db/selenium-testing-library/pull/181
+
+
+**Full Changelog**: https://github.com/anze3db/selenium-testing-library/compare/2024.3...2026.1
+
+### Contributors
+
+Thank you to everyone who contributed to this release: @anze3db
 
 ## 2024.3
 
