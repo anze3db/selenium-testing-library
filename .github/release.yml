@@ -5,6 +5,10 @@ changelog:
     labels:
       - release
       - skip-changelog
+    # The old monthly dependency-update workflow and pre-commit.ci's hook updates
+    authors:
+      - github-actions[bot]
+      - pre-commit-ci[bot]
   categories:
     - title: 💥 Breaking changes
       labels: [breaking]
