@@ -1,5 +1,5 @@
 import json
-from typing import Iterable, Optional, Union
+from collections.abc import Iterable
 
 from selenium.webdriver.common.by import By as SeleniumBy
 
@@ -79,15 +79,15 @@ class Role(Locator):
         role: str,
         *,
         hidden: bool = False,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        selected: Optional[bool] = None,
-        checked: Optional[bool] = None,
-        pressed: Optional[bool] = None,
-        current: Optional[Union[bool, str]] = None,
-        expanded: Optional[bool] = None,
-        queryFallbacks: Optional[bool] = None,
-        level: Optional[int] = None,
+        name: str | None = None,
+        description: str | None = None,
+        selected: bool | None = None,
+        checked: bool | None = None,
+        pressed: bool | None = None,
+        current: bool | str | None = None,
+        expanded: bool | None = None,
+        queryFallbacks: bool | None = None,
+        level: int | None = None,
     ):
         self.role = role
         self.hidden = hidden
@@ -150,7 +150,7 @@ class Text(Locator):
         *,
         selector: str = "*",
         exact: bool = True,
-        ignore: Union[str, bool] = "script, style",
+        ignore: str | bool = "script, style",
     ):
         self.text = text
         self.selector = selector
@@ -285,7 +285,4 @@ class DisplayValue(Locator):
         return f"return __stl__.queryAllByDisplayValue(document, {json.dumps(self.value)}, {{exact: {json.dumps(self.exact)}}});"
 
 
-LocatorType = Union[
-    Iterable[str,],
-    Locator,
-]
+LocatorType = Iterable[str] | Locator

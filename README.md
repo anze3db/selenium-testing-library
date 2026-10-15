@@ -1,13 +1,13 @@
 # Selenium Testing Library
 
 [![PyPI version](https://badge.fury.io/py/selenium-testing-library.svg)](https://badge.fury.io/py/selenium-testing-library)
-[![test](https://github.com/anze3db/selenium-testing-library/actions/workflows/main.yml/badge.svg)](https://github.com/anze3db/selenium-testing-library/actions/workflows/main.yml) [![codecov](https://codecov.io/gh/anze3db/selenium-testing-library/branch/main/graph/badge.svg?token=L1M7HO3DL7)](https://codecov.io/gh/anze3db/selenium-testing-library)
+[![CI](https://github.com/anze3db/selenium-testing-library/actions/workflows/ci.yml/badge.svg)](https://github.com/anze3db/selenium-testing-library/actions/workflows/ci.yml)
 
 Selenium Testing Library (STL) is a Python library implementing [Testing-Library](https://testing-library.com/) in Selenium.
 
 ## Dependencies
 
-- Python 3.8, 3.9, 3.10, 3.11, 3.12, 3.13-dev
+- Python 3.11, 3.12, 3.13, 3.14, 3.15
 - [`selenium`](https://pypi.org/project/selenium/) >= 3.0.0
 ## Installation
 
@@ -22,7 +22,7 @@ from selenium import webdriver
 from selenium_testing_library import Screen
 
 driver = webdriver.Chrome()
-driver.open('https://google.com/')
+driver.open("https://google.com/")
 
 screen = Screen(driver)
 search_input = screen.find_by_title("Search")
@@ -55,9 +55,15 @@ from selenium.webdriver.common.by import By
 from selenium_testing_library import Screen
 
 screen = Screen(webdriver.Chrome())
-screen.get_by((By.CSS, ".my_class")) # Will throw an exception if the element is not found
-screen.query_by((By.ID, "my_id")) # you can use regular tuples as if you were using Selenium's find_element()
-screen.find_by((By.XPATH, "//div"), timeout=5, poll_frequency=0.5) # locators for searching through text also work
+screen.get_by(
+    (By.CSS, ".my_class")
+)  # Will throw an exception if the element is not found
+screen.query_by(
+    (By.ID, "my_id")
+)  # you can use regular tuples as if you were using Selenium's find_element()
+screen.find_by(
+    (By.XPATH, "//div"), timeout=5, poll_frequency=0.5
+)  # locators for searching through text also work
 ```
 
 ## Locator Classes
@@ -69,9 +75,15 @@ from selenium import webdriver
 from selenium_testing_library import Screen, locators
 
 screen = Screen(webdriver.Chrome())
-screen.get_by(locators.Css(".my_class")) # Will throw an exception if the element is not found
-screen.query_by(locators.Id("my_id")) # you can use regular tuples as if you were using Selenium's find_element()
-screen.find_by(locators.XPath("//div"), timeout=5, poll_frequency=0.5) # locators for searching through text also work
+screen.get_by(
+    locators.Css(".my_class")
+)  # Will throw an exception if the element is not found
+screen.query_by(
+    locators.Id("my_id")
+)  # you can use regular tuples as if you were using Selenium's find_element()
+screen.find_by(
+    locators.XPath("//div"), timeout=5, poll_frequency=0.5
+)  # locators for searching through text also work
 ```
 
 ## Testing Library Selectors
@@ -93,7 +105,9 @@ from selenium_testing_library import Screen, locators
 screen = Screen(webdriver.Chrome())
 screen.get_by(locators.Text("My Text"))
 screen.query_by(locators.Role("button", pressed=True))
-screen.find_by(locators.TestId("my-test"), timeout=5, poll_frequency=0.5) # locators for searching through text also work
+screen.find_by(
+    locators.TestId("my-test"), timeout=5, poll_frequency=0.5
+)  # locators for searching through text also work
 ```
 ## Helper functions
 
@@ -175,42 +189,18 @@ url = screen.log_testing_playground_url(screen.get_by_text("test"))
 
 # Contributing
 
-Setting up a local development environment
+Setting up a local development environment needs [uv](https://docs.astral.sh/uv/),
+[just](https://just.systems/), Node.js and Chrome:
 
 ```shell
 git clone https://github.com/anze3db/selenium-testing-library.git && cd selenium-testing-library
-poetry install && poetry shell
-# Make sure `chromedriver` is in your PATH, download from https://chromedriver.chromium.org/downloads
-# run tests:
-pytest --selenium-headless
-# run tests and display coverage info:
-pytest --selenium-headless --cov=selenium_testing_library --cov-report html
-
-# To test on multiple Python versions make sure that py37, py38, py39 are
-# installed on your system and available through python3.7, python3.8,
-# python3.9. (Use pyenv and add the pyenv shims to your path
-# `export PATH=$(pyenv root)/shims:$PATH`). Then run tox:
-tox
+just sync      # install the dev dependencies and bundle Testing Library (main.js)
+just test      # run the tests in headless Chrome
+just test-all  # run the tests on every supported Python
+just check     # lint and test, as CI does
 ```
 
 # Releasing a new version
 
-1. Update Changelog
-2. Update npm dependencies
-```shell
-npm run deploy
-```
-If `npm run deploy` fails because of outdated dependencies run:
-
-```shell
-npm update
-```
-
-3. Bump the version
-```shell
-bumpver update  # Wait and see if the CI is green
-```
-4. Publish to PyPI
-```shell
-poetry build && poetry publish
-```
+See [RELEASING.md](RELEASING.md): `just release` previews the next version and its
+changelog, `just release --no-dry-run --push` releases it.
