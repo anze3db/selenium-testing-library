@@ -203,4 +203,4 @@ just check     # lint and test, as CI does
 # Releasing a new version
 
 See [RELEASING.md](RELEASING.md): `just release` previews the next version and its
-changelog, `just release --no-dry-run --push` releases it.
+changelog, `just release --no-dry-run` releases it.
