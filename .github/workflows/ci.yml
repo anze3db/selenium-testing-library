@@ -18,6 +18,7 @@ jobs:
       - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
       - run: uv run ruff check selenium_testing_library tests scripts
       - run: uv run ruff format --check selenium_testing_library tests scripts
+      - run: uvx pre-commit run --all-files --show-diff-on-failure
 
   test:
     runs-on: ubuntu-latest

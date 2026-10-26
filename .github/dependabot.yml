@@ -1,9 +1,9 @@
 # One pull request a month, on the 1st, that bumps everything: the GitHub Actions, the
-# uv.lock and the package-lock.json (Testing Library) dependencies share a
-# multi-ecosystem group, so they land together.
-# Security updates still open as soon as an advisory is published, but they skip the
-# multi-ecosystem group: the `security` groups gather them into one pull request per
-# ecosystem instead of one per dependency.
+# uv.lock dependencies (transitive ones too), the package-lock.json (Testing Library)
+# dependencies and the pre-commit hooks share a multi-ecosystem group, so they land
+# together. Security updates still open as soon as an advisory is published, but they
+# skip the multi-ecosystem group: the `security` groups gather them into one pull
+# request per ecosystem instead of one per dependency.
 version: 2
 
 multi-ecosystem-groups:
@@ -26,6 +26,8 @@ updates:
   - package-ecosystem: uv
     directory: /
     patterns: ["*"]
+    allow:
+      - dependency-type: all
     multi-ecosystem-group: monthly
     groups:
       security:
@@ -40,3 +42,8 @@ updates:
       security:
         applies-to: security-updates
         patterns: ["*"]
+
+  - package-ecosystem: pre-commit
+    directory: /
+    patterns: ["*"]
+    multi-ecosystem-group: monthly
